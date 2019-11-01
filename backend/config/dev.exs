@@ -6,7 +6,6 @@ config :kjer_si, KjerSi.Repo,
   password: System.get_env("PGPASSWORD"),
   database: System.get_env("PGDATABASE"),
   hostname: System.get_env("PGHOST"),
-  port: System.get_env("PGPORT"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
@@ -46,17 +45,6 @@ config :kjer_si, KjerSiWeb.Endpoint,
 # If desired, both `http:` and `https:` keys can be
 # configured to run both http and https servers on
 # different ports.
-
-# Watch static and templates for browser reloading.
-config :kjer_si, KjerSiWeb.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/kjer_si_web/{live,views}/.*(ex)$",
-      ~r"lib/kjer_si_web/templates/.*(eex)$"
-    ]
-  ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

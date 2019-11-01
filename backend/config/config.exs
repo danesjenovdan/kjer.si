@@ -8,13 +8,14 @@
 use Mix.Config
 
 config :kjer_si,
-  ecto_repos: [KjerSi.Repo]
+  ecto_repos: [KjerSi.Repo],
+  generators: [binary_id: true]
 
 # Configures the endpoint
 config :kjer_si, KjerSiWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "zMebK4XoL56EScamIJTEqwR8RUDhCVe8UWU7z9S9AjEQyWKJwvh6WjRnJ7rFP79W",
-  render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(html json)],
+  secret_key_base: "RWXcvmiZMWqdlx9nJWYotq3OHfavqzltRMe2KwlsTlaIR11hTfR/Mnka4TJy6OXC",
+  render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: KjerSi.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger

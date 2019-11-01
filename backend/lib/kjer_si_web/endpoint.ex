@@ -18,8 +18,6 @@ defmodule KjerSiWeb.Endpoint do
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
-    socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
-    plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
   end
 
@@ -40,7 +38,7 @@ defmodule KjerSiWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_kjer_si_key",
-    signing_salt: "4bbkL1/I"
+    signing_salt: "/QDiigZY"
 
   plug KjerSiWeb.Router
 end
