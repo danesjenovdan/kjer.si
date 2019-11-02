@@ -4,8 +4,8 @@ RUN apt-get update && \
   apt-get install -y postgresql-client inotify-tools
 
 RUN mkdir /app
-COPY . /app
 WORKDIR /app
+COPY . /app
 
 RUN mix local.hex --force
 
