@@ -7,5 +7,6 @@ defmodule KjerSiWeb.Router do
 
   scope "/api", KjerSiWeb do
     pipe_through :api
+    resources "/users", UserController, except: [:new, :edit]
   end
 end
