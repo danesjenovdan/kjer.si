@@ -6,8 +6,11 @@
 * [Vue DevTools](https://nativescript-vue.org/en/docs/getting-started/vue-devtools/)
 * [NativeScript Vue docs](https://nativescript-vue.org/en/docs/introduction/)
 
-## Installation
+## Prerequisites
 * `$ npm install -g nativescript`
+
+## Installation
+* `$ npm install`
 
 ## Running
 * `$ tns run android`
