@@ -16,6 +16,7 @@ services:
       - db
     volumes:
       - .:/app
+
   db:
     image: postgres:12
     environment:
@@ -27,3 +28,4 @@ services:
       - pgdata:/var/lib/postgresql/data
 volumes:
   pgdata:
+    
