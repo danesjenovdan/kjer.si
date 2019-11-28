@@ -1,0 +1,30 @@
+{
+  "nativescript": {
+    "id": "si.djnd.kjersi",
+    "tns-android": {
+      "version": "5.4.0"
+    },
+    "tns-ios": {
+      "version": "5.4.2"
+    }
+  },
+  "description": "NativeScript Application",
+  "license": "SEE LICENSE IN <your-license-filename>",
+  "repository": "https://github.com/danesjenovdan/kjer.si.git",
+  "dependencies": {
+    "nativescript-theme-core": "~1.0.4",
+    "nativescript-vue": "~2.2.0",
+    "tns-core-modules": "~5.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.1.0",
+    "@babel/preset-env": "~7.1.0",
+    "babel-loader": "~8.0.0",
+    "nativescript-dev-webpack": "~0.24.0",
+    "nativescript-vue-template-compiler": "~2.2.0",
+    "node-sass": "^4.7.1",
+    "vue-loader": "~15.4.0"
+  },
+  "gitHead": "8c1a4866a66daab09bf5ef8e5a96472687192373",
+  "readme": "NativeScript Application"
+}
