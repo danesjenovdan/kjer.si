@@ -48,6 +48,24 @@ defmodule KjerSiWeb.UserController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  # This is copy-pasted from a tutorial and will probably require modification.
+  # def update_user_channels(user, channel_ids) when is_list(channel_ids) do
+  #   channels =
+  #     Channel
+  #     |> where([channel], channel.id in ^channel_ids)
+  #     |> Repo.all()
+
+  #   with {:ok, _struct} <-
+  #          user
+  #          |> User.changeset_update_channels(channels)
+  #          |> Repo.update() do
+  #     {:ok, Accounts.get_user(user.id)}
+  #   else
+  #     error ->
+  #       error
+  #   end
+  # end
 end
 
 # TODO

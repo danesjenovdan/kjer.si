@@ -13,6 +13,14 @@ defmodule KjerSi.Channels.Channel do
     field :coordinates, Geo.PostGIS.Geometry
     field :radius, :integer
 
+    many_to_many(
+      :users,
+      KjerSi.Accounts.User,
+      join_through: "user_channel",
+      on_replace: :delete,
+      unique: true
+    )
+
     timestamps()
   end
 

@@ -10,6 +10,14 @@ defmodule KjerSi.Accounts.User do
     field :is_admin, :boolean
     field :is_active, :boolean
 
+    many_to_many(
+      :channels,
+      KjerSi.Channels.Channel,
+      join_through: "user_channel",
+      on_replace: :delete,
+      unique: true
+    )
+
     timestamps()
   end
 
@@ -20,5 +28,11 @@ defmodule KjerSi.Accounts.User do
     |> validate_required([:nickname, :uuid])
     |> unique_constraint(:nickname)
     |> unique_constraint(:uuid)
+  end
+
+  def changeset_update_channels(user, channels) do
+    user
+    # associate channels to the user
+    |> put_assoc(:channels, channels)
   end
 end
