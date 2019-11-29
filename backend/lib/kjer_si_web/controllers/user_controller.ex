@@ -47,7 +47,9 @@ defmodule KjerSiWeb.UserController do
   def delete(conn, %{"uuid" => uuid}) do
     user = Accounts.get_user_by_uuid(uuid)
     unless user, do: AccountsHelpers.return_not_found(conn)
-    unless uuid == user.uuid, do: AccountsHelpers.return_unauthorized(conn)
+    unless Accounts.is_admin(AccountsHelpers.get_uuid(conn)) do
+      unless uuid == AccountsHelpers.get_uuid(conn), do: AccountsHelpers.return_unauthorized(conn)
+    end
 
     with {:ok, %User{}} <- Accounts.delete_user(user) do
       send_resp(conn, :no_content, "")
