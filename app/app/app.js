@@ -1,7 +1,7 @@
 import Vue from "nativescript-vue";
 import {Mapbox} from 'nativescript-mapbox'
 import Home from "./components/Home/Home";
-import { MapView } from "nativescript-google-maps-sdk";
+import {MapView} from "nativescript-google-maps-sdk";
 import FontIcon from 'nativescript-vue-fonticon'
 
 Vue.config.silent = false;

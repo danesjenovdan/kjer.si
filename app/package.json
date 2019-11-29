@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "~7.1.0",
     "babel-loader": "~8.0.0",
     "nativescript-dev-webpack": "1.0.1",

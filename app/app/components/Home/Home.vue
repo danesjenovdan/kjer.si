@@ -8,12 +8,17 @@
 <script>
 
   import Discover from "../Discover/Discover";
+  import * as AppService from '../../services/app.service';
 
   export default {
     computed: {
       message() {
         return "Blank {N}-Vue app";
       }
+    },
+    mounted(){
+      console.log('Value: ', AppService.default.value);
+      AppService.default.value = AppService.default.value + 1;
     },
     methods: {
       goToDiscoverPage() {

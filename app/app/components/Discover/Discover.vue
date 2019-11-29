@@ -10,6 +10,8 @@
   // import
   import {MapView, Marker, Position} from "nativescript-google-maps-sdk";
   import MapCard from './MapCard/MapCard.vue'
+  import * as platform from 'tns-core-modules/platform';
+  import * as AppService from '../../services/app.service';
 
   export default {
     components: {
@@ -24,8 +26,15 @@
         maxZoom: 22,
         bearing: 0,
         tilt: 0,
-        mapView: undefined
+        mapView: undefined,
+        screenHeight: platform.screen.mainScreen.heightDIPs
       }
+    },
+    mounted() {
+      let pageContainer = this.$refs.pageContainer;
+      setTimeout(() => {
+        console.log('pageContainer: ', pageContainer.nativeView.getMeasuredWidth());
+      }, 100);
     },
     methods: {
       onMapReady(event) {
