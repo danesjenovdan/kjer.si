@@ -2,7 +2,7 @@ defmodule KjerSiWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", KjerSiWeb.RoomChannel
+  channel "room:main", KjerSiWeb.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
