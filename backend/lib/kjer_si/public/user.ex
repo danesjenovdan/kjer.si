@@ -1,4 +1,4 @@
-defmodule KjerSi.Public.User do
+defmodule KjerSi.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 

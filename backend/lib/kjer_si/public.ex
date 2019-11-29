@@ -1,12 +1,12 @@
-defmodule KjerSi.Public do
+defmodule KjerSi.Accounts do
   @moduledoc """
-  The Public context.
+  The Accounts context.
   """
 
   import Ecto.Query, warn: false
   alias KjerSi.Repo
 
-  alias KjerSi.Public.User
+  alias KjerSi.Accounts.User
 
   @doc """
   Returns the list of users.

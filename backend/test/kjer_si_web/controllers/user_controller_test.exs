@@ -1,8 +1,8 @@
 defmodule KjerSiWeb.UserControllerTest do
   use KjerSiWeb.ConnCase
 
-  alias KjerSi.Public
-  alias KjerSi.Public.User
+  alias KjerSi.Accounts
+  alias KjerSi.Accounts.User
 
   @create_attrs %{
     uuid: 42,
@@ -15,7 +15,7 @@ defmodule KjerSiWeb.UserControllerTest do
   @invalid_attrs %{uuid: nil, nickname: nil}
 
   def fixture(:user) do
-    {:ok, user} = Public.create_user(@create_attrs)
+    {:ok, user} = Accounts.create_user(@create_attrs)
     user
   end
 
