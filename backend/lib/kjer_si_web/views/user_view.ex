@@ -13,6 +13,6 @@ defmodule KjerSiWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       nickname: user.nickname,
-      device_id: user.device_id}
+      uuid: user.uuid}
   end
 end

@@ -5,7 +5,7 @@ defmodule KjerSi.Public.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
-    field :device_id, :integer
+    field :uuid, :integer
     field :nickname, :string
 
     timestamps()
@@ -14,9 +14,9 @@ defmodule KjerSi.Public.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:nickname, :device_id])
-    |> validate_required([:nickname, :device_id])
+    |> cast(attrs, [:nickname, :uuid])
+    |> validate_required([:nickname, :uuid])
     |> unique_constraint(:nickname)
-    |> unique_constraint(:device_id)
+    |> unique_constraint(:uuid)
   end
 end
