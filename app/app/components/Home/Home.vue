@@ -6,11 +6,20 @@
 </style>
 
 <script>
-    export default {
-        computed: {
-            message() {
-                return "Blank {N}-Vue app";
-            }
-        }
-    };
+
+  import Discover from "../Discover/Discover";
+
+  export default {
+    computed: {
+      message() {
+        return "Blank {N}-Vue app";
+      }
+    },
+    methods: {
+      goToDiscoverPage() {
+        console.log('TAP: go to discover page');
+        this.$navigateTo(Discover);
+      }
+    }
+  };
 </script>
