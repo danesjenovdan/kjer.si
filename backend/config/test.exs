@@ -2,6 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :kjer_si, KjerSi.Repo,
+  types: KjerSi.PostgresTypes,
   username: System.get_env("PGUSER"),
   password: System.get_env("PGPASSWORD"),
   database: System.get_env("PGDATABASE") <> "_test",
