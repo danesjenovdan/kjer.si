@@ -5,7 +5,7 @@ defmodule KjerSi.Accounts.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
-    field :uuid, Ecto.UUID
+    field :uuid, :string
     field :nickname, :string
 
     timestamps()
