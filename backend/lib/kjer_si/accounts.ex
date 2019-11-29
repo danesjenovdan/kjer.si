@@ -38,6 +38,44 @@ defmodule KjerSi.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user by uuid.
+
+  Returns `nil` if the User does not exist.
+
+  ## Examples
+
+      iex> get_user!('asdf')
+      %User{}
+
+      iex> get_user!('fdsa')
+      ** nil
+
+  """
+  def get_user_by_uuid(uuid), do: Repo.get_by(User, uuid: uuid)
+
+  @doc """
+  Checks if a user is an admin.
+
+  Raises `Ecto.NoResultsError` if the User does not exist.
+
+  ## Examples
+
+      iex> get_user!('asdf')
+      %User{}
+
+      iex> get_user!('fdsa')
+      ** (Ecto.NoResultsError)
+
+  """
+  def is_admin(uuid) do
+    user = Repo.get_by(User, uuid: uuid)
+    if user do
+      user.is_admin
+    end
+    false
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples

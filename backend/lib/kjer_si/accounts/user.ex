@@ -7,6 +7,8 @@ defmodule KjerSi.Accounts.User do
   schema "users" do
     field :uuid, :string
     field :nickname, :string
+    field :is_admin, :boolean
+    field :is_active, :boolean
 
     timestamps()
   end
