@@ -6,9 +6,9 @@ defmodule KjerSi.PublicTest do
   describe "users" do
     alias KjerSi.Public.User
 
-    @valid_attrs %{device_id: 42, nickname: "some nickname"}
-    @update_attrs %{device_id: 43, nickname: "some updated nickname"}
-    @invalid_attrs %{device_id: nil, nickname: nil}
+    @valid_attrs %{uuid: 42, nickname: "some nickname"}
+    @update_attrs %{uuid: 43, nickname: "some updated nickname"}
+    @invalid_attrs %{uuid: nil, nickname: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -31,7 +31,7 @@ defmodule KjerSi.PublicTest do
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Public.create_user(@valid_attrs)
-      assert user.device_id == 42
+      assert user.uuid == 42
       assert user.nickname == "some nickname"
     end
 
@@ -42,7 +42,7 @@ defmodule KjerSi.PublicTest do
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
       assert {:ok, %User{} = user} = Public.update_user(user, @update_attrs)
-      assert user.device_id == 43
+      assert user.uuid == 43
       assert user.nickname == "some updated nickname"
     end
 
