@@ -71,8 +71,9 @@ defmodule KjerSi.Accounts do
     user = Repo.get_by(User, uuid: uuid)
     if user do
       user.is_admin
+    else
+      false
     end
-    false
   end
 
   @doc """
