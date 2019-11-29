@@ -4,6 +4,12 @@
   </ActionBar>
 
   <GridLayout>
-
+    <MapView :latitude="latitude"
+             :longitude="longitude"
+             :zoom="zoom"
+             :minZoom="minZoom"
+             :maxZoom="maxZoom"
+             @mapReady="onMapReady"
+             @coordinateTapped="onCoordinateTapped"></MapView>
   </GridLayout>
 </Page>

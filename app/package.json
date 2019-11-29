@@ -12,6 +12,8 @@
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "https://github.com/danesjenovdan/kjer.si.git",
   "dependencies": {
+    "nativescript-google-maps-sdk": "^2.8.1",
+    "nativescript-mapbox": "^4.4.1",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-vue": "2.3.0",
     "tns-core-modules": "6.0.1"
