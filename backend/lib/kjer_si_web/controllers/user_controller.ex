@@ -1,12 +1,20 @@
 defmodule KjerSiWeb.UserController do
   use KjerSiWeb, :controller
 
+  import Plug.Conn
+  import Logger
+
   alias KjerSi.Accounts
   alias KjerSi.Accounts.User
+  alias KjerSi.AccountsHelpers
 
   action_fallback KjerSiWeb.FallbackController
 
   def index(conn, _params) do
+    unless Accounts.is_admin(AccountsHelpers.get_uuid(conn)) do
+      AccountsHelpers.return_unauthorized(conn)
+    end
+
     users = Accounts.list_users()
     render(conn, "index.json", users: users)
   end
@@ -41,3 +49,7 @@ defmodule KjerSiWeb.UserController do
     end
   end
 end
+
+# TODO
+# make sure only admins can do admin stuff
+# make sure users can only access info about / delete themselves
