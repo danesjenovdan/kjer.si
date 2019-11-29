@@ -2,8 +2,7 @@ version: '3.7'
 
 services:
   phoenix:
-    build:
-      context: .
+    image: elixir:latest
     environment:
       PGUSER: postgres
       PGPASSWORD: postgres
@@ -14,11 +13,21 @@ services:
       - "4000:4000"
     depends_on:
       - db
+    working_dir: /app
     volumes:
-      - .:/app
+      - .:/app/:ro
+      - elixir-deps:/app/deps/
+      - elixir-build:/app/_build/
+    command: >
+      /bin/sh -c 'apt-get update && apt-get install -y inotify-tools &&
+      mix local.hex --force &&
+      mix local.rebar --force &&
+      mix deps.get &&
+      mix ecto.setup &&
+      mix phx.server'
 
   db:
-    image: postgres:12
+    image: mdillon/postgis
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -26,6 +35,10 @@ services:
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
 volumes:
   pgdata:
-    
+  elixir-deps: {}
+  elixir-build: {}
