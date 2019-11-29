@@ -8,9 +8,13 @@
 <script>
 
   // import
-  import { MapView, Marker, Position } from "nativescript-google-maps-sdk";
+  import {MapView, Marker, Position} from "nativescript-google-maps-sdk";
+  import MapCard from './MapCard/MapCard.vue'
 
   export default {
+    components: {
+      MapCard
+    },
     data() {
       return {
         latitude: -33.86,
