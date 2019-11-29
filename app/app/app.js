@@ -1,6 +1,6 @@
 import Vue from "nativescript-vue";
 import {Mapbox} from 'nativescript-mapbox'
-import Home from "./components/Home/Home";
+import Splash from "./components/Splash/Splash";
 import {MapView} from "nativescript-google-maps-sdk";
 import FontIcon from 'nativescript-vue-fonticon'
 
@@ -20,10 +20,10 @@ new Vue({
 
     template: `
         <Frame>
-            <Home />
+            <Splash />
         </Frame>`,
 
     components: {
-        Home
+        Splash
     }
 }).$start();

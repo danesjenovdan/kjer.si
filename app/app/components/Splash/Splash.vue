@@ -1,8 +1,8 @@
-<template src='./Home.html'>
+<template src='./Splash.html'>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped src="./Home.scss" lang="scss">
+<style scoped src="./Splash.scss" lang="scss">
 </style>
 
 <script>
