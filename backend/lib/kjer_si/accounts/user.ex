@@ -23,10 +23,4 @@ defmodule KjerSi.Accounts.User do
     |> unique_constraint(:nickname)
     |> unique_constraint(:uuid)
   end
-
-  def changeset_update_channels(user, channels) do
-    user
-    # associate channels to the user
-    |> put_assoc(:channels, channels)
-  end
 end
