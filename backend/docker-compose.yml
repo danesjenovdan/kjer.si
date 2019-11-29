@@ -15,7 +15,7 @@ services:
       - db
     working_dir: /app
     volumes:
-      - .:/app/:ro
+      - .:/app/
       - elixir-deps:/app/deps/
       - elixir-build:/app/_build/
     command: >
@@ -38,5 +38,5 @@ services:
 
 volumes:
   pgdata:
-  elixir-deps: {}
-  elixir-build: {}
+  elixir-deps:
+  elixir-build:
