@@ -7,19 +7,13 @@ defmodule KjerSi.Channels.Channel do
   schema "channels" do
     field :uuid, Ecto.UUID
     field :name, :string
-    field :category_id, :binary_id
+    belongs_to :category, KjerSi.Channels.Category
     field :lat, :float, virtual: true
     field :lng, :float, virtual: true
     field :coordinates, Geo.PostGIS.Geometry
     field :radius, :integer
 
-    many_to_many(
-      :users,
-      KjerSi.Accounts.User,
-      join_through: "user_channel",
-      on_replace: :delete,
-      unique: true
-    )
+    many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Accounts.UserChannel, unique: true
 
     timestamps()
   end

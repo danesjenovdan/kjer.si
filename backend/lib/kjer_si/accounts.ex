@@ -139,4 +139,53 @@ defmodule KjerSi.Accounts do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  alias KjerSi.Accounts.UserChannel
+
+  @doc """
+  Returns the list of user channels.
+
+  ## Examples
+
+      iex> list_user_channels()
+      [%UserChannel{}, ...]
+
+  """
+  def list_user_channels do
+    Repo.all(UserChannel)
+  end
+
+  @doc """
+  Subscribes user to channel.
+
+  ## Examples
+
+      iex> create_user_channel(%{field: value})
+      {:ok, %UserChannel{}}
+
+      iex> create_user_channel(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_user_channel(attrs \\ %{}) do
+    %UserChannel{}
+    |> UserChannel.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Unsubscribes user from channel.
+
+  ## Examples
+
+      iex> delete_user_channel(user_channel)
+      {:ok, %UserChannel{}}
+
+      iex> delete_user_channel(user_channel)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_user_channel(%UserChannel{} = user_channel) do
+    Repo.delete(user_channel)
+  end
 end

@@ -10,13 +10,7 @@ defmodule KjerSi.Accounts.User do
     field :is_admin, :boolean
     field :is_active, :boolean
 
-    many_to_many(
-      :channels,
-      KjerSi.Channels.Channel,
-      join_through: "user_channel",
-      on_replace: :delete,
-      unique: true
-    )
+    many_to_many :channels, KjerSi.Channels.Channel, join_through: KjerSi.Accounts.UserChannel, unique: true
 
     timestamps()
   end
