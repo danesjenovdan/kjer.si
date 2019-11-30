@@ -1,9 +1,12 @@
+require Logger
+
 defmodule KjerSiWeb.ChatChannel do
   use KjerSiWeb, :channel
 
-  def join("chat:lobby", payload, socket) do
+  def join("room:" <> room_id, payload, socket) do
     if authorized?(payload) do
-      {:ok, socket}
+    Logger.info "joinal sobo #{room_id}"
+    {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
     end

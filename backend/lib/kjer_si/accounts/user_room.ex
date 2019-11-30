@@ -1,12 +1,12 @@
-defmodule KjerSi.Accounts.UserChannel do
+defmodule KjerSi.Accounts.UserRoom do
   use Ecto.Schema
   import Ecto.Changeset
 
   @primary_key false
   @foreign_key_type :binary_id
-  schema "users_channels" do
+  schema "users_rooms" do
     belongs_to :user_id, KjerSi.Accounts.User
-    belongs_to :channel_id, KjerSi.Channels.Channel
+    belongs_to :room_id, KjerSi.Rooms.Room
 
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule KjerSi.Accounts.UserChannel do
   @doc false
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:user_id, :channel_id])
-    |> validate_required([:user_id, :channel_id])
+    |> cast(params, [:user_id, :room_id])
+    |> validate_required([:user_id, :room_id])
   end
 end

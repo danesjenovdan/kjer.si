@@ -1,4 +1,4 @@
-defmodule KjerSi.Channels.Category do
+defmodule KjerSi.Rooms.Category do
   use Ecto.Schema
   import Ecto.Changeset
 

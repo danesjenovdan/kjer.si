@@ -54,29 +54,6 @@ defmodule KjerSi.Accounts do
   def get_user_by_uid(uid), do: Repo.get_by(User, uid: uid)
 
   @doc """
-  Checks if a user is an admin.
-
-  Raises `Ecto.NoResultsError` if the User does not exist.
-
-  ## Examples
-
-      iex> get_user!('asdf')
-      %User{}
-
-      iex> get_user!('fdsa')
-      ** (Ecto.NoResultsError)
-
-  """
-  def is_admin(uid) do
-    user = Repo.get_by(User, uid: uid)
-    if user do
-      user.is_admin
-    else
-      false
-    end
-  end
-
-  @doc """
   Creates a user.
 
   ## Examples
@@ -141,52 +118,52 @@ defmodule KjerSi.Accounts do
     User.changeset(user, %{})
   end
 
-  alias KjerSi.Accounts.UserChannel
+  alias KjerSi.Accounts.UserRoom
 
   @doc """
-  Returns the list of user channels.
+  Returns the list of user rooms.
 
   ## Examples
 
-      iex> list_user_channels()
-      [%UserChannel{}, ...]
+      iex> list_user_rooms()
+      [%UserRoom{}, ...]
 
   """
-  def list_user_channels do
-    Repo.all(UserChannel)
+  def list_user_rooms do
+    Repo.all(UserRoom)
   end
 
   @doc """
-  Subscribes user to channel.
+  Subscribes user to room.
 
   ## Examples
 
-      iex> create_user_channel(%{field: value})
-      {:ok, %UserChannel{}}
+      iex> create_user_room(%{field: value})
+      {:ok, %UserRoom{}}
 
-      iex> create_user_channel(%{field: bad_value})
+      iex> create_user_room(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user_channel(attrs \\ %{}) do
-    %UserChannel{}
-    |> UserChannel.changeset(attrs)
+  def create_user_room(attrs \\ %{}) do
+    %UserRoom{}
+    |> UserRoom.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Unsubscribes user from channel.
+  Unsubscribes user from room.
 
   ## Examples
 
-      iex> delete_user_channel(user_channel)
-      {:ok, %UserChannel{}}
+      iex> delete_user_room(user_room)
+      {:ok, %UserRoom{}}
 
-      iex> delete_user_channel(user_channel)
+      iex> delete_user_room(user_room)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_user_channel(%UserChannel{} = user_channel) do
-    Repo.delete(user_channel)
+  def delete_user_room(%UserRoom{} = user_room) do
+    Repo.delete(user_room)
   end
 end

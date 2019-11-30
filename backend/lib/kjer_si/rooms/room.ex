@@ -1,26 +1,26 @@
-defmodule KjerSi.Channels.Channel do
+defmodule KjerSi.Rooms.Room do
   use Ecto.Schema
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "channels" do
+  schema "rooms" do
     field :uuid, Ecto.UUID
     field :name, :string
-    belongs_to :category, KjerSi.Channels.Category
+    belongs_to :category, KjerSi.Rooms.Category
     field :lat, :float, virtual: true
     field :lng, :float, virtual: true
     field :coordinates, Geo.PostGIS.Geometry
     field :radius, :integer
 
-    many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Accounts.UserChannel, unique: true
+    many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Accounts.UserRoom, unique: true
 
     timestamps()
   end
 
   @doc false
-  def changeset(channel, attrs) do
-    channel
+  def changeset(room, attrs) do
+    room
     |> cast(attrs, [:name, :lat, :lng, :uuid, :radius])
     |> validate_required([:name, :lat, :lng, :uuid, :radius])
     |> cast_coordinates()

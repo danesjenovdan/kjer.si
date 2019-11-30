@@ -11,10 +11,12 @@ defmodule KjerSiWeb.UserController do
   action_fallback KjerSiWeb.FallbackController
 
   def index(conn, _params) do
-    unless Accounts.is_admin(AccountsHelpers.get_uid(conn)), do: AccountsHelpers.return_unauthorized(conn)
-
-    users = Accounts.list_users()
-    render(conn, "index.json", users: users)
+    unless AccountsHelpers.is_admin(conn) do
+      AccountsHelpers.return_unauthorized(conn)
+    else
+      users = Accounts.list_users()
+      render(conn, "index.json", users: users)
+    end
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -28,31 +30,41 @@ defmodule KjerSiWeb.UserController do
 
   def show(conn, %{"uid" => uid}) do
     user = Accounts.get_user_by_uid(uid)
-    unless user, do: AccountsHelpers.return_not_found(conn)
-    unless uid == user.uid, do: AccountsHelpers.return_unauthorized(conn)
-
-    render(conn, "show.json", user: user)
+    cond do
+      user == nil ->
+        AccountsHelpers.return_not_found(conn)
+      AccountsHelpers.get_uid(conn) != uid ->
+        AccountsHelpers.return_unauthorized(conn)
+      true ->
+        render(conn, "show.json", user: user)
+    end
   end
 
   def update(conn, %{"uid" => uid, "user" => user_params}) do
     user = Accounts.get_user_by_uid(uid)
-    unless user, do: AccountsHelpers.return_not_found(conn)
-    unless uid == user.uid, do: AccountsHelpers.return_unauthorized(conn)
-
-    with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+    cond do
+      user == nil ->
+        AccountsHelpers.return_not_found(conn)
+      AccountsHelpers.get_uid(conn) != uid ->
+        AccountsHelpers.return_unauthorized(conn)
+      true ->
+        with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
+          render(conn, "show.json", user: user)
+        end    
     end
   end
 
   def delete(conn, %{"uid" => uid}) do
     user = Accounts.get_user_by_uid(uid)
-    unless user, do: AccountsHelpers.return_not_found(conn)
-    unless Accounts.is_admin(AccountsHelpers.get_uid(conn)) do
-      unless uid == AccountsHelpers.get_uid(conn), do: AccountsHelpers.return_unauthorized(conn)
-    end
-
-    with {:ok, %User{}} <- Accounts.delete_user(user) do
-      send_resp(conn, :no_content, "")
+    cond do
+      user == nil ->
+        AccountsHelpers.return_not_found(conn)
+      AccountsHelpers.get_uid(conn) != uid and not AccountsHelpers.is_admin(conn) ->
+        AccountsHelpers.return_unauthorized(conn)
+      true ->
+        with {:ok, %User{}} <- Accounts.delete_user(user) do
+          send_resp(conn, :no_content, "")
+        end
     end
   end
 end
