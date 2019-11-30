@@ -1,6 +1,9 @@
 defmodule KjerSiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :kjer_si
 
+  # Uncomment this and add a comma above to return JSON errors
+  # render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(json), layout: false]
+
   socket "/socket", KjerSiWeb.UserSocket,
     websocket: true,
     longpoll: false
