@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 # Generate users
-KjerSi.Repo.insert!(%KjerSi.Accounts.User{uid: "1", nickname: "Polde"})
+KjerSi.Repo.insert!(%KjerSi.Accounts.User{uid: "1", nickname: "Polde the Admin", is_admin: true})
 KjerSi.Repo.insert!(%KjerSi.Accounts.User{uid: "2", nickname: "Micka"})
 KjerSi.Repo.insert!(%KjerSi.Accounts.User{uid: "3", nickname: "Štef"})
 
