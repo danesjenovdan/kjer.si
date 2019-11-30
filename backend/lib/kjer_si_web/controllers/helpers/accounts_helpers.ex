@@ -10,6 +10,15 @@ defmodule KjerSi.AccountsHelpers do
     conn |> get_auth # pipe will continue at some point
   end
 
+  def get_auth_user(conn) do
+    user = conn |> get_uid |> Accounts.get_user_by_uid
+    if user do
+      user
+    else
+      return_unauthorized(conn)
+    end
+  end
+
   def is_admin(conn) do
     user = conn |> get_uid |> Accounts.get_user_by_uid
     if user do
