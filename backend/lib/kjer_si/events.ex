@@ -7,6 +7,7 @@ defmodule KjerSi.Events do
   alias KjerSi.Repo
 
   alias KjerSi.Events.Event
+  alias KjerSi.Events.UserEvent
 
   @doc """
   Returns the list of events.
@@ -141,5 +142,50 @@ defmodule KjerSi.Events do
     Event.changeset(event, %{})
   end
 
+  @doc """
+  Returns the list of user events.
 
+  ## Examples
+
+      iex> list_user_events()
+      [%UserEvent{}, ...]
+
+  """
+  def list_user_events do
+    Repo.all(UserEvent)
+  end
+
+  @doc """
+  Subscribes user to event.
+
+  ## Examples
+
+      iex> create_user_event(%{field: value})
+      {:ok, %UserEvent{}}
+
+      iex> create_user_event(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_user_event(attrs \\ %{}) do
+    %UserEvent{}
+    |> UserEvent.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Unsubscribes user from event.
+
+  ## Examples
+
+      iex> delete_user_event(user_event)
+      {:ok, %UserEvent{}}
+
+      iex> delete_user_event(user_event)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_user_event(%UserEvent{} = user_event) do
+    Repo.delete(user_event)
+  end
 end

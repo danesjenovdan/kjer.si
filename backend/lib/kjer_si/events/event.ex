@@ -5,12 +5,15 @@ defmodule KjerSi.Events.Event do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "events" do
+    field :uuid, Ecto.UUID
     field :datetime, :utc_datetime
     field :description, :string
     field :max_attending, :integer
     field :name, :string
     field :author, :binary_id
     field :room_id, :binary_id
+
+    many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Events.UserEvent, unique: true
 
     timestamps()
   end
