@@ -6,6 +6,8 @@ defmodule KjerSi.Events do
   import Ecto.Query, warn: false
   alias KjerSi.Repo
 
+  import Logger
+
   alias KjerSi.Events.Event
   alias KjerSi.Events.UserEvent
 
@@ -168,9 +170,20 @@ defmodule KjerSi.Events do
 
   """
   def create_user_event(attrs \\ %{}) do
+
+
+    Logger.debug "sdfsd"
+
+
+
     %UserEvent{}
     |> UserEvent.changeset(attrs)
     |> Repo.insert()
+
+
+    Logger.debug "sdfsd2"
+
+
   end
 
   @doc """
@@ -188,4 +201,16 @@ defmodule KjerSi.Events do
   def delete_user_event(%UserEvent{} = user_event) do
     Repo.delete(user_event)
   end
+
+  @doc """
+  Gets a single user_room.
+  Raises `Ecto.NoResultsError` if the UserRoom does not exist.
+  ## Examples
+      iex> get_user_room!(123)
+      %User{}
+      iex> get_user_room!(456)
+      ** (Ecto.NoResultsError)
+  """
+  def get_user_event!(uuid), do: Repo.get!(UserEvent, uuid)
+
 end
