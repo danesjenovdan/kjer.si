@@ -63,4 +63,40 @@ defmodule KjerSi.AccountsTest do
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end
   end
+
+  describe "user_channels" do
+    alias KjerSi.Accounts.UserChannel
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def user_channel_fixture(attrs \\ %{}) do
+      {:ok, user_channel} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Accounts.create_user_channel()
+
+      user_channel
+    end
+
+    test "list_user_channels/0 returns all user_channels" do
+      user_channel = user_channel_fixture()
+      assert Accounts.list_user_channels() == [user_channel]
+    end
+
+    test "create_user_channel/1 with valid data creates a user_channel" do
+      assert {:ok, %UserChannel{} = user_channel} = Accounts.create_user_channel(@valid_attrs)
+    end
+
+    test "create_user_channel/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_user_channel(@invalid_attrs)
+    end
+
+    test "delete_user_channel/1 deletes the user_channel" do
+      user_channel = user_channel_fixture()
+      assert {:ok, %UserChannel{}} = Accounts.delete_user_channel(user_channel)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user_channel!(user_channel.id) end
+    end
+  end
 end

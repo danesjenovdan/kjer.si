@@ -11,9 +11,7 @@ defmodule KjerSiWeb.UserController do
   action_fallback KjerSiWeb.FallbackController
 
   def index(conn, _params) do
-    unless Accounts.is_admin(AccountsHelpers.get_uuid(conn)) do
-      AccountsHelpers.return_unauthorized(conn)
-    end
+    unless Accounts.is_admin(AccountsHelpers.get_uuid(conn)), do: AccountsHelpers.return_unauthorized(conn)
 
     users = Accounts.list_users()
     render(conn, "index.json", users: users)
@@ -28,21 +26,30 @@ defmodule KjerSiWeb.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def show(conn, %{"uuid" => uuid}) do
+    user = Accounts.get_user_by_uuid(uuid)
+    unless user, do: AccountsHelpers.return_not_found(conn)
+    unless uuid == user.uuid, do: AccountsHelpers.return_unauthorized(conn)
+
     render(conn, "show.json", user: user)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
+  def update(conn, %{"uuid" => uuid, "user" => user_params}) do
+    user = Accounts.get_user_by_uuid(uuid)
+    unless user, do: AccountsHelpers.return_not_found(conn)
+    unless uuid == user.uuid, do: AccountsHelpers.return_unauthorized(conn)
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
       render(conn, "show.json", user: user)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def delete(conn, %{"uuid" => uuid}) do
+    user = Accounts.get_user_by_uuid(uuid)
+    unless user, do: AccountsHelpers.return_not_found(conn)
+    unless Accounts.is_admin(AccountsHelpers.get_uuid(conn)) do
+      unless uuid == AccountsHelpers.get_uuid(conn), do: AccountsHelpers.return_unauthorized(conn)
+    end
 
     with {:ok, %User{}} <- Accounts.delete_user(user) do
       send_resp(conn, :no_content, "")

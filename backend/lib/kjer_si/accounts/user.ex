@@ -7,8 +7,10 @@ defmodule KjerSi.Accounts.User do
   schema "users" do
     field :uuid, :string
     field :nickname, :string
-    field :is_admin, :boolean
-    field :is_active, :boolean
+    field :is_admin, :boolean, default: false
+    field :is_active, :boolean, default: true
+
+    many_to_many :channels, KjerSi.Channels.Channel, join_through: KjerSi.Accounts.UserChannel, unique: true
 
     timestamps()
   end
