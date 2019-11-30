@@ -1,8 +1,8 @@
 defmodule KjerSi.AccountsHelpers do
   import Plug.Conn
 
-  def get_uuid(conn) do
-    to_string(get_req_header(conn, "uuid"))
+  def get_uid(conn) do
+    to_string(get_req_header(conn, "uid"))
   end
 
   def return_unauthorized(conn) do

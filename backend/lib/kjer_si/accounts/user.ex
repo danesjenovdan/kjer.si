@@ -5,7 +5,7 @@ defmodule KjerSi.Accounts.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
-    field :uuid, :string
+    field :uid, :string
     field :nickname, :string
     field :is_admin, :boolean, default: false
     field :is_active, :boolean, default: true
@@ -18,9 +18,9 @@ defmodule KjerSi.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:nickname, :uuid])
-    |> validate_required([:nickname, :uuid])
+    |> cast(attrs, [:nickname, :uid])
+    |> validate_required([:nickname, :uid])
     |> unique_constraint(:nickname)
-    |> unique_constraint(:uuid)
+    |> unique_constraint(:uid)
   end
 end

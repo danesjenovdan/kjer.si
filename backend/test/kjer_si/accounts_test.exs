@@ -6,9 +6,9 @@ defmodule KjerSi.AccountsTest do
   describe "users" do
     alias KjerSi.Accounts.User
 
-    @valid_attrs %{uuid: 42, nickname: "some nickname"}
-    @update_attrs %{uuid: 43, nickname: "some updated nickname"}
-    @invalid_attrs %{uuid: nil, nickname: nil}
+    @valid_attrs %{uid: 42, nickname: "some nickname"}
+    @update_attrs %{uid: 43, nickname: "some updated nickname"}
+    @invalid_attrs %{uid: nil, nickname: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -31,7 +31,7 @@ defmodule KjerSi.AccountsTest do
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
-      assert user.uuid == 42
+      assert user.uid == 42
       assert user.nickname == "some nickname"
     end
 
@@ -42,7 +42,7 @@ defmodule KjerSi.AccountsTest do
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
       assert {:ok, %User{} = user} = Accounts.update_user(user, @update_attrs)
-      assert user.uuid == 43
+      assert user.uid == 43
       assert user.nickname == "some updated nickname"
     end
 
