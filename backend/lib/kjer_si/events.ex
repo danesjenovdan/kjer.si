@@ -170,20 +170,9 @@ defmodule KjerSi.Events do
 
   """
   def create_user_event(attrs \\ %{}) do
-
-
-    Logger.debug "sdfsd"
-
-
-
     %UserEvent{}
     |> UserEvent.changeset(attrs)
     |> Repo.insert()
-
-
-    Logger.debug "sdfsd2"
-
-
   end
 
   @doc """
