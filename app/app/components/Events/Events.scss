@@ -1,0 +1,17 @@
+// Start custom common variables
+@import '../../app-variables';
+// End custom common variables
+
+// Custom styles
+   .fa {
+       color: $kjersi-green;
+   }
+
+
+.action-bar{
+  background-color: $kjersi-green;
+}
+
+.info {
+    font-size: 20;
+}
