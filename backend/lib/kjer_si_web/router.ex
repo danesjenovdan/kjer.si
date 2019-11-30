@@ -11,6 +11,6 @@ defmodule KjerSiWeb.Router do
     resources "/subscriptions", UserRoomController, only: [:create, :show, :delete]
     resources "/events", EventController, param: "id", only: [:index, :show, :create]
     resources "/eventsubscriptions", UserEventController, param: "event_id", only: [:create, :delete]
-    resources "/rooms", RoomController, param: "room_id", only: [:create, :delete, :show]
+    resources "/rooms", RoomController, only: [:create, :delete, :show]
   end
 end
