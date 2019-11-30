@@ -7,10 +7,10 @@ defmodule KjerSiWeb.Router do
 
   scope "/api", KjerSiWeb do
     pipe_through :api
-    resources "/users", UserController, param: "uid", except: [:new, :edit]
-    resources "/subscriptions", UserRoomController, param: "room_id", only: [:create, :delete]
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/subscriptions", UserRoomController, only: [:create, :show, :delete]
     resources "/events", EventController, param: "id", only: [:index, :show, :create]
-    resources "/rooms", RoomController, param: "room_id", only: [:create, :delete]
     resources "/eventsubscriptions", UserEventController, param: "event_id", only: [:create, :delete]
+    resources "/rooms", RoomController, param: "room_id", only: [:create, :delete, :show]
   end
 end

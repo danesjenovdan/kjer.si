@@ -8,6 +8,8 @@ defmodule KjerSiWeb.UserController do
   alias KjerSi.Accounts.User
   alias KjerSi.AccountsHelpers
 
+  alias KjerSi.Rooms.Room
+
   action_fallback KjerSiWeb.FallbackController
 
   def index(conn, _params) do
@@ -28,38 +30,38 @@ defmodule KjerSiWeb.UserController do
     end
   end
 
-  def show(conn, %{"uid" => uid}) do
-    user = Accounts.get_user_by_uid(uid)
+  def show(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
     cond do
-      user == nil ->
-        AccountsHelpers.return_not_found(conn)
-      AccountsHelpers.get_uid(conn) != uid ->
+      # user == nil ->
+      #   AccountsHelpers.return_not_found(conn)
+      AccountsHelpers.get_uid(conn) != user.uid ->
         AccountsHelpers.return_unauthorized(conn)
       true ->
         render(conn, "show.json", user: user)
     end
   end
 
-  def update(conn, %{"uid" => uid, "user" => user_params}) do
-    user = Accounts.get_user_by_uid(uid)
+  def update(conn, %{"id" => id, "user" => user_params}) do
+    user = Accounts.get_user!(id)
     cond do
-      user == nil ->
-        AccountsHelpers.return_not_found(conn)
-      AccountsHelpers.get_uid(conn) != uid ->
+      # user == nil ->
+      #   AccountsHelpers.return_not_found(conn)
+      AccountsHelpers.get_uid(conn) != user.id ->
         AccountsHelpers.return_unauthorized(conn)
       true ->
         with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
           render(conn, "show.json", user: user)
-        end    
+        end
     end
   end
 
-  def delete(conn, %{"uid" => uid}) do
-    user = Accounts.get_user_by_uid(uid)
+  def delete(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
     cond do
-      user == nil ->
-        AccountsHelpers.return_not_found(conn)
-      AccountsHelpers.get_uid(conn) != uid and not AccountsHelpers.is_admin(conn) ->
+      # user == nil ->
+      #   AccountsHelpers.return_not_found(conn)
+      AccountsHelpers.get_uid(conn) != user.uid and not AccountsHelpers.is_admin(conn) ->
         AccountsHelpers.return_unauthorized(conn)
       true ->
         with {:ok, %User{}} <- Accounts.delete_user(user) do
@@ -67,6 +69,23 @@ defmodule KjerSiWeb.UserController do
         end
     end
   end
+
+  # def upsert_user_rooms(user, rooms) when is_list(room_ids) do
+  #   rooms =
+  #     Room
+  #     |> where([room], room.id in ^room_ids)
+  #     |> Repo.all()
+    
+  #   with {:ok, struct} <-
+  #     user
+  #     |> User.changeset_update_rooms(rooms)
+  #     |> Repo.update() do
+  #       {:ok, Accounts.get_user!(user.id)}
+  #   else
+  #     error ->
+  #       error
+  #   end
+  # end
 end
 
 # TODO

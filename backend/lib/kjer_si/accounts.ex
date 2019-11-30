@@ -152,6 +152,22 @@ defmodule KjerSi.Accounts do
   end
 
   @doc """
+  Gets a single user_room.
+
+  Raises `Ecto.NoResultsError` if the UserRoom does not exist.
+
+  ## Examples
+
+      iex> get_user_room!(123)
+      %User{}
+
+      iex> get_user_room!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_room!(uuid), do: Repo.get!(UserRoom, uuid)
+
+  @doc """
   Unsubscribes user from room.
 
   ## Examples

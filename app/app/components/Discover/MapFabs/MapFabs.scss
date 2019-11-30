@@ -1,0 +1,16 @@
+// Start custom common variables
+@import '../../../app-variables';
+// End custom common variables
+
+.map-fab-item {
+  width: 64;
+  height: 64;
+  border-radius: 50;
+  background-color: $kjersi-green;
+  margin-bottom: 10;
+}
+
+.map-fab-item-icon {
+  width: 25;
+  height: 25;
+}

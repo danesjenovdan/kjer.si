@@ -4,8 +4,8 @@ defmodule KjerSiWeb.RoomController do
   import Plug.Conn
   import Logger
 
+  alias KjerSi.Rooms
   alias KjerSi.Rooms.Room
-  alias KjerSi.AccountsHelpers
 
   action_fallback KjerSiWeb.FallbackController
 
@@ -15,7 +15,12 @@ defmodule KjerSiWeb.RoomController do
       |> put_status(:created)
       |> put_resp_header("location", Routes.room_path(conn, :show, room))
       |> render("show.json", room: room)
+      # |> render("show.json", room: Rooms.get_room!(room.id))
     end
+  end
+
+  def show(conn, %{"id" => id}) do
+    render conn, "show.json", room: Rooms.get_room!(id)
   end
 end
 
