@@ -1,6 +1,11 @@
 import * as http from "http";
+import {getUUID} from "nativescript-uuid";
 
 export default new class {
+
+  get uid() {
+    return getUUID();
+  }
 
   screen = {
     width: 0,

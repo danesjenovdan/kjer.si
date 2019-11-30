@@ -12,11 +12,15 @@
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "https://github.com/danesjenovdan/kjer.si.git",
   "dependencies": {
+    "axios": "^0.19.0",
     "nativescript-google-maps-sdk": "^2.8.1",
+    "nativescript-localstorage": "^2.0.1",
     "nativescript-mapbox": "^4.4.1",
     "nativescript-theme-core": "~1.0.4",
+    "nativescript-uuid": "0.0.1",
     "nativescript-vue": "2.3.0",
     "nativescript-vue-fonticon": "^1.0.3",
+    "nativescript-websockets": "^1.5.5",
     "tns-core-modules": "6.0.1"
   },
   "devDependencies": {
