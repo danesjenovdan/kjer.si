@@ -5,14 +5,14 @@ defmodule KjerSiWeb.UserControllerTest do
   alias KjerSi.Accounts.User
 
   @create_attrs %{
-    uuid: 42,
+    uid: 42,
     nickname: "some nickname"
   }
   @update_attrs %{
-    uuid: 43,
+    uid: 43,
     nickname: "some updated nickname"
   }
-  @invalid_attrs %{uuid: nil, nickname: nil}
+  @invalid_attrs %{uid: nil, nickname: nil}
 
   def fixture(:user) do
     {:ok, user} = Accounts.create_user(@create_attrs)
@@ -39,7 +39,7 @@ defmodule KjerSiWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "uuid" => 42,
+               "uid" => 42,
                "nickname" => "some nickname"
              } = json_response(conn, 200)["data"]
     end
@@ -61,7 +61,7 @@ defmodule KjerSiWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "uuid" => 43,
+               "uid" => 43,
                "nickname" => "some updated nickname"
              } = json_response(conn, 200)["data"]
     end

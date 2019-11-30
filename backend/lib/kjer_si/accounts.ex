@@ -38,7 +38,7 @@ defmodule KjerSi.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
-  Gets a single user by uuid.
+  Gets a single user by uid.
 
   Returns `nil` if the User does not exist.
 
@@ -51,7 +51,7 @@ defmodule KjerSi.Accounts do
       ** nil
 
   """
-  def get_user_by_uuid(uuid), do: Repo.get_by(User, uuid: uuid)
+  def get_user_by_uid(uid), do: Repo.get_by(User, uid: uid)
 
   @doc """
   Checks if a user is an admin.
@@ -67,8 +67,8 @@ defmodule KjerSi.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def is_admin(uuid) do
-    user = Repo.get_by(User, uuid: uuid)
+  def is_admin(uid) do
+    user = Repo.get_by(User, uid: uid)
     if user do
       user.is_admin
     else
