@@ -154,6 +154,19 @@ defmodule KjerSi.Accounts do
   end
 
   @doc """
+  Returns the list of user rooms.
+
+  ## Examples
+
+      iex> list_user_rooms()
+      [%UserRoom{}, ...]
+
+  """
+  def list_user_rooms_by_user(user) do
+    Repo.all(from ur in UserRoom, where: ur.user_id == ^user.id, select: ur)
+  end
+
+  @doc """
   Subscribes user to room.
 
   ## Examples
@@ -185,7 +198,7 @@ defmodule KjerSi.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user_room!(uuid), do: Repo.get!(UserRoom, uuid)
+  def get_user_room!(id), do: Repo.get!(UserRoom, id)
 
   @doc """
   Unsubscribes user from room.
