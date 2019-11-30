@@ -10,7 +10,7 @@ defmodule KjerSi.Accounts.User do
     field :is_admin, :boolean, default: false
     field :is_active, :boolean, default: true
 
-    many_to_many :channels, KjerSi.Channels.Channel, join_through: KjerSi.Accounts.UserChannel, unique: true
+    many_to_many :rooms, KjerSi.Rooms.Room, join_through: KjerSi.Accounts.UserRoom, unique: true
 
     timestamps()
   end

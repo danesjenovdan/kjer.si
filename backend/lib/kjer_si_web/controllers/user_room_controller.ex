@@ -1,20 +1,20 @@
-defmodule KjerSiWeb.UserChannelController do
+defmodule KjerSiWeb.UserRoomController do
   use KjerSiWeb, :controller
 
   import Plug.Conn
   import Logger
 
   alias KjerSi.Accounts
-  alias KjerSi.Accounts.UserChannel
+  alias KjerSi.Accounts.UserRoom
   alias KjerSi.AccountsHelpers
 
   action_fallback KjerSiWeb.FallbackController
 
   def create(conn, %{"subscription" => subscription_params}) do
-    with {:ok, %UserChannel{} = user_channel} <- Accounts.create_user_channel(subscription_params) do
+    with {:ok, %UserRoom{} = user_room} <- Accounts.create_user_room(subscription_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user_channel))
+      |> put_resp_header("location", Routes.user_path(conn, :show, user_room))
       |> send_resp(:no_content, "{}")
     end
   end

@@ -64,39 +64,39 @@ defmodule KjerSi.AccountsTest do
     end
   end
 
-  describe "user_channels" do
-    alias KjerSi.Accounts.UserChannel
+  describe "user_rooms" do
+    alias KjerSi.Accounts.UserRoom
 
     @valid_attrs %{}
     @update_attrs %{}
     @invalid_attrs %{}
 
-    def user_channel_fixture(attrs \\ %{}) do
-      {:ok, user_channel} =
+    def user_room_fixture(attrs \\ %{}) do
+      {:ok, user_room} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Accounts.create_user_channel()
+        |> Accounts.create_user_room()
 
-      user_channel
+      user_room
     end
 
-    test "list_user_channels/0 returns all user_channels" do
-      user_channel = user_channel_fixture()
-      assert Accounts.list_user_channels() == [user_channel]
+    test "list_user_rooms/0 returns all user_rooms" do
+      user_room = user_room_fixture()
+      assert Accounts.list_user_rooms() == [user_room]
     end
 
-    test "create_user_channel/1 with valid data creates a user_channel" do
-      assert {:ok, %UserChannel{} = user_channel} = Accounts.create_user_channel(@valid_attrs)
+    test "create_user_room/1 with valid data creates a user_room" do
+      assert {:ok, %UserRoom{} = user_room} = Accounts.create_user_room(@valid_attrs)
     end
 
-    test "create_user_channel/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_user_channel(@invalid_attrs)
+    test "create_user_room/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_user_room(@invalid_attrs)
     end
 
-    test "delete_user_channel/1 deletes the user_channel" do
-      user_channel = user_channel_fixture()
-      assert {:ok, %UserChannel{}} = Accounts.delete_user_channel(user_channel)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user_channel!(user_channel.id) end
+    test "delete_user_room/1 deletes the user_room" do
+      user_room = user_room_fixture()
+      assert {:ok, %UserRoom{}} = Accounts.delete_user_room(user_room)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user_room!(user_room.id) end
     end
   end
 end

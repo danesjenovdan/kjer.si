@@ -1,8 +1,8 @@
-defmodule KjerSi.Repo.Migrations.CreateChannels do
+defmodule KjerSi.Repo.Migrations.CreateRooms do
   use Ecto.Migration
 
   def change do
-    create table(:channels, primary_key: false) do
+    create table(:rooms, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :text
       # add :lat, :float
@@ -14,7 +14,7 @@ defmodule KjerSi.Repo.Migrations.CreateChannels do
       timestamps()
     end
 
-    execute("SELECT AddGeometryColumn ('channels','coordinates',4326,'POINT',2);")
-    create index(:channels, [:category_id])
+    execute("SELECT AddGeometryColumn ('rooms','coordinates',4326,'POINT',2);")
+    create index(:rooms, [:category_id])
   end
 end
