@@ -18,11 +18,18 @@ defmodule KjerSiWeb.UserRoomController do
   end
 
   def create(conn, %{"subscription" => subscription_params}) do
-    with {:ok, %UserRoom{} = user_room} <- Accounts.create_user_room(subscription_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_room_path(conn, :show, user_room.id))
-      |> render("show.json", user_room: user_room)
+    with {:ok, user} = AccountsHelpers.get_auth_user(conn) do
+      import Logger
+      if subscription_params["user_id"] == user.id do
+        with {:ok, %UserRoom{} = user_room} <- Accounts.create_user_room(subscription_params) do
+          conn
+          |> put_status(:created)
+          |> put_resp_header("location", Routes.user_room_path(conn, :show, user_room.id))
+          |> render("show.json", user_room: user_room)
+        end
+      else
+        AccountsHelpers.return_unauthorized(conn)
+      end
     end
   end
 
