@@ -4,9 +4,17 @@ defmodule KjerSiWeb.UserRoomController do
   import Plug.Conn
 
   alias KjerSi.Accounts
+  alias KjerSi.Accounts.User
   alias KjerSi.Accounts.UserRoom
+  alias KjerSi.AccountsHelpers
 
   action_fallback KjerSiWeb.FallbackController
+
+  def index(conn, _params) do
+    with {:ok, %User{} = user} <- AccountsHelpers.get_auth_user(conn, [:rooms]) do
+      render(conn, "user_rooms_of_user.json", rooms: user.rooms)
+    end
+  end
 
   def create(conn, %{"subscription" => subscription_params}) do
     with {:ok, %UserRoom{} = user_room} <- Accounts.create_user_room(subscription_params) do

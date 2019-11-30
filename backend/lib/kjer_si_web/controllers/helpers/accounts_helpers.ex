@@ -10,10 +10,10 @@ defmodule KjerSi.AccountsHelpers do
     conn |> get_auth # pipe will continue at some point
   end
 
-  def get_auth_user(conn) do
-    user = conn |> get_uid |> Accounts.get_user_by_uid
+  def get_auth_user(conn, preload \\ []) do
+    user = conn |> get_uid |> Accounts.get_user_with_preload(preload)
     if user do
-      user
+      {:ok, user}
     else
       return_unauthorized(conn)
     end
