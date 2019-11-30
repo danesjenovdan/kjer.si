@@ -20,9 +20,9 @@ defmodule KjerSi.Rooms.Room do
   @doc false
   def changeset(room, attrs) do
     room
-    |> cast(attrs, [:name, :lat, :lng, :radius])
-    |> validate_required([:name, :lat, :lng, :radius])
+    |> cast(attrs, [:name, :lat, :lng, :radius, :category_id])
     |> cast_coordinates()
+    |> validate_required([:name, :lat, :lng, :radius, :category_id])
   end
 
   def cast_coordinates(changeset) do

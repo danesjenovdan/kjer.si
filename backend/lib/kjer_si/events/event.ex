@@ -9,8 +9,10 @@ defmodule KjerSi.Events.Event do
     field :description, :string
     field :max_attending, :integer
     field :name, :string
-    field :author, :binary_id
-    field :room_id, :binary_id
+    belongs_to :user, KjerSi.Accounts.User
+    belongs_to :room, KjerSi.Rooms.Room
+
+    many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Events.UserEvent, unique: true
 
     timestamps()
   end
@@ -18,7 +20,7 @@ defmodule KjerSi.Events.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:name, :description, :datetime, :max_attending])
-    |> validate_required([:name, :description, :datetime, :max_attending])
+    |> cast(attrs, [:datetime, :description, :max_attending, :name, :user_id, :room_id])
+    |> validate_required([:datetime, :description, :max_attending, :name, :user_id, :room_id])
   end
 end
