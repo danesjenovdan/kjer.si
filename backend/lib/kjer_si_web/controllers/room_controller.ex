@@ -2,8 +2,8 @@ defmodule KjerSiWeb.RoomController do
   use KjerSiWeb, :controller
 
   import Plug.Conn
-  import Logger
 
+  alias KjerSi.AccountsHelpers
   alias KjerSi.Rooms
   alias KjerSi.Rooms.Room
 
@@ -16,6 +16,15 @@ defmodule KjerSiWeb.RoomController do
       |> put_resp_header("location", Routes.room_path(conn, :show, room))
       |> render("show.json", room: room)
       # |> render("show.json", room: Rooms.get_room!(room.id))
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    if AccountsHelpers.is_admin(conn) do
+      room = Rooms.get_room!(id)
+      with {:ok, %Room{}} <- Rooms.delete_room(room) do
+        send_resp(conn, :no_content, "")
+      end
     end
   end
 
