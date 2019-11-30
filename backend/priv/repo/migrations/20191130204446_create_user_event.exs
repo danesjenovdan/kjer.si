@@ -1,4 +1,4 @@
-defmodule KjerSi.Repo.Migrations.CreateUserRooms do
+defmodule KjerSi.Repo.Migrations.CreateUserEvents do
   use Ecto.Migration
 
   def change do
