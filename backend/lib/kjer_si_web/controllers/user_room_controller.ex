@@ -11,8 +11,9 @@ defmodule KjerSiWeb.UserRoomController do
   action_fallback KjerSiWeb.FallbackController
 
   def index(conn, _params) do
-    with {:ok, %User{} = user} <- AccountsHelpers.get_auth_user(conn, [:rooms]) do
-      render(conn, "user_rooms_of_user.json", rooms: user.rooms)
+    with {:ok, %User{} = user} <- AccountsHelpers.get_auth_user(conn) do
+      user_rooms = Accounts.list_user_rooms_by_user(user)
+      render(conn, "user_rooms_of_user.json", user_rooms: user_rooms)
     end
   end
 
@@ -31,10 +32,16 @@ defmodule KjerSiWeb.UserRoomController do
   end
 
   def delete(conn, %{"id" => id}) do
-    user_room = Accounts.get_user_room!(id)
-
-    with {:ok, %UserRoom{}} <- Accounts.delete_user_room(user_room) do
-      send_resp(conn, :no_content, "")
+    with user_room = Accounts.get_user_room!(id) do
+      with {:ok, user} = AccountsHelpers.get_auth_user(conn) do
+        if user_room.user_id == user.id do
+          with {:ok, %UserRoom{}} <- Accounts.delete_user_room(user_room) do
+            send_resp(conn, :no_content, "")
+          end
+        else
+          AccountsHelpers.return_unauthorized(conn)
+        end
+      end
     end
   end
 end
