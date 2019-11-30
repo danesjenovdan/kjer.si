@@ -5,7 +5,6 @@ defmodule KjerSi.Rooms.Room do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "rooms" do
-    field :uuid, Ecto.UUID
     field :name, :string
     belongs_to :category, KjerSi.Rooms.Category
     field :lat, :float, virtual: true
@@ -21,8 +20,8 @@ defmodule KjerSi.Rooms.Room do
   @doc false
   def changeset(room, attrs) do
     room
-    |> cast(attrs, [:name, :lat, :lng, :uuid, :radius])
-    |> validate_required([:name, :lat, :lng, :uuid, :radius])
+    |> cast(attrs, [:name, :lat, :lng, :radius])
+    |> validate_required([:name, :lat, :lng, :radius])
     |> cast_coordinates()
   end
 

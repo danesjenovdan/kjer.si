@@ -65,9 +65,9 @@ defmodule KjerSi.RoomsTest do
   describe "rooms" do
     alias KjerSi.Rooms.Room
 
-    @valid_attrs %{lat: 120.5, lng: 120.5, name: "some name", radius: 42, uuid: "7488a646-e31f-11e4-aace-600308960662"}
-    @update_attrs %{lat: 456.7, lng: 456.7, name: "some updated name", radius: 43, uuid: "7488a646-e31f-11e4-aace-600308960668"}
-    @invalid_attrs %{lat: nil, lng: nil, name: nil, radius: nil, uuid: nil}
+    @valid_attrs %{lat: 120.5, lng: 120.5, name: "some name", radius: 42}
+    @update_attrs %{lat: 456.7, lng: 456.7, name: "some updated name", radius: 43}
+    @invalid_attrs %{lat: nil, lng: nil, name: nil, radius: nil}
 
     def room_fixture(attrs \\ %{}) do
       {:ok, room} =
@@ -93,7 +93,6 @@ defmodule KjerSi.RoomsTest do
       assert room.coordinates == %Geo.Point{coordinates: {120.5, 120.5}, srid: 4326}
       assert room.name == "some name"
       assert room.radius == 42
-      assert room.uuid == "7488a646-e31f-11e4-aace-600308960662"
     end
 
     test "create_room/1 with invalid data returns error changeset" do
@@ -106,7 +105,6 @@ defmodule KjerSi.RoomsTest do
       assert room.coordinates == %Geo.Point{coordinates: {456.7, 456.7}, srid: 4326}
       assert room.name == "some updated name"
       assert room.radius == 43
-      assert room.uuid == "7488a646-e31f-11e4-aace-600308960668"
     end
 
     test "update_room/2 with invalid data returns error changeset" do

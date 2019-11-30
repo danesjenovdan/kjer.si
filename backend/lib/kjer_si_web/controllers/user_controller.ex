@@ -50,7 +50,7 @@ defmodule KjerSiWeb.UserController do
       true ->
         with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
           render(conn, "show.json", user: user)
-        end    
+        end
     end
   end
 
