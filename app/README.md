@@ -13,5 +13,5 @@
 * `$ npm install`
 
 ## Running
-* `$ tns run android`
+* `$ tns run android --no-hrm`
 * `$ tns run ios`
