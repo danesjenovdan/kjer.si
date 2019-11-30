@@ -9,5 +9,6 @@ defmodule KjerSiWeb.Router do
     pipe_through :api
     resources "/users", UserController, param: "uid", except: [:new, :edit]
     resources "/subscriptions", UserRoomController, param: "room_id", only: [:create, :delete]
+    resources "/rooms", RoomController, param: "room_id", only: [:create, :delete]
   end
 end
