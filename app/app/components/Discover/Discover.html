@@ -9,6 +9,7 @@
              height="100%"
              @mapReady="onMapReady"
              @coordinateTapped="onCoordinateTapped"></MapView>
-    <MapCard :translateY="screenHeight - 200"></MapCard>
+    <MapFabs :translateX="screenWidth - 75" :translateY="screenHeight - 150 - 140"></MapFabs>
+    <MapCard @tap="onCardTap" :translateY="screenHeight - 150"></MapCard>
   </AbsoluteLayout>
 </Page>

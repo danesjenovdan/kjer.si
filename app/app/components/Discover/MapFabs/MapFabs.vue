@@ -1,8 +1,8 @@
-<template src='./MapCard.html'>
+<template src='./MapFabs.html'>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped src="./MapCard.scss" lang="scss">
+<style scoped src="./MapFabs.scss" lang="scss">
 </style>
 
 <script>
@@ -21,23 +21,20 @@
     },
     methods: {
       async onOpenTap() {
+        try {
 
-        this.$emit('tap', {});
+          console.log('Uid: ', AppService.default.uid);
 
-        // try {
-        //
-        //   console.log('Uid: ', AppService.default.uid);
-        //
-        //   const response = await ApiService.default.post('/users', {
-        //     user: {
-        //       uid: AppService.default.uid,
-        //       nickname: 'Francis'
-        //     }
-        //   });
-        //   console.log('Response status: ', response.status);
-        // } catch (e) {
-        //   console.log('Error: ', e);
-        // }
+          const response = await ApiService.default.post('/users', {
+            user: {
+              uid: AppService.default.uid,
+              nickname: 'Francis'
+            }
+          });
+          console.log('Response status: ', response.status);
+        } catch (e) {
+          console.log('Error: ', e);
+        }
       },
       async onDeleteTap() {
         try {

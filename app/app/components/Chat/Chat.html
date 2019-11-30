@@ -1,18 +1,9 @@
 <Page class="page">
   <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Home"></Label>
+    <Label class="action-bar-title" text="Chat"></Label>
   </ActionBar>
 
   <GridLayout ref="appContainer" rows="*, auto, *">
-    <StackLayout row="1">
-      <Label class="info" horizontalAlignment="center" verticalAlignment="center">
-        <FormattedString>
-          <Span class="fa" text.decode="&#xf135; "/>
-          <Span :text="message"/>
-        </FormattedString>
-      </Label>
-      <FontIcon name="ion-arrow-move" type="ion"/>
-      <Button @tap="goToDiscoverPage" text="To map"></Button>
-    </StackLayout>
+
   </GridLayout>
 </Page>

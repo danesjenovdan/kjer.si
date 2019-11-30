@@ -7,7 +7,6 @@
 }
 
 .map-card-inner-container {
-  height: 180 d;
   padding: 10;
   margin: 10;
   background-color: #ffffff;
@@ -19,7 +18,39 @@
 }
 
 .map-card-title {
-  color: $kjersi-red;
-  font-size: 20;
-  font-weight: 800;
+  color: #333;
+  font-size: 22;
+  margin-top: 2;
+  font-family: MuseoSansRoundedBold;
+}
+
+.map-card-last-activity-label {
+  font-family: MuseoSansRounded;
+  margin-left: 5;
+}
+
+.map-card-last-activity-first-span{
+  font-family: MuseoSansRoundedBold;
+}
+
+.map-card-last-activity-green {
+  color: $kjersi-green;
+  font-family: MuseoSansRounded;
+}
+
+.map-card-members-container {
+  margin-top: 10;
+}
+
+.map-card-members-number {
+  color: $kjersi-green;
+  font-size: 24;
+  font-family: MuseoSansRoundedBold;
+  margin-left: 5;
+}
+
+.map-card-members-label {
+  margin-top: -5;
+  margin-left: 5;
+  font-family: MuseoSansRoundedBold;
 }

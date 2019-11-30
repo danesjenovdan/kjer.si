@@ -7,8 +7,10 @@
 
 <script>
 
+  import Chat from '../Chat/Chat';
   import {Marker, Position} from "nativescript-google-maps-sdk";
-  import MapCard from './MapCard/MapCard.vue'
+  import MapFabs from './MapFabs/MapFabs.vue';
+  import MapCard from './MapCard/MapCard.vue';
   import * as utils from 'tns-core-modules/utils/utils';
   import * as ApiService from '../../services/api.service';
   import * as websockets from 'nativescript-websockets';
@@ -17,7 +19,8 @@
 
   export default {
     components: {
-      MapCard
+      MapCard,
+      MapFabs
     },
     data() {
       return {
@@ -29,7 +32,8 @@
         bearing: 0,
         tilt: 0,
         mapView: undefined,
-        screenHeight: 0
+        screenHeight: 0,
+        screenWidth: 0
       }
     },
     mounted() {
@@ -37,14 +41,14 @@
       this.$refs.pageContainer.nativeView.actionBarHidden = true;
       setTimeout(() => {
         this.$data.screenHeight = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight());
-        console.log('pageContainer: ', utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight()));
-      }, 200);
+        this.$data.screenWidth = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredWidth());
+      }, 300);
 
       // to create a socket connection
       var socket = new Phx.Socket("http://192.168.3.193:4000/socket", {params: {userToken: "123"}});
       socket.connect();
       socket.onOpen((state) => {
-        console.log('Socket: ', socket.isConnected());
+        // console.log('Socket: ', socket.isConnected());
       });
 
       // to create a channel
@@ -58,8 +62,8 @@
 
       // join the channel, with success and failure callbacks
       channel.join()
-        .receive("ok", resp => console.log("Joined channel successfully", resp) )
-        .receive("error", resp => console.log("Failed to join channel", resp) );
+        .receive("ok", resp => console.log("Joined channel successfully", resp))
+        .receive("error", resp => console.log("Failed to join channel", resp));
 
       // to send messages
       channel.push("shout", {body: "This is a shoutout!"});
@@ -69,6 +73,16 @@
 
     },
     methods: {
+      onCardTap() {
+        this.$navigateTo(Chat, {
+          transition: {
+            name: 'slideTop',
+            duration: 300,
+            curve: 'easeInOut'
+            // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
+          }
+        });
+      },
       onMapReady(event) {
         console.log("Map ready!");
         this.mapView = event.object;
