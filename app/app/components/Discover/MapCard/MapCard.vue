@@ -7,7 +7,16 @@
 
 <script>
 
+  import * as AppService from '../../../services/app.service';
+  import * as utils from 'tns-core-modules/utils/utils';
+
   export default {
-    name: 'map-card'
+    name: 'map-card',
+    data() {
+      return {};
+    },
+    mounted() {
+
+    }
   };
 </script>

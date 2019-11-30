@@ -7,11 +7,9 @@
 
 <script>
 
-  // import
-  import {MapView, Marker, Position} from "nativescript-google-maps-sdk";
+  import {Marker, Position} from "nativescript-google-maps-sdk";
   import MapCard from './MapCard/MapCard.vue'
-  import * as platform from 'tns-core-modules/platform';
-  import * as AppService from '../../services/app.service';
+  import * as utils from 'tns-core-modules/utils/utils';
 
   export default {
     components: {
@@ -27,14 +25,16 @@
         bearing: 0,
         tilt: 0,
         mapView: undefined,
-        screenHeight: platform.screen.mainScreen.heightDIPs
+        screenHeight: 0
       }
     },
     mounted() {
-      let pageContainer = this.$refs.pageContainer;
+      let mapContainer = this.$refs.mapContainer;
+      this.$refs.pageContainer.nativeView.actionBarHidden = true;
       setTimeout(() => {
-        console.log('pageContainer: ', pageContainer.nativeView.getMeasuredWidth());
-      }, 100);
+        this.$data.screenHeight = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight());
+        console.log('pageContainer: ', utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight()));
+      }, 200);
     },
     methods: {
       onMapReady(event) {

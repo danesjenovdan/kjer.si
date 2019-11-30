@@ -2,11 +2,24 @@
 @import '../../../app-variables';
 // End custom common variables
 
-// Custom styles
-   .fa {
-       color: $accent-dark;
-   }
+.map-card-container {
+  width: 100%;
+}
 
-.info {
-    font-size: 20;
+.map-card-inner-container {
+  height: 180 d;
+  padding: 10;
+  margin: 10;
+  background-color: #ffffff;
+  border-radius: 15;
+}
+
+.map-card-title-icon {
+  font-size: 20;
+}
+
+.map-card-title {
+  color: $kjersi-red;
+  font-size: 20;
+  font-weight: 800;
 }

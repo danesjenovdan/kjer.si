@@ -1,16 +1,14 @@
 <Page ref="pageContainer" class="page">
-  <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Map"></Label>
-  </ActionBar>
-
-  <GridLayout>
+  <AbsoluteLayout ref="mapContainer" width="100%" height="100%">
     <MapView :latitude="latitude"
              :longitude="longitude"
              :zoom="zoom"
              :minZoom="minZoom"
              :maxZoom="maxZoom"
+             width="100%"
+             height="100%"
              @mapReady="onMapReady"
              @coordinateTapped="onCoordinateTapped"></MapView>
-    <MapCard></MapCard>
-  </GridLayout>
+    <MapCard :translateY="screenHeight - 200"></MapCard>
+  </AbsoluteLayout>
 </Page>

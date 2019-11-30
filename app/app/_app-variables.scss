@@ -13,6 +13,10 @@ $blue-50: rgba($blue-dark, 0.5) !default;
 $blue-20: rgba($blue-dark, 0.2) !default;
 $blue-10: rgba($blue-dark, 0.1) !default;
 
+$kjersi-red: #F24150;
+$kjersi-green: #22AC9B;
+$kjersi-pink: #F24150;
+
 $accent-dark: #3A53FF !default;
 $accent-light: #4781FE !default;
 
@@ -51,7 +55,7 @@ $accent: $accent-dark;
 $error: $error-light;
 
 // SideDrawer
-$item-color-android : #737373;
+$item-color-android: #737373;
 $item-active-background: #F8F8F8;
 $item-active-color: $accent;
 $item-active-icon-color: $item-active-color;
