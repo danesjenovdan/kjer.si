@@ -8,6 +8,7 @@ defmodule KjerSiWeb.RoomView do
 
   def render("room.json", %{room: room}) do
     %{
+      id: room.id,
       name: room.name,
       radius: room.radius,
       # category: render_one(room.category, KjerSiWeb.CategoryView, "category.json")
