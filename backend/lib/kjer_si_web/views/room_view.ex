@@ -1,16 +1,17 @@
 defmodule KjerSiWeb.RoomView do
   use KjerSiWeb, :view
+  alias KjerSiWeb.RoomView
 
   def render("show.json", %{room: room}) do
     %{data: render_one(room, RoomView, "room.json")}
   end
 
   def render("room.json", %{room: room}) do
-    %{uuid: room.uuid,
+    %{
       name: room.name,
-      lat: room.lat,
-      lng: room.lng,
-      radius: room.radius}
-      # belongs_to :category, KjerSi.Rooms.Category
+      radius: room.radius,
+      # category: render_one(room.category, KjerSiWeb.CategoryView, "category.json")
+      category_id: room.category_id
+    }
   end
 end
