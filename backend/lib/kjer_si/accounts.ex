@@ -54,29 +54,6 @@ defmodule KjerSi.Accounts do
   def get_user_by_uid(uid), do: Repo.get_by(User, uid: uid)
 
   @doc """
-  Checks if a user is an admin.
-
-  Raises `Ecto.NoResultsError` if the User does not exist.
-
-  ## Examples
-
-      iex> get_user!('asdf')
-      %User{}
-
-      iex> get_user!('fdsa')
-      ** (Ecto.NoResultsError)
-
-  """
-  def is_admin(uid) do
-    user = Repo.get_by(User, uid: uid)
-    if user do
-      user.is_admin
-    else
-      false
-    end
-  end
-
-  @doc """
   Creates a user.
 
   ## Examples
