@@ -10,6 +10,10 @@
   import {Marker, Position} from "nativescript-google-maps-sdk";
   import MapCard from './MapCard/MapCard.vue'
   import * as utils from 'tns-core-modules/utils/utils';
+  import * as ApiService from '../../services/api.service';
+  import * as websockets from 'nativescript-websockets';
+
+  const Phx = require("../../assets/js/phoenix"); // <- this depends on where you put your file
 
   export default {
     components: {
@@ -35,6 +39,34 @@
         this.$data.screenHeight = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight());
         console.log('pageContainer: ', utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight()));
       }, 200);
+
+      // to create a socket connection
+      var socket = new Phx.Socket("http://192.168.3.193:4000/socket", {params: {userToken: "123"}});
+      socket.connect();
+      socket.onOpen((state) => {
+        console.log('Socket: ', socket.isConnected());
+      });
+
+      // to create a channel
+      const channel = socket.channel("room:lobby", {});
+
+      // listen for "shout" events
+      channel.on("shout", payload => {
+        // do your own thing
+        // alert(payload.body);
+      });
+
+      // join the channel, with success and failure callbacks
+      channel.join()
+        .receive("ok", resp => console.log("Joined channel successfully", resp) )
+        .receive("error", resp => console.log("Failed to join channel", resp) );
+
+      // to send messages
+      channel.push("shout", {body: "This is a shoutout!"});
+
+      // to leave a channel
+      // channel.leave();
+
     },
     methods: {
       onMapReady(event) {
