@@ -9,8 +9,14 @@
              height="100%"
              @mapReady="onMapReady"
              @coordinateTapped="onCoordinateTapped"></MapView>
+    <Image src="~/assets/images/create_group_pin.png" width="40" height="40" stretch="aspectFit"
+           :translateX="screenWidth/2-6" :translateY="screenHeight/2-41"></Image>
+    <StackLayout :translateY="screenHeight-85" orientation="vertical" width="100%" v-if="currentPageState === PAGE_STATES.CREATE">
+      <Label class="kjer-si-big-button" text="Potrdi lokacijo" margin="0 10"></Label>
+    </StackLayout>
     <MapListPopover @closeListTap="onCloseListTap" v-if="currentPageState === PAGE_STATES.LIST"></MapListPopover>
-    <MapFabs @listTap="onListTap" @createTap="onCreateTap" v-if="currentPageState === PAGE_STATES.MAP" :translateX="screenWidth - 75" :translateY="screenHeight - 170 - 140"></MapFabs>
+    <MapFabs @listTap="onListTap" @createTap="onCreateTap" v-if="currentPageState === PAGE_STATES.MAP"
+             :translateX="screenWidth - 75" :translateY="screenHeight - 170 - 140"></MapFabs>
     <MapCard v-show="currentPageState === PAGE_STATES.MAP" @tap="onCardTap" :translateY="screenHeight - 170"></MapCard>
   </AbsoluteLayout>
 </Page>

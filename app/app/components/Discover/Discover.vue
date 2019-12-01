@@ -114,7 +114,8 @@
       },
 
       onCreateTap() {
-        // this.currentPageState = this.PAGE_STATES.CREATE;
+        this.mapView.clear();
+        this.currentPageState = this.PAGE_STATES.CREATE;
       },
 
       onCardTap() {
@@ -155,6 +156,7 @@
         marker.title = 'Moja lokacija';
         marker.icon = 'my_location_pin';
         this.mapView.addMarker(marker);
+
       },
 
       async requestLocation() {
