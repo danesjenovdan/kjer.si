@@ -2,68 +2,12 @@
 @import '../../../app-variables';
 // End custom common variables
 
-.map-card-container {
+.map-popover-list-container {
   width: 100%;
 }
 
-.map-card-inner-container {
+.map-popover-list-inner-container {
   margin: 15;
   background-color: #ffffff;
   border-radius: 10;
-}
-
-.map-card-title-icon {
-  font-size: 20;
-}
-
-.map-card-title-container {
-  border-bottom-width: 1;
-  border-bottom-color: #f7f7f7;
-  padding: 10 10 5 10;
-}
-
-.map-card-content-container {
-  padding: 10;
-}
-
-.map-card-title {
-  color: #444;
-  font-size: 22;
-  margin-top: 2;
-  font-family: MuseoSansRounded;
-}
-
-.map-card-icon-image {
-  margin: 7;
-}
-
-.map-card-last-activity-label {
-  font-family: MuseoSansRounded;
-  margin-left: 5;
-}
-
-.map-card-last-activity-first-span {
-  font-family: MuseoSansRoundedBold;
-}
-
-.map-card-last-activity-green {
-  color: $kjersi-green;
-  font-family: MuseoSansRounded;
-}
-
-.map-card-members-container {
-  margin-top: 10;
-}
-
-.map-card-members-number {
-  color: $kjersi-green;
-  font-size: 22;
-  font-family: MuseoSansRoundedBold;
-  margin-left: 5;
-}
-
-.map-card-members-label {
-  margin-top: -5;
-  margin-left: 5;
-  font-family: MuseoSansRoundedBold;
 }

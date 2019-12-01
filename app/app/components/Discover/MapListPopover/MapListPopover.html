@@ -1,36 +1,5 @@
-<StackLayout class="map-card-container">
-  <StackLayout class="map-card-inner-container" v-shadow="6" @tap="onOpenTap">
-    <StackLayout class="map-card-title-container" orientation="horizontal">
-      <Image class="map-card-icon-image" src="~/assets/images/chat_icon_gray.png" width="20" height="20"
-             stretch="aspectFit"></Image>
-      <Label class="map-card-title" text="Group name"></Label>
-    </StackLayout>
-    <StackLayout class="map-card-content-container">
-      <Label class="map-card-last-activity-label">
-        <FormattedString>
-          <Span class="map-card-last-activity-first-span" text="Aktivnost:"></Span>
-          <Span class="map-card-last-activity-green" text=" pred nekaj minutami"></Span>
-        </FormattedString>
-      </Label>
-      <GridLayout columns="3.3*, 3.3*, 3.3*">
-        <GridLayout class="map-card-members-container" col="0" columns="auto, auto" rows="auto, auto">
-          <Image class="map-card-members-icon" verticalAlignment="bottom" width="40" height="40" col="0" rowSpan="2"
-                 src="~/assets/images/members_icon.png"></Image>
-          <Label class="map-card-members-number" col="1" row="0" text="27"></Label>
-          <Label class="map-card-members-label" col="1" row="1" text="članov"></Label>
-        </GridLayout>
-        <GridLayout class="map-card-members-container" col="1" columns="auto, auto" rows="auto, auto">
-          <Image class="map-card-members-icon" verticalAlignment="bottom" width="35" height="35" col="0" rowSpan="2"
-                 src="~/assets/images/calendar_icon.png"></Image>
-          <Label class="map-card-members-number" col="1" row="0" text="6"></Label>
-          <Label class="map-card-members-label" col="1" row="1" text="dogodkov"></Label>
-        </GridLayout>
-        <StackLayout col="2" verticalAlignment="bottom" paddingLeft="10">
-          <Label class="kjer-si-button" text="Odpri"></Label>
-        </StackLayout>
-      </GridLayout>
-      <!--    <Button @tap="onOpenTap()" text="Odpri"></Button>-->
-      <!--    <Button @tap="onDeleteTap()" text="Delete"></Button>-->
-    </StackLayout>
+<StackLayout class="map-popover-list-container">
+  <StackLayout class="map-popover-list-inner-container" v-shadow="6" @tap="onOpenTap">
+
   </StackLayout>
 </StackLayout>
