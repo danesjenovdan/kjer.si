@@ -15,6 +15,7 @@
   import * as MapService from '../../services/map.service';
   import * as LocationService from '../../services/location.service';
   import * as utils from 'tns-core-modules/utils/utils';
+  import * as UiService from '../../services/ui.service';
   import * as ApiService from '../../services/api.service';
   import * as websockets from 'nativescript-websockets';
   import * as Phx from '../../assets/js/phoenix';
@@ -50,12 +51,17 @@
     mounted() {
 
       this.currentPageState = this.PAGE_STATES.MAP;
-
-      let mapContainer = this.$refs.mapContainer;
       this.$refs.pageRef.nativeView.actionBarHidden = true;
+
       setTimeout(() => {
-        this.$data.screenHeight = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight());
-        this.$data.screenWidth = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredWidth());
+
+        let mapContainer = this.$refs.mapContainer;
+
+        UiService.default.layoutHeight = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight());
+        UiService.default.layoutWidth = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredWidth());
+        this.screenHeight = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight());
+        this.screenWidth = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredWidth());
+
       }, 300);
 
       // to create a socket connection
@@ -88,7 +94,23 @@
     },
     methods: {
       onListTap() {
+
         this.currentPageState = this.PAGE_STATES.LIST;
+
+        this.mapView.padding = [
+          utils.layout.toDevicePixels(this.screenHeight) - utils.layout.toDevicePixels(100),
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0)
+        ];
+
+        this.mapView.mapAnimationsEnabled = false;
+        this.mapView.latitude = this.location.latitude;
+        this.mapView.longitude = this.location.longitude;
+        this.mapView.mapAnimationsEnabled = true;
+
+        this.mapView.updateCamera();
+
       },
 
       onCreateTap() {
@@ -109,7 +131,21 @@
       },
 
       onCloseListTap() {
+
         this.currentPageState = this.PAGE_STATES.MAP;
+
+        this.mapView.padding = [
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0)
+        ];
+
+        this.mapView.mapAnimationsEnabled = false;
+        this.mapView.latitude = this.location.latitude;
+        this.mapView.longitude = this.location.longitude;
+        this.mapView.mapAnimationsEnabled = true;
+
       },
 
       setupMyLocation() {

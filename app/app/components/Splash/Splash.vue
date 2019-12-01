@@ -9,6 +9,7 @@
 
   import Discover from "../Discover/Discover";
   import * as AppService from '../../services/app.service';
+  import * as UiService from '../../services/ui.service';
   import * as MapService from '../../services/map.service';
   import * as LocationService from '../../services/location.service';
   import * as utils from 'tns-core-modules/utils/utils';
@@ -62,9 +63,8 @@
       setTimeout(geolocation.enableLocationRequest, 1000);
 
       setTimeout(() => {
-        AppService.default.screen.height = utils.layout.toDeviceIndependentPixels(pageContainer.nativeView.getMeasuredHeight());
-        AppService.default.screen.width = utils.layout.toDeviceIndependentPixels(pageContainer.nativeView.getMeasuredWidth());
-        console.log('AppService.default.screen: ', AppService.default.screen);
+        UiService.default.layoutHeight = utils.layout.toDeviceIndependentPixels(pageContainer.nativeView.getMeasuredHeight());
+        UiService.default.layoutWidth = utils.layout.toDeviceIndependentPixels(pageContainer.nativeView.getMeasuredWidth());
       }, 200);
 
       this.requestLocation();

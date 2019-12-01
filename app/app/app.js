@@ -20,7 +20,7 @@ Vue.use(FontIcon, {
   }
 });
 
-Vue.use(NSVueShadow)
+Vue.use(NSVueShadow);
 Vue.directive('customShadow', Shadow.default);
 
 new Vue({

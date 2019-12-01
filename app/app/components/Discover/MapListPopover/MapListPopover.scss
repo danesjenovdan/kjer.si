@@ -11,6 +11,7 @@
   background-color: #ffffff;
   border-radius: 20;
   padding-bottom: 20;
+  z-index: 5;
 }
 
 .map-popover-list-title-container {
@@ -44,4 +45,8 @@
   padding: 20;
   font-family: MuseoSansRoundedBold;
   color: #888;
+}
+
+.pointer-down {
+  z-index: 100;
 }
