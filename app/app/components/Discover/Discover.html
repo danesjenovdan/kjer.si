@@ -7,12 +7,39 @@
              :maxZoom="maxZoom"
              width="100%"
              height="100%"
+             @cameraChanged="onCameraChanged"
              @mapReady="onMapReady"
              @coordinateTapped="onCoordinateTapped"></MapView>
     <Image src="~/assets/images/create_group_pin.png" width="40" height="40" stretch="aspectFit"
+           v-if="currentPageState === PAGE_STATES.CREATE"
            :translateX="screenWidth/2-6" :translateY="screenHeight/2-41"></Image>
-    <StackLayout :translateY="screenHeight-85" orientation="vertical" width="100%" v-if="currentPageState === PAGE_STATES.CREATE">
-      <Label class="kjer-si-big-button" text="Potrdi lokacijo" margin="0 10"></Label>
+    <!--    <StackLayout :translateY="screenHeight-85" orientation="vertical" width="100%"-->
+    <!--                 v-if="currentPageState === PAGE_STATES.CREATE">-->
+    <!--      <Label class="kjer-si-big-button" text="Potrdi lokacijo" margin="0 10"></Label>-->
+    <!--    </StackLayout>-->
+    <GridLayout v-show="currentPageState === PAGE_STATES.CREATE" v-shadow="15" columns="60, *, 60"
+                class="create-group-header-container" width="100%">
+      <StackLayout @tap="onCloseListTap" col="0" verticalAlignment="center" horizontalAlignment="center" width="40"
+                   height="40">
+        <Image src="~/assets/images/close_icon.png" width="20" height="20" stretch="aspectFit"></Image>
+      </StackLayout>
+      <Label class="create-group-title" col="1" textAlignment="center" text="Ustvari sobo"
+             verticalAlignment="center"></Label>
+    </GridLayout>
+    <StackLayout v-if="currentPageState === PAGE_STATES.CREATE" v-shadow="15" @tap="catchGestureTap"
+                 class="create-group-range-panel" :translateY="screenHeight-150" width="100%" height="150">
+      <Label text="Nastavi razdaljo" class="create-group-range-title"></Label>
+      <StackLayout padding="0 20" marginTop="10">
+        <Slider value="10" minValue="0" maxValue="100" verticalAlignment="center" color="#22AC9B"
+                backgroundColor="#22AC9B">
+        </Slider>
+      </StackLayout>
+      <GridLayout columns="*,*,*" width="100%" padding="5 20" height="30">
+        <Label class="create-group-range-slider-label" col="0" text="100" textAlignment="left"></Label>
+        <Label class="create-group-range-slider-label" col="1" text="metrov" textAlignment="center"></Label>
+        <Label class="create-group-range-slider-label" col="2" text="500" textAlignment="right"></Label>
+      </GridLayout>
+      <Label @tap="confirmRangeTap" class="kjer-si-big-button" text="Potrdi" margin="0 10"></Label>
     </StackLayout>
     <MapListPopover @closeListTap="onCloseListTap" v-if="currentPageState === PAGE_STATES.LIST"></MapListPopover>
     <MapFabs @listTap="onListTap" @createTap="onCreateTap" v-if="currentPageState === PAGE_STATES.MAP"

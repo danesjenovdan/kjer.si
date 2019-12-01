@@ -3,10 +3,35 @@
 // End custom common variables
 
 // Custom styles
-   .fa {
-       color: $accent-dark;
-   }
+.fa {
+  color: $accent-dark;
+}
 
 .info {
-    font-size: 20;
+  font-size: 20;
+}
+
+.create-group-header-container {
+  padding: 12 0;
+  background-color: #fff;
+}
+
+.create-group-title {
+  font-size: 20;
+  font-family: MuseoSansRoundedBold;
+}
+
+.create-group-range-panel {
+  background-color: #fff;
+}
+
+.create-group-range-slider-label {
+  font-family: MuseoSansRoundedBold;
+}
+
+.create-group-range-title {
+  font-family: MuseoSansRoundedBold;
+  text-align: center;
+  font-size: 18;
+  margin-top: 10;
 }

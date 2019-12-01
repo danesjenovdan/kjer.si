@@ -45,7 +45,9 @@
           MAP: 'MAP',
           LIST: 'LIST',
           CREATE: 'CREATE'
-        }
+        },
+        newRoom: null,
+        lastMapCamera: null
       }
     },
     mounted() {
@@ -93,6 +95,14 @@
 
     },
     methods: {
+
+      onCameraChanged(evt) {
+
+        console.log('Camera changed: ', evt.camera);
+        this.lastMapCamera = evt.camera;
+
+      },
+
       onListTap() {
 
         this.currentPageState = this.PAGE_STATES.LIST;
@@ -116,6 +126,20 @@
       onCreateTap() {
         this.mapView.clear();
         this.currentPageState = this.PAGE_STATES.CREATE;
+      },
+
+      catchGestureTap() {
+
+      },
+
+      confirmRangeTap() {
+        this.newRoom = {
+          location: {
+            latitude: this.lastMapCamera.latitude,
+            longitude: this.lastMapCamera.longitude
+          }
+        };
+        console.log('Confirm range tap');
       },
 
       onCardTap() {
@@ -147,9 +171,16 @@
         this.mapView.longitude = this.location.longitude;
         this.mapView.mapAnimationsEnabled = true;
 
+        this.setupMyLocation();
+
       },
 
       setupMyLocation() {
+
+        if (!this.mapView) {
+          return;
+        }
+
         const marker = new Marker();
 
         marker.position = Position.positionFromLatLng(this.location.latitude, this.location.longitude);
