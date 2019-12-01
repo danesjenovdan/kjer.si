@@ -1,5 +1,3 @@
-require Logger
-
 defmodule KjerSiWeb.RoomController do
   use KjerSiWeb, :controller
 
@@ -31,10 +29,7 @@ defmodule KjerSiWeb.RoomController do
   end
 
   def show(conn, %{"id" => id}) do
-    room = Rooms.get_room!(id)
-    users = Rooms.get_room_users!(id)
-
-    render conn, "room.json", room: room, users: users
+    render conn, "show.json", room: Rooms.get_room!(id)
   end
 end
 

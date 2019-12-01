@@ -7,7 +7,6 @@ defmodule KjerSi.Rooms do
   alias KjerSi.Repo
 
   alias KjerSi.Rooms.Category
-  alias KjerSi.Accounts.UserRoom
 
   @doc """
   Returns the list of categories.
@@ -135,24 +134,6 @@ defmodule KjerSi.Rooms do
   def get_room!(id) do
     Repo.get!(Room, id)
     # Repo.get!(Room, id) |> Repo.preload([:category])
-  end
-
-  @doc """
-  Gets a single room.
-
-  Raises `Ecto.NoResultsError` if the Room does not exist.
-
-  ## Examples
-
-      iex> get_room!(123)
-      %Room{}
-
-      iex> get_room!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_room_users!(room_id) do
-    Repo.all(from ur in UserRoom, where: ur.room_id == ^room_id, select: ur.user_id)
   end
 
   @doc """
