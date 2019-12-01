@@ -11,6 +11,7 @@ Vue.config.silent = false;
 
 Vue.registerElement('MapView', () => MapView);
 Vue.registerElement('MapBox', () => Mapbox);
+Vue.registerElement('lottie-view', () => require('nativescript-lottie').LottieView)
 
 Vue.use(FontIcon, {
   debug: false, // <-- Optional. Will output the css mapping to console.

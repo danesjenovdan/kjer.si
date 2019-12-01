@@ -3,10 +3,16 @@
 // End custom common variables
 
 // Custom styles
-   .fa {
-       color: $accent-dark;
-   }
+.fa {
+  color: $accent-dark;
+}
 
 .info {
-    font-size: 20;
+  font-size: 20;
+}
+
+.splash-searching-location-label {
+  text-align: center;
+  font-family: MuseoSansRoundedBold;
+  margin-top: -25;
 }

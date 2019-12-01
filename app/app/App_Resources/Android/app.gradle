@@ -8,6 +8,14 @@
 // If you want to add something to be applied before applying plugins' include.gradle files
 // e.g. project.ext.googlePlayServicesVersion = "15.0.1"
 // create a file named before-plugins.gradle in the current directory and place it there
+project.ext {
+    googlePlayServicesVersion = "+"
+}
+
+dependencies {
+  def googlePlayServicesVersion = project.googlePlayServicesVersion
+  compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
+}
 
 android {
   defaultConfig {
@@ -17,8 +25,4 @@ android {
   aaptOptions {
     additionalParameters "--no-version-vectors"
   }
-}
-
-project.ext {
-    googlePlayServicesVersion = "+"
 }

@@ -1,11 +1,11 @@
 {
   "nativescript": {
     "id": "si.djnd.kjersi",
-    "tns-android": {
-      "version": "6.0.0"
-    },
     "tns-ios": {
       "version": "6.0.1"
+    },
+    "tns-android": {
+      "version": "6.0.0"
     }
   },
   "description": "NativeScript Application",
@@ -13,8 +13,10 @@
   "repository": "https://github.com/danesjenovdan/kjer.si.git",
   "dependencies": {
     "axios": "^0.19.0",
+    "nativescript-geolocation": "^5.1.0",
     "nativescript-google-maps-sdk": "^2.8.1",
     "nativescript-localstorage": "^2.0.1",
+    "nativescript-lottie": "3.0.3",
     "nativescript-mapbox": "^4.4.1",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-uuid": "0.0.1",

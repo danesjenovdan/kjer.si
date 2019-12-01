@@ -1,7 +1,7 @@
-<Page ref="pageContainer" class="page">
+<Page ref="pageRef" class="page">
   <AbsoluteLayout ref="mapContainer" width="100%" height="100%">
-    <MapView :latitude="latitude"
-             :longitude="longitude"
+    <MapView :latitude="location.latitude"
+             :longitude="location.longitude"
              :zoom="zoom"
              :minZoom="minZoom"
              :maxZoom="maxZoom"

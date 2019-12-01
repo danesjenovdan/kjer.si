@@ -1,18 +1,21 @@
-<Page class="page">
-  <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Home"></Label>
-  </ActionBar>
+<Page ref="pageRef" class="page">
 
-  <GridLayout ref="appContainer" rows="*, auto, *">
-    <StackLayout row="1">
-      <Label class="info" horizontalAlignment="center" verticalAlignment="center">
-        <FormattedString>
-          <Span class="fa" text.decode="&#xf135; "/>
-          <Span :text="message"/>
-        </FormattedString>
-      </Label>
-      <FontIcon name="ion-arrow-move" type="ion"/>
-      <Button @tap="goToDiscoverPage" text="To map"></Button>
-    </StackLayout>
+  <GridLayout ref="appContainer" width="100%" height="100%">
+    <Image :src="mapBackground" stretch="aspectFill"></Image>
+    <GridLayout rows="5*, 5*">
+      <Image row="0" marginBottom="-20" verticalAlignment="bottom" src="~/assets/images/main_screen_logo.png"
+             width="200" height="100" stretch="aspectFit"></Image>
+      <StackLayout row="1" marginTop="20">
+        <Label class="kjer-si-button" v-if="location" @tap="goToDiscoverPage" text="Vstopi" width="150"
+               marginTop="40"></Label>
+        <Label class="kjer-si-button" v-if="locationError" @tap="requestLocation" text="Poizkusi ponovno" width="150"
+               marginTop="40"></Label>
+        <LottieView src="location.json" height="130" v-if="!location && !locationError" loop="true"
+                    autoPlay="true"></LottieView>
+        <Label class="splash-searching-location-label" v-if="!location && !locationError"
+               text="Iščem lokacijo..."></Label>
+      </StackLayout>
+    </GridLayout>
   </GridLayout>
+
 </Page>

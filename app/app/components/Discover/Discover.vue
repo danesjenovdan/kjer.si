@@ -11,6 +11,8 @@
   import {Marker, Position} from "nativescript-google-maps-sdk";
   import MapFabs from './MapFabs/MapFabs.vue';
   import MapCard from './MapCard/MapCard.vue';
+  import * as MapService from '../../services/map.service';
+  import * as LocationService from '../../services/location.service';
   import * as utils from 'tns-core-modules/utils/utils';
   import * as ApiService from '../../services/api.service';
   import * as websockets from 'nativescript-websockets';
@@ -23,9 +25,11 @@
     },
     data() {
       return {
-        latitude: -33.86,
-        longitude: 151.20,
-        zoom: 8,
+        location:{
+          latitude: -33.86,
+          longitude: 151.20,
+        },
+        zoom: 15,
         minZoom: 0,
         maxZoom: 22,
         bearing: 0,
@@ -36,8 +40,12 @@
       }
     },
     mounted() {
+
+      this.location.latitude = LocationService.default.location.latitude;
+      this.location.longitude = LocationService.default.location.longitude;
+
       let mapContainer = this.$refs.mapContainer;
-      this.$refs.pageContainer.nativeView.actionBarHidden = true;
+      this.$refs.pageRef.nativeView.actionBarHidden = true;
       setTimeout(() => {
         this.$data.screenHeight = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredHeight());
         this.$data.screenWidth = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredWidth());
@@ -87,6 +95,7 @@
       onMapReady(event) {
         console.log("Map ready!");
         this.mapView = event.object;
+        this.mapView.setStyle(MapService.default.lightMapStyle);
       },
       onCoordinateTapped() {
         const marker = new Marker();
