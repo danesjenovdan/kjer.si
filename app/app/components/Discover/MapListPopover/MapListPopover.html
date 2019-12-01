@@ -1,5 +1,45 @@
-<StackLayout class="map-popover-list-container">
-  <StackLayout class="map-popover-list-inner-container" v-shadow="6" @tap="onOpenTap">
+<GridLayout rows="*" class="map-popover-list-container">
+  <GridLayout rows="auto, 300" class="map-popover-list-inner-container" v-shadow="6">
+    <GridLayout columns="50, *, 50" class="map-popover-list-title-container">
+      <StackLayout @tap="onCloseListTap" col="0" verticalAlignment="center" horizontalAlignment="center" width="40" height="40">
+        <Image src="~/assets/images/close_icon.png" width="20" height="20" stretch="aspectFit"></Image>
+      </StackLayout>
+      <Label col="1" class="map-popover-list-title" text="Sobe blizu tebe"></Label>
+    </GridLayout>
 
-  </StackLayout>
-</StackLayout>
+    <ScrollView row="1">
+      <StackLayout class="map-popover-list-scroll-container">
+        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
+          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
+          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
+          <Label class="map-popover-list-item-distance" col="2" text="100m"></Label>
+        </GridLayout>
+        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
+          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
+          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
+          <Label class="map-popover-list-item-distance" col="2" text="100m"></Label>
+        </GridLayout>
+        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
+          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
+          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
+          <Label class="map-popover-list-item-distance" col="2" text="100m"></Label>
+        </GridLayout>
+        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
+          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
+          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
+          <Label class="map-popover-list-item-distance" col="2" text="100m"></Label>
+        </GridLayout>
+        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
+          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
+          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
+          <Label class="map-popover-list-item-distance" col="2" text="100m"></Label>
+        </GridLayout>
+        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
+          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
+          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
+          <Label class="map-popover-list-item-distance" col="2" text="100m"></Label>
+        </GridLayout>
+      </StackLayout>
+    </ScrollView>
+  </GridLayout>
+</GridLayout>

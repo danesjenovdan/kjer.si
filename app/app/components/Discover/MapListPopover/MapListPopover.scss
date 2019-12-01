@@ -9,5 +9,39 @@
 .map-popover-list-inner-container {
   margin: 15;
   background-color: #ffffff;
-  border-radius: 10;
+  border-radius: 20;
+  padding-bottom: 20;
+}
+
+.map-popover-list-title-container {
+  border-bottom-width: 1;
+  border-bottom-color: #eee;
+}
+
+.map-popover-list-item-container {
+  border-bottom-width: 1;
+  border-bottom-color: #eee;
+}
+
+.map-popover-list-title {
+  text-align: center;
+  font-family: MuseoSansRoundedBold;
+  font-size: 24;
+  padding: 20 0;
+}
+
+.map-popover-list-item-icon {
+  padding: 20;
+}
+
+.map-popover-list-item-name {
+  padding: 20 5;
+  font-size: 20;
+  font-family: MuseoSansRoundedBold;
+}
+
+.map-popover-list-item-distance {
+  padding: 20;
+  font-family: MuseoSansRoundedBold;
+  color: #888;
 }

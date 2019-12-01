@@ -10,6 +10,7 @@
   import Chat from '../Chat/Chat';
   import {Marker, Position} from "nativescript-google-maps-sdk";
   import MapFabs from './MapFabs/MapFabs.vue';
+  import MapListPopover from './MapListPopover/MapListPopover.vue';
   import MapCard from './MapCard/MapCard.vue';
   import * as MapService from '../../services/map.service';
   import * as LocationService from '../../services/location.service';
@@ -21,13 +22,14 @@
   export default {
     components: {
       MapCard,
-      MapFabs
+      MapFabs,
+      MapListPopover
     },
     data() {
       return {
-        location:{
-          latitude: -33.86,
-          longitude: 151.20,
+        location: {
+          latitude: 46.049131,
+          longitude: 14.507172,
         },
         zoom: 15,
         minZoom: 0,
@@ -36,13 +38,18 @@
         tilt: 0,
         mapView: undefined,
         screenHeight: 0,
-        screenWidth: 0
+        screenWidth: 0,
+        currentPageState: null,
+        PAGE_STATES: {
+          MAP: 'MAP',
+          LIST: 'LIST',
+          CREATE: 'CREATE'
+        }
       }
     },
     mounted() {
 
-      this.location.latitude = LocationService.default.location.latitude;
-      this.location.longitude = LocationService.default.location.longitude;
+      this.currentPageState = this.PAGE_STATES.MAP;
 
       let mapContainer = this.$refs.mapContainer;
       this.$refs.pageRef.nativeView.actionBarHidden = true;
@@ -80,6 +87,14 @@
 
     },
     methods: {
+      onListTap() {
+        this.currentPageState = this.PAGE_STATES.LIST;
+      },
+
+      onCreateTap() {
+        // this.currentPageState = this.PAGE_STATES.CREATE;
+      },
+
       onCardTap() {
 
         this.$navigateTo(Chat, {
@@ -92,11 +107,47 @@
         });
 
       },
+
+      onCloseListTap() {
+        this.currentPageState = this.PAGE_STATES.MAP;
+      },
+
+      setupMyLocation() {
+        const marker = new Marker();
+
+        marker.position = Position.positionFromLatLng(this.location.latitude, this.location.longitude);
+        marker.title = 'Moja lokacija';
+        marker.icon = 'my_location_pin';
+        this.mapView.addMarker(marker);
+      },
+
+      async requestLocation() {
+        try {
+          const location = await LocationService.default.requestLocation();
+          this.location.latitude = location.latitude;
+          this.location.longitude = location.longitude;
+          this.mapView.latitude = location.latitude;
+          this.mapView.longitude = location.longitude;
+          this.setupMyLocation();
+        } catch (e) {
+          console.log('Location error: ', e);
+        }
+      },
+
       onMapReady(event) {
         console.log("Map ready!");
         this.mapView = event.object;
         this.mapView.setStyle(MapService.default.lightMapStyle);
+
+        if (LocationService.default.location.latitude) {
+          this.location.latitude = LocationService.default.location.latitude;
+          this.location.longitude = LocationService.default.location.longitude;
+          this.setupMyLocation();
+        } else {
+          this.requestLocation();
+        }
       },
+
       onCoordinateTapped() {
         const marker = new Marker();
         marker.position = Position.positionFromLatLng(-33.86, 151.20);
@@ -107,4 +158,5 @@
       }
     }
   };
+
 </script>

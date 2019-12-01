@@ -1,8 +1,8 @@
 <StackLayout class="map-fabs-container">
-  <StackLayout  v-shadow="2" class="map-fab-item" verticalAlignment="center">
+  <StackLayout @tap="onListTap"  v-shadow="2" class="map-fab-item" verticalAlignment="center">
     <Image class="map-fab-item-icon" width="25" height="25" src="~/assets/images/list_icon.png"></Image>
   </StackLayout>
-  <StackLayout  v-shadow="2" class="map-fab-item" verticalAlignment="center">
+  <StackLayout @tap="onCreateTap" v-shadow="2" class="map-fab-item" verticalAlignment="center">
     <Image class="map-fab-item-icon" width="25" height="25" src="~/assets/images/create_group_icon.png"></Image>
   </StackLayout>
 </StackLayout>

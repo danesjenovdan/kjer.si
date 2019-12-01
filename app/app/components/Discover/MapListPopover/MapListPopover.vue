@@ -20,7 +20,9 @@
 
     },
     methods: {
-
+      onCloseListTap(){
+        this.$emit('closeListTap');
+      }
     }
   };
 </script>
