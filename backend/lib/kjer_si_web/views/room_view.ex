@@ -11,8 +11,8 @@ defmodule KjerSiWeb.RoomView do
       id: room.id,
       name: room.name,
       radius: room.radius,
-      # category: render_one(room.category, KjerSiWeb.CategoryView, "category.json")
-      category_id: room.category_id
+      category_id: room.category_id,
+      users: render_many(room.users, KjerSiWeb.UserView, "user_id.json")
     }
   end
 end
