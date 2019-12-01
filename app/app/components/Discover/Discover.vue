@@ -14,8 +14,7 @@
   import * as utils from 'tns-core-modules/utils/utils';
   import * as ApiService from '../../services/api.service';
   import * as websockets from 'nativescript-websockets';
-
-  const Phx = require("../../assets/js/phoenix"); // <- this depends on where you put your file
+  import * as Phx from '../../assets/js/phoenix';
 
   export default {
     components: {
@@ -74,6 +73,7 @@
     },
     methods: {
       onCardTap() {
+
         this.$navigateTo(Chat, {
           transition: {
             name: 'slideTop',
@@ -82,6 +82,7 @@
             // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
           }
         });
+
       },
       onMapReady(event) {
         console.log("Map ready!");

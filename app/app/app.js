@@ -26,8 +26,8 @@ new Vue({
 
   template: `
         <Frame>
-            <Discover />
-<!--            <Splash />-->
+<!--            <Discover />-->
+            <Splash />
         </Frame>`,
 
   components: {

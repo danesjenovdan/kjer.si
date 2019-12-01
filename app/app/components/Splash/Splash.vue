@@ -21,27 +21,14 @@
       }
     },
     mounted() {
+
       let pageContainer = this.$refs.appContainer;
+
       setTimeout(() => {
         AppService.default.screen.height = utils.layout.toDeviceIndependentPixels(pageContainer.nativeView.getMeasuredHeight());
         AppService.default.screen.width = utils.layout.toDeviceIndependentPixels(pageContainer.nativeView.getMeasuredWidth());
         console.log('AppService.default.screen: ', AppService.default.screen);
       }, 200);
-
-      // to create a socket connection
-      var socket = Phx.Socket("http://localhost:4000/socket", {params: {userToken: "123"}});
-      socket.connect();
-
-      console.log('Socket: ', socket);
-
-      // to create a channel
-      let channel = socket.channel("room:lobby", {});
-
-      // listen for "shout" events
-      channel.on("shout", payload => {
-        // do your own thing
-        alert(payload.body);
-      });
 
     },
     methods: {

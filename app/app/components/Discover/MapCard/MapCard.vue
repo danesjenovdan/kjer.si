@@ -20,7 +20,7 @@
 
     },
     methods: {
-      async onOpenTap() {
+      onOpenTap() {
 
         this.$emit('tap', {});
 
