@@ -16,4 +16,8 @@ defmodule KjerSiWeb.UserView do
       uid: user.uid,
       is_active: user.is_active}
   end
+
+  def render("user_id.json", %{user: user}) do
+    user.id
+  end
 end

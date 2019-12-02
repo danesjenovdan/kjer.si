@@ -131,9 +131,8 @@ defmodule KjerSi.Rooms do
       ** (Ecto.NoResultsError)
 
   """
-  def get_room!(id) do
-    Repo.get!(Room, id)
-    # Repo.get!(Room, id) |> Repo.preload([:category])
+  def get_room!(id, preload \\ []) do
+    Repo.get!(Room, id) |> Repo.preload(preload)
   end
 
   @doc """
