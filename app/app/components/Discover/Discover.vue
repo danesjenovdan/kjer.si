@@ -7,25 +7,33 @@
 
 <script>
 
-  import Chat from '../Chat/Chat';
+
   import {Marker, Position, Circle} from "nativescript-google-maps-sdk";
-  import MapFabs from './MapFabs/MapFabs.vue';
-  import MapListPopover from './MapListPopover/MapListPopover.vue';
-  import MapCard from './MapCard/MapCard.vue';
-  import * as MapService from '../../services/map.service';
-  import * as LocationService from '../../services/location.service';
   import * as utils from 'tns-core-modules/utils/utils';
-  import * as UiService from '../../services/ui.service';
   import {Color} from "tns-core-modules/color";
   import * as ApiService from '../../services/api.service';
   import * as websockets from 'nativescript-websockets';
   import * as Phx from '../../assets/js/phoenix';
 
+  // Components
+  import MapFabs from './MapFabs/MapFabs.vue';
+  import MapListPopover from './MapListPopover/MapListPopover.vue';
+  import MapCard from './MapCard/MapCard.vue';
+  import Chat from '../Chat/Chat';
+  import MapCategoryListPopover from './MapCategoryListPopover/MapCategoryListPopover';
+
+  // Services
+  import * as MapService from '../../services/map.service';
+  import * as LocationService from '../../services/location.service';
+  import * as UiService from '../../services/ui.service';
+
+
   export default {
     components: {
       MapCard,
       MapFabs,
-      MapListPopover
+      MapListPopover,
+      MapCategoryListPopover,
     },
     data() {
       return {
@@ -38,14 +46,15 @@
         maxZoom: 22,
         bearing: 0,
         tilt: 0,
-        mapView: undefined,
+        mapView: null,
         screenHeight: 0,
         screenWidth: 0,
         currentPageState: null,
         PAGE_STATES: {
           MAP: 'MAP',
           LIST: 'LIST',
-          CREATE: 'CREATE'
+          NEW_ROOM_LOCATION_SETUP: 'NEW_ROOM_LOCATION_SETUP',
+          NEW_ROOM_CATEGORY_SELECT: 'NEW_ROOM_CATEGORY_SELECT'
         },
         newRoom: {
           location: null,
@@ -106,7 +115,7 @@
         console.log('Camera changed: ', evt.camera);
         this.lastMapCamera = evt.camera;
 
-        if (this.currentPageState === this.PAGE_STATES.CREATE) {
+        if (this.currentPageState === this.PAGE_STATES.NEW_ROOM_LOCATION_SETUP) {
           this.drawCircle(true);
         }
 
@@ -135,7 +144,7 @@
       onCreateTap() {
         this.mapView.clear();
         this.rangeCircle = null;
-        this.currentPageState = this.PAGE_STATES.CREATE;
+        this.currentPageState = this.PAGE_STATES.NEW_ROOM_LOCATION_SETUP;
         this.drawCircle();
       },
 
@@ -144,13 +153,34 @@
       },
 
       confirmRangeTap() {
-        this.newRoom = {
-          location: {
-            latitude: this.lastMapCamera.latitude,
-            longitude: this.lastMapCamera.longitude
-          }
+
+        this.newRoom.location = {
+          latitude: this.lastMapCamera.latitude,
+          longitude: this.lastMapCamera.longitude
         };
+
+        this.mapView.clear();
+
+        this.mapView.padding = [
+          utils.layout.toDevicePixels(this.screenHeight) - utils.layout.toDevicePixels(100),
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0)
+        ];
+
+        this.createMarker(this.newRoom.location.latitude, this.newRoom.location.longitude, 'room_pin', null, [0.5, 1]);
+
+        this.mapView.mapAnimationsEnabled = false;
+        this.mapView.latitude = this.newRoom.location.latitude;
+        this.mapView.longitude = this.newRoom.location.longitude;
+
+
+        this.mapView.updateCamera();
+
+        this.mapView.mapAnimationsEnabled = true;
+        this.currentPageState = this.PAGE_STATES.NEW_ROOM_CATEGORY_SELECT;
         console.log('Confirm radius tap');
+
       },
 
       drawCircle(forceRedraw = false) {
@@ -211,6 +241,27 @@
         this.mapView.mapAnimationsEnabled = true;
       },
 
+      onCloseCategoryListTap() {
+
+        this.currentPageState = this.PAGE_STATES.MAP;
+        this.mapView.clear();
+
+        this.mapView.padding = [
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0),
+          utils.layout.toDevicePixels(0)
+        ];
+
+        this.mapView.mapAnimationsEnabled = false;
+        this.mapView.latitude = this.location.latitude;
+        this.mapView.longitude = this.location.longitude;
+        this.mapView.mapAnimationsEnabled = true;
+
+        this.setupMyLocation();
+
+      },
+
       onCloseListTap() {
 
         this.currentPageState = this.PAGE_STATES.MAP;
@@ -245,11 +296,24 @@
           return;
         }
 
+        this.createMarker(this.location.latitude, this.location.longitude, 'my_location_pin');
+
+      },
+
+      createMarker(latitude, longitude, iconName, title, anchor) {
+
         const marker = new Marker();
 
-        marker.position = Position.positionFromLatLng(this.location.latitude, this.location.longitude);
-        marker.title = 'Moja lokacija';
-        marker.icon = 'my_location_pin';
+        marker.position = Position.positionFromLatLng(latitude, longitude);
+        if (anchor) {
+          marker.anchor = anchor;
+        }
+        if (title) {
+          marker.title = title;
+        }
+        if (iconName) {
+          marker.icon = iconName;
+        }
         this.mapView.addMarker(marker);
 
       },

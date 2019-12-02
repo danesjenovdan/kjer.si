@@ -11,13 +11,13 @@
              @mapReady="onMapReady"
              @coordinateTapped="onCoordinateTapped"></MapView>
 
-    <!-- ROOM CREATE CENTER PIN -->
+    <!-- ROOM NEW_ROOM_LOCATION_SETUP CENTER PIN -->
     <Image src="~/assets/images/create_group_pin.png" width="40" height="40" stretch="aspectFit"
-           v-if="currentPageState === PAGE_STATES.CREATE"
+           v-if="currentPageState === PAGE_STATES.NEW_ROOM_LOCATION_SETUP"
            :translateX="screenWidth/2-6" :translateY="screenHeight/2-41"></Image>
 
-    <!-- ROOM CREATE TITLE -->
-    <GridLayout v-show="currentPageState === PAGE_STATES.CREATE" v-shadow="15" columns="60, *, 60"
+    <!-- ROOM NEW_ROOM_LOCATION_SETUP TITLE -->
+    <GridLayout v-show="currentPageState === PAGE_STATES.NEW_ROOM_LOCATION_SETUP" v-shadow="15" columns="60, *, 60"
                 class="create-group-header-container" width="100%">
       <StackLayout @tap="onCloseCreateRoom" col="0" verticalAlignment="center" horizontalAlignment="center" width="40"
                    height="40">
@@ -27,8 +27,8 @@
              verticalAlignment="center"></Label>
     </GridLayout>
 
-    <!-- ROOM CREATE SLIDER PANEL -->
-    <StackLayout v-if="currentPageState === PAGE_STATES.CREATE" v-shadow="15" @tap="catchGestureTap"
+    <!-- ROOM NEW_ROOM_LOCATION_SETUP SLIDER PANEL -->
+    <StackLayout v-if="currentPageState === PAGE_STATES.NEW_ROOM_LOCATION_SETUP" v-shadow="15" @tap="catchGestureTap"
                  class="create-group-range-panel" :translateY="screenHeight-150" width="100%" height="150">
       <Label text="Nastavi razdaljo" class="create-group-range-title"></Label>
       <StackLayout padding="0 20" marginTop="10">
@@ -45,6 +45,7 @@
     </StackLayout>
 
     <!-- FLOATING COMPONENTS -->
+    <MapCategoryListPopover @closeListTap="onCloseCategoryListTap" v-if="currentPageState === PAGE_STATES.NEW_ROOM_CATEGORY_SELECT"></MapCategoryListPopover>
     <MapListPopover @closeListTap="onCloseListTap" v-if="currentPageState === PAGE_STATES.LIST"></MapListPopover>
     <MapFabs @listTap="onListTap" @createTap="onCreateTap" v-if="currentPageState === PAGE_STATES.MAP"
              :translateX="screenWidth - 75" :translateY="screenHeight - 170 - 140"></MapFabs>
