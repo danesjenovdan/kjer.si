@@ -8,7 +8,7 @@
 <script>
 
   import Chat from '../Chat/Chat';
-  import {Marker, Position} from "nativescript-google-maps-sdk";
+  import {Marker, Position, Circle} from "nativescript-google-maps-sdk";
   import MapFabs from './MapFabs/MapFabs.vue';
   import MapListPopover from './MapListPopover/MapListPopover.vue';
   import MapCard from './MapCard/MapCard.vue';
@@ -16,6 +16,7 @@
   import * as LocationService from '../../services/location.service';
   import * as utils from 'tns-core-modules/utils/utils';
   import * as UiService from '../../services/ui.service';
+  import {Color} from "tns-core-modules/color";
   import * as ApiService from '../../services/api.service';
   import * as websockets from 'nativescript-websockets';
   import * as Phx from '../../assets/js/phoenix';
@@ -46,7 +47,11 @@
           LIST: 'LIST',
           CREATE: 'CREATE'
         },
-        newRoom: null,
+        newRoom: {
+          location: null,
+          radius: 200
+        },
+        rangeCircle: null,
         lastMapCamera: null
       }
     },
@@ -101,6 +106,10 @@
         console.log('Camera changed: ', evt.camera);
         this.lastMapCamera = evt.camera;
 
+        if (this.currentPageState === this.PAGE_STATES.CREATE) {
+          this.drawCircle(true);
+        }
+
       },
 
       onListTap() {
@@ -125,7 +134,9 @@
 
       onCreateTap() {
         this.mapView.clear();
+        this.rangeCircle = null;
         this.currentPageState = this.PAGE_STATES.CREATE;
+        this.drawCircle();
       },
 
       catchGestureTap() {
@@ -139,7 +150,38 @@
             longitude: this.lastMapCamera.longitude
           }
         };
-        console.log('Confirm range tap');
+        console.log('Confirm radius tap');
+      },
+
+      drawCircle(forceRedraw = false) {
+
+        if (!this.lastMapCamera || !this.newRoom || !this.newRoom.radius) {
+          console.log('Missing reference required for circle');
+          return;
+        }
+
+        if (this.rangeCircle && !forceRedraw) {
+          this.rangeCircle.radius = this.newRoom.radius;
+          return;
+        }
+
+        if (forceRedraw && this.rangeCircle) {
+          this.mapView.removeShape(this.rangeCircle);
+        }
+
+        const circle = new Circle();
+
+        circle.center = Position.positionFromLatLng(this.lastMapCamera.latitude, this.lastMapCamera.longitude);
+        circle.visible = true;
+        circle.radius = this.newRoom.radius;
+        circle.fillColor = new Color('#1122AC9B');
+        circle.strokeColor = new Color('#22AC9B');
+        circle.strokeWidth = 10;
+
+        this.rangeCircle = circle;
+
+        this.mapView.addCircle(circle);
+
       },
 
       onCardTap() {
@@ -153,6 +195,20 @@
           }
         });
 
+      },
+
+      onCloseCreateRoom() {
+        if (this.rangeCircle) {
+          this.mapView.removeShape(this.rangeCircle);
+          this.rangeCircle = null;
+        }
+        this.currentPageState = this.PAGE_STATES.MAP;
+        this.setupMyLocation();
+
+        this.mapView.mapAnimationsEnabled = false;
+        this.mapView.latitude = this.location.latitude;
+        this.mapView.longitude = this.location.longitude;
+        this.mapView.mapAnimationsEnabled = true;
       },
 
       onCloseListTap() {
@@ -172,6 +228,14 @@
         this.mapView.mapAnimationsEnabled = true;
 
         this.setupMyLocation();
+
+      },
+
+      onSliderValueChange(evt) {
+
+        this.newRoom.radius = evt.value;
+        this.drawCircle();
+        console.log('Range: ', this.newRoom.radius);
 
       },
 

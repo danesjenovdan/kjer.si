@@ -12,7 +12,6 @@
   import * as ApiService from '../../../services/api.service';
 
   export default {
-    name: 'map-card',
     data() {
       return {};
     },

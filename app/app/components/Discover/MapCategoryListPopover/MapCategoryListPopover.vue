@@ -1,8 +1,8 @@
-<template src='./MapListPopover.html'>
+<template src='./MapCategoryListPopover.html'>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped src="./MapListPopover.scss" lang="scss">
+<style scoped src="./MapCategoryListPopover.scss" lang="scss">
 </style>
 
 <script>
