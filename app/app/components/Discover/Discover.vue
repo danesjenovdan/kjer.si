@@ -112,7 +112,7 @@
 
       onCameraChanged(evt) {
 
-        console.log('Camera changed: ', evt.camera);
+        // console.log('Camera changed: ', evt.camera);
         this.lastMapCamera = evt.camera;
 
         if (this.currentPageState === this.PAGE_STATES.NEW_ROOM_LOCATION_SETUP) {
@@ -218,7 +218,7 @@
 
         this.$navigateTo(Chat, {
           transition: {
-            name: 'slideTop',
+            name: 'slideLeft',
             duration: 300,
             curve: 'easeInOut'
             // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
@@ -332,7 +332,7 @@
       },
 
       onMapReady(event) {
-        console.log("Map ready!");
+        // console.log("Map ready!");
         this.mapView = event.object;
         this.mapView.setStyle(MapService.default.lightMapStyle);
 

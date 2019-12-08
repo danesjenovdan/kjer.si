@@ -16,10 +16,8 @@
         return "Blank {N}-Vue app";
       }
     },
-    mounted(){
-      let pageContainer = this.$refs.appContainer;
-      AppService.default.screen.height = pageContainer.nativeView.getMeasuredHeight();
-      AppService.default.screen.width = pageContainer.nativeView.getMeasuredWidth();
+    mounted() {
+      this.$refs.pageRef.nativeView.actionBarHidden = true;
     },
     methods: {
       goToDiscoverPage() {

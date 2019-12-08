@@ -5,9 +5,10 @@ import Discover from "./components/Discover/Discover";
 import {MapView} from "nativescript-google-maps-sdk";
 import FontIcon from 'nativescript-vue-fonticon'
 import * as Shadow from './directives/shadow';
+import * as AnimateIn from './directives/animate-in';
 import NSVueShadow from 'nativescript-vue-shadow'
 
-Vue.config.silent = false;
+// Vue.config.silent = false;
 
 Vue.registerElement('MapView', () => MapView);
 Vue.registerElement('MapBox', () => Mapbox);
@@ -21,7 +22,8 @@ Vue.use(FontIcon, {
 });
 
 Vue.use(NSVueShadow);
-Vue.directive('customShadow', Shadow.default);
+// Vue.directive('customShadow', Shadow.default);
+Vue.directive('animateIn', AnimateIn.default);
 
 new Vue({
 
