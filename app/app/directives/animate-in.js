@@ -1,8 +1,7 @@
-import * as enums from "@nativescript/core/ui/enums";
+import * as enums from "tns-core-modules/ui/enums";
 
 const AnimateIn = {
   inserted(el) {
-    console.log('DIRECTIVE');
     el._nativeView.translateY = -50;
 
     el._nativeView.animate({

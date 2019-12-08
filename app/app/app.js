@@ -2,11 +2,13 @@ import Vue from "nativescript-vue";
 import {Mapbox} from 'nativescript-mapbox'
 import Splash from "./components/Splash/Splash";
 import Discover from "./components/Discover/Discover";
+import Chat from "./components/Chat/Chat";
 import {MapView} from "nativescript-google-maps-sdk";
 import FontIcon from 'nativescript-vue-fonticon'
 import * as Shadow from './directives/shadow';
 import * as AnimateIn from './directives/animate-in';
 import NSVueShadow from 'nativescript-vue-shadow'
+import * as AutoFocus from "~/directives/auto-focus";
 
 // Vue.config.silent = false;
 
@@ -24,17 +26,20 @@ Vue.use(FontIcon, {
 Vue.use(NSVueShadow);
 // Vue.directive('customShadow', Shadow.default);
 Vue.directive('animateIn', AnimateIn.default);
+Vue.directive('autoFocus', AutoFocus.default);
 
 new Vue({
 
   template: `
         <Frame>
-            <Discover />
-<!--            <Splash />-->
+<!--            <Discover />-->
+            <Splash />
+<!--            <Chat/>-->
         </Frame>`,
 
   components: {
     Splash,
-    Discover
+    Discover,
+    Chat
   }
 }).$start();

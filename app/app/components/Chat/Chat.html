@@ -3,7 +3,22 @@
 <!--    <Label class="action-bar-title" text="Chat"></Label>-->
 <!--  </ActionBar>-->
 
-  <GridLayout ref="appContainer" rows="*, auto, *">
+  <GridLayout ref="appContainer" rows="70, *, auto">
+
+    <GridLayout class="chat-page-header-container" row="0" columns="70, *, 70">
+      <Image @tap="onBackTap" class="page-header-icon" src="~/assets/images/back_icon.png" height="70" col="0" stretch="aspectFit"/>
+      <Label verticalAlignment="center" class="page-header-title" text="Room name" col="1"></Label>
+      <Image class="page-header-icon" src="~/assets/images/more_icon.png" height="70" col="2" stretch="aspectFit"/>
+    </GridLayout>
+
+    <ScrollView row="1">
+      <StackLayout></StackLayout>
+    </ScrollView>
+
+    <GridLayout class="chat-page-input-container" columns="*, 50" row="2">
+      <TextView v-auto-focus class="chat-page-text-view" col="0"></TextView>
+      <Image class="chat-page-send-icon" col="1" verticalAlignment="top" src="~/assets/images/send_message_icon.png" stretch="aspectFit"/>
+    </GridLayout>
 
   </GridLayout>
 </Page>

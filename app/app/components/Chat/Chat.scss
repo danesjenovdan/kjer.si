@@ -3,15 +3,42 @@
 // End custom common variables
 
 // Custom styles
-   .fa {
-       color: $kjersi-green;
-   }
+.fa {
+  color: $kjersi-green;
+}
 
 
-.action-bar{
+.action-bar {
   background-color: $kjersi-green;
 }
 
 .info {
-    font-size: 20;
+  font-size: 20;
+}
+
+.chat-page-send-icon {
+  width: 50;
+  height: 50;
+  background-color: #f7f7f7;
+  padding: 12 12 8 8;
+}
+
+.chat-page-input-container {
+  background-color: #f7f7f7;
+  padding: 5;
+}
+
+.chat-page-text-view {
+  border-radius: 30;
+  background-color: #fff;
+  border-width: 1;
+  border-color: #eee;
+  margin-right: 5;
+  padding: 12;
+}
+
+.chat-page-header-container {
+  //background-color: #f7f7f7;
+  border-bottom-width: 2;
+  border-bottom-color: #eee;
 }
