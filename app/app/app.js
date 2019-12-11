@@ -9,12 +9,14 @@ import * as Shadow from './directives/shadow';
 import * as AnimateIn from './directives/animate-in';
 import NSVueShadow from 'nativescript-vue-shadow'
 import * as AutoFocus from "~/directives/auto-focus";
+import * as KeyboardSend from "~/directives/keyboard-send";
 
 // Vue.config.silent = false;
 
 Vue.registerElement('MapView', () => MapView);
 Vue.registerElement('MapBox', () => Mapbox);
 Vue.registerElement('lottie-view', () => require('nativescript-lottie').LottieView);
+Vue.registerElement('Rippler', () => require('nativescript-ripple').Ripple);
 
 Vue.use(FontIcon, {
   debug: false, // <-- Optional. Will output the css mapping to console.
@@ -27,14 +29,15 @@ Vue.use(NSVueShadow);
 // Vue.directive('customShadow', Shadow.default);
 Vue.directive('animateIn', AnimateIn.default);
 Vue.directive('autoFocus', AutoFocus.default);
+Vue.directive('keyboardSend', KeyboardSend.default);
 
 new Vue({
 
   template: `
         <Frame>
 <!--            <Discover />-->
-            <Splash />
-<!--            <Chat/>-->
+<!--            <Splash />-->
+            <Chat/>
         </Frame>`,
 
   components: {

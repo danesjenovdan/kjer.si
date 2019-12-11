@@ -1,24 +1,43 @@
 <Page ref="pageRef" class="page">
-<!--  <ActionBar class="action-bar">-->
-<!--    <Label class="action-bar-title" text="Chat"></Label>-->
-<!--  </ActionBar>-->
 
-  <GridLayout ref="appContainer" rows="70, *, auto">
+  <AbsoluteLayout>
 
-    <GridLayout class="chat-page-header-container" row="0" columns="70, *, 70">
-      <Image @tap="onBackTap" class="page-header-icon" src="~/assets/images/back_icon.png" height="70" col="0" stretch="aspectFit"/>
-      <Label verticalAlignment="center" class="page-header-title" text="Room name" col="1"></Label>
-      <Image class="page-header-icon" src="~/assets/images/more_icon.png" height="70" col="2" stretch="aspectFit"/>
+    <GridLayout ref="appContainer" rows="70, *, auto" width="100%" height="100%">
+
+      <GridLayout class="chat-page-header-container" row="0" columns="70, *, 70">
+        <Rippler rippleColor="#777777" rippleBorderRadius="50" margin="5" @tap="onBackTap" col="0">
+        <Image class="page-header-icon" src="~/assets/images/back_icon.png" height="60"
+               stretch="aspectFit"/>
+        </Rippler>
+        <Label verticalAlignment="center" class="page-header-title" text="Room name" col="1"></Label>
+        <Rippler rippleColor="#777777" rippleBorderRadius="50" margin="5" @tap="onMenuTap" col="2">
+          <Image class="page-header-icon" src="~/assets/images/more_icon.png" height="60"
+                 stretch="aspectFit"/>
+        </Rippler>
+      </GridLayout>
+
+      <ScrollView row="1">
+        <StackLayout></StackLayout>
+      </ScrollView>
+
+      <GridLayout class="chat-page-input-container" columns="*, 50" row="2">
+        <TextView v-keyboard-send v-auto-focus class="chat-page-text-view" col="0"></TextView>
+        <Image class="chat-page-send-icon" col="1" verticalAlignment="top" src="~/assets/images/send_message_icon.png"
+               stretch="aspectFit"/>
+      </GridLayout>
+
     </GridLayout>
 
-    <ScrollView row="1">
-      <StackLayout></StackLayout>
-    </ScrollView>
-
-    <GridLayout class="chat-page-input-container" columns="*, 50" row="2">
-      <TextView v-auto-focus class="chat-page-text-view" col="0"></TextView>
-      <Image class="chat-page-send-icon" col="1" verticalAlignment="top" src="~/assets/images/send_message_icon.png" stretch="aspectFit"/>
+    <GridLayout v-if="showMenu" translateY="-10" v-animate-in @tap="onContainerTap" rows="auto, *" columns="*, auto"
+                width="100%" height="100%" class="chat-menu-outer-container">
+      <StackLayout translateY="50" row="0" class="chat-menu-container" v-shadow="15" col="1">
+        <Label @tap="onEventsTap" class="chat-menu-button" text="Events"></Label>
+        <Label class="chat-menu-button" text="Leave"></Label>
+        <Label class="chat-menu-button" text="Silence"></Label>
+        <Label class="chat-menu-button chat-menu-button-last" text="Settings"></Label>
+      </StackLayout>
     </GridLayout>
 
-  </GridLayout>
+  </AbsoluteLayout>
+
 </Page>

@@ -2,7 +2,6 @@ import * as enums from "tns-core-modules/ui/enums";
 
 const AnimateIn = {
   inserted(el) {
-    el._nativeView.translateY = -50;
 
     el._nativeView.animate({
       translate: {x: 0, y: 0},

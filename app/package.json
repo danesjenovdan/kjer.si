@@ -18,6 +18,7 @@
     "nativescript-localstorage": "^2.0.1",
     "nativescript-lottie": "3.0.3",
     "nativescript-mapbox": "^4.4.1",
+    "nativescript-ripple": "^2.2.1",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-uuid": "0.0.1",
     "nativescript-vue": "2.3.0",

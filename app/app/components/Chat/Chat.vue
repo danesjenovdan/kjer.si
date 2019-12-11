@@ -13,6 +13,11 @@
   import * as platform from 'tns-core-modules/platform';
 
   export default {
+    data() {
+      return {
+        showMenu: false
+      }
+    },
     computed: {
       message() {
         return "Blank {N}-Vue app";
@@ -33,8 +38,22 @@
         this.$navigateTo(Discover);
       },
       onBackTap() {
+        console.log('TAP: go back');
         this.$navigateBack();
+      },
+      onContainerTap() {
+        this.showMenu = false;
+      },
+      onMenuTap() {
+        console.log('TAP: open menu');
+        setTimeout(() => {
+          this.showMenu = true;
+        }, 10);
+      },
+      onEventsTap() {
+        console.log('TAP: events');
       }
     }
   };
+
 </script>

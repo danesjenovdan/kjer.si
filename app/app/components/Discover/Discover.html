@@ -46,8 +46,8 @@
     </StackLayout>
 
     <!-- FLOATING COMPONENTS -->
-    <MapCategoryListPopover v-animate-in @closeListTap="onCloseCategoryListTap" v-if="currentPageState === PAGE_STATES.NEW_ROOM_CATEGORY_SELECT"></MapCategoryListPopover>
-    <MapListPopover v-animate-in @closeListTap="onCloseListTap" v-if="currentPageState === PAGE_STATES.LIST"></MapListPopover>
+    <MapCategoryListPopover translateY="-50" v-animate-in @closeListTap="onCloseCategoryListTap" v-if="currentPageState === PAGE_STATES.NEW_ROOM_CATEGORY_SELECT"></MapCategoryListPopover>
+    <MapListPopover  translateY="-50" v-animate-in @closeListTap="onCloseListTap" v-if="currentPageState === PAGE_STATES.LIST"></MapListPopover>
     <MapFabs @listTap="onListTap" @createTap="onCreateTap" v-if="currentPageState === PAGE_STATES.MAP"
              :translateX="screenWidth - 75" :translateY="screenHeight - 170 - 140"></MapFabs>
     <MapCard v-show="currentPageState === PAGE_STATES.MAP" @tap="onCardTap" :translateY="screenHeight - 170"></MapCard>

@@ -38,7 +38,29 @@
 }
 
 .chat-page-header-container {
-  //background-color: #f7f7f7;
   border-bottom-width: 2;
   border-bottom-color: #eee;
+}
+
+.chat-menu-container {
+  background-color: #ffffff;
+  border-radius: 15;
+  margin: 25;
+}
+
+.chat-menu-outer-container {
+  margin: 10;
+}
+
+.chat-menu-button {
+  padding: 17 50 17 25;
+  border-bottom-width: 1;
+  border-bottom-color: #eee;
+  font-family: MuseoSansRounded;
+  font-size: 18;
+  color: #000;
+}
+
+.chat-menu-button-last {
+  border-bottom-width: 0;
 }
