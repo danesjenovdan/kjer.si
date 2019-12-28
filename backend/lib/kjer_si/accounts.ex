@@ -38,6 +38,13 @@ defmodule KjerSi.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Checks if nickname is unique.
+  """
+  def unique_nickname?(nickname) do
+    nil == Repo.get_by(User, nickname: nickname)
+  end
+
+  @doc """
   Gets a single user by uid.
 
   Returns `nil` if the User does not exist.

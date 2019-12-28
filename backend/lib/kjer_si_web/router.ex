@@ -15,5 +15,6 @@ defmodule KjerSiWeb.Router do
     resources "/rooms", RoomController, only: [:create, :delete, :show]
 
     post "/map/rooms", MapController, :get_rooms_in_radius
+    get "/generate-username", UserController, :generate_username
   end
 end

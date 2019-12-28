@@ -7,6 +7,7 @@ defmodule KjerSiWeb.UserController do
   alias KjerSi.Accounts
   alias KjerSi.Accounts.User
   alias KjerSi.AccountsHelpers
+  alias KjerSi.UserHelpers
 
   alias KjerSi.Rooms.Room
 
@@ -86,6 +87,12 @@ defmodule KjerSiWeb.UserController do
   #       error
   #   end
   # end
+
+  def generate_username(conn, _params) do
+    # generate nickname and assign to user here TODO
+    name = UserHelpers.generate_unique_name
+    send_resp(conn, :ok, name)
+  end
 end
 
 # TODO
