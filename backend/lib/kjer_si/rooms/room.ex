@@ -7,8 +7,8 @@ defmodule KjerSi.Rooms.Room do
   schema "rooms" do
     field :name, :string
     belongs_to :category, KjerSi.Rooms.Category
-    field :lat, :float, virtual: true
-    field :lng, :float, virtual: true
+    field :lat, :float
+    field :lng, :float
     field :coordinates, Geo.PostGIS.Geometry
     field :radius, :integer
 
@@ -22,13 +22,13 @@ defmodule KjerSi.Rooms.Room do
     room
     |> cast(attrs, [:name, :lat, :lng, :radius, :category_id])
     |> cast_coordinates()
-    |> validate_required([:name, :lat, :lng, :radius, :category_id])
+    |> validate_required([:name, :lat, :lng, :radius, :category_id, :coordinates])
   end
 
   def cast_coordinates(changeset) do
     lat = get_change(changeset, :lat)
     lng = get_change(changeset, :lng)
-    geo = %Geo.Point{coordinates: {lng, lat}, srid: 4326}
-    changeset |> put_change(:coordinates, geo)
+    point = %Geo.Point{coordinates: {lng, lat}, srid: 4326}
+    changeset |> put_change(:coordinates, point)
   end
 end

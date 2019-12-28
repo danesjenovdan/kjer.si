@@ -4,6 +4,7 @@ defmodule KjerSi.Rooms do
   """
 
   import Ecto.Query, warn: false
+  import Geo.PostGIS
   alias KjerSi.Repo
 
   alias KjerSi.Rooms.Category
@@ -198,5 +199,26 @@ defmodule KjerSi.Rooms do
   """
   def change_room(%Room{} = room) do
     Room.changeset(room, %{})
+  end
+
+  @doc """
+  Returns all rooms that are close enough to
+  the specified point (based on each room's
+  individual radius).
+
+  ## Examples
+
+    iex> get_rooms_around_point(point)
+    [%Room{}, ...]
+  """
+  def get_rooms_around_point(point) do
+    query = from room in Room,
+            where: st_dwithin_in_meters(room.coordinates, ^point, room.radius),
+            order_by: [asc: st_distance_in_meters(room.coordinates, ^point)],
+            limit: 5
+
+    query
+    |> Repo.all
+    |> Repo.preload(:users)
   end
 end
