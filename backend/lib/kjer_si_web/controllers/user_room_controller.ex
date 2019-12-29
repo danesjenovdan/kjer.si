@@ -7,6 +7,7 @@ defmodule KjerSiWeb.UserRoomController do
   alias KjerSi.Accounts.User
   alias KjerSi.Accounts.UserRoom
   alias KjerSi.AccountsHelpers
+  alias KjerSi.Rooms
 
   action_fallback KjerSiWeb.FallbackController
 
@@ -19,7 +20,6 @@ defmodule KjerSiWeb.UserRoomController do
 
   def create(conn, %{"subscription" => subscription_params}) do
     with {:ok, user} = AccountsHelpers.get_auth_user(conn) do
-      import Logger
       if subscription_params["user_id"] == user.id do
         with {:ok, %UserRoom{} = user_room} <- Accounts.create_user_room(subscription_params) do
           conn
@@ -42,7 +42,15 @@ defmodule KjerSiWeb.UserRoomController do
     with user_room = Accounts.get_user_room!(id) do
       with {:ok, user} = AccountsHelpers.get_auth_user(conn) do
         if user_room.user_id == user.id do
+          # save room ID for later
+          room_id = user_room.room_id
           with {:ok, %UserRoom{}} <- Accounts.delete_user_room(user_room) do
+            # check if room is empty and delete room
+            with room = Rooms.get_room!(room_id, [:users]) do
+              if length(room.users) == 0 do
+                Rooms.delete_room(room)
+              end
+            end
             send_resp(conn, :no_content, "")
           end
         else
