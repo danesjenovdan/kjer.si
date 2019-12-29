@@ -17,4 +17,18 @@ defmodule KjerSiWeb.RoomView do
       users: render_many(room.users, KjerSiWeb.UserView, "user_nickname.json")
     }
   end
+
+  def render("categories.json", %{categories: categories}) do
+    %{categories: render_many(categories, RoomView, "category.json")}
+  end
+
+  # this is a bit of a hack but it exposes how phoenix works
+  # when you call render_many it assigns the key in the struct
+  # based on the ?module name? or something else beyond our control
+  def render("category.json", %{room: category}) do
+    %{
+      id: category.id,
+      name: category.name
+    }
+  end
 end
