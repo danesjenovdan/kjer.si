@@ -6,6 +6,18 @@ defmodule KjerSiWeb.RoomView do
     %{data: render_one(room, RoomView, "room.json")}
   end
 
+  def render("new.json", %{room: room}) do
+    %{
+      id: room.id,
+      name: room.name,
+      radius: room.radius,
+      category_id: room.category_id,
+      lat: room.lat,
+      lng: room.lng,
+      users: [],
+    }
+  end
+
   def render("room.json", %{room: room}) do
     %{
       id: room.id,
