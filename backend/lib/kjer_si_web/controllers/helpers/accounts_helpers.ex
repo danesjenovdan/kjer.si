@@ -3,7 +3,7 @@ defmodule KjerSi.AccountsHelpers do
   alias KjerSi.Accounts
 
   def get_auth(conn) do
-    conn |> get_req_header("uid") |> to_string
+    conn |> get_req_header("authorization") |> to_string
   end
 
   def get_uid(conn) do
