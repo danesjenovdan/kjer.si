@@ -93,6 +93,11 @@ defmodule KjerSiWeb.UserController do
     name = UserHelpers.generate_unique_name
     send_resp(conn, :ok, name)
   end
+
+  def recover_self(conn, _params) do
+    user = conn |> AccountsHelpers.get_uid |> Accounts.get_user_by_uid
+    render(conn, "show.json", user: user)
+  end
 end
 
 # TODO
