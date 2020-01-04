@@ -31,25 +31,25 @@ defmodule KjerSiWeb.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def show(conn, %{"uid" => uid}) do
+    user = Accounts.get_user_by_uid(uid)
     cond do
-      # user == nil ->
-      #   AccountsHelpers.return_not_found(conn)
-      AccountsHelpers.get_uid(conn) != user.uid ->
-        AccountsHelpers.return_unauthorized(conn)
+      user == nil ->
+        AccountsHelpers.return_not_found(conn)
+      # AccountsHelpers.get_uid(conn) != user.uid ->
+      #   AccountsHelpers.return_unauthorized(conn)
       true ->
-        render(conn, "show.json", user: user)
+        render(conn, "user_nickname.json", user: user)
     end
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
+  def update(conn, %{"uid" => uid, "user" => user_params}) do
+    user = Accounts.get_user_by_uid(uid)
     cond do
-      # user == nil ->
-      #   AccountsHelpers.return_not_found(conn)
-      AccountsHelpers.get_uid(conn) != user.id ->
-        AccountsHelpers.return_unauthorized(conn)
+      user == nil ->
+        AccountsHelpers.return_not_found(conn)
+      # AccountsHelpers.get_uid(conn) != user.id ->
+      #   AccountsHelpers.return_unauthorized(conn)
       true ->
         with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
           render(conn, "show.json", user: user)
@@ -57,13 +57,13 @@ defmodule KjerSiWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def delete(conn, %{"uid" => uid}) do
+    user = Accounts.get_user_by_uid(uid)
     cond do
-      # user == nil ->
-      #   AccountsHelpers.return_not_found(conn)
-      AccountsHelpers.get_uid(conn) != user.uid and not AccountsHelpers.is_admin(conn) ->
-        AccountsHelpers.return_unauthorized(conn)
+      user == nil ->
+        AccountsHelpers.return_not_found(conn)
+      # AccountsHelpers.get_uid(conn) != user.uid and not AccountsHelpers.is_admin(conn) ->
+      #   AccountsHelpers.return_unauthorized(conn)
       true ->
         with {:ok, %User{}} <- Accounts.delete_user(user) do
           send_resp(conn, :no_content, "")
