@@ -5,8 +5,8 @@
     <GridLayout rows="5*, 5*">
       <Image row="0" marginBottom="-20" verticalAlignment="bottom" src="~/assets/images/main_screen_logo.png"
              width="200" height="100" stretch="aspectFit"></Image>
-      <StackLayout row="1" marginTop="20">
-        <Label class="kjer-si-big-button" v-if="location" @tap="goToDiscoverPage" text="Vstopi" width="150"
+      <StackLayout v-if="!isCreatingUser" row="1" marginTop="20">
+        <Label class="kjer-si-big-button" v-if="location" @tap="onEnterTap" text="Vstopi" width="150"
                marginTop="40"></Label>
         <Label class="kjer-si-button" v-if="locationError" @tap="requestLocation" text="Poizkusi ponovno" width="150"
                marginTop="40"></Label>
@@ -14,6 +14,9 @@
                     autoPlay="true"></LottieView>
         <Label class="splash-searching-location-label" v-if="!location && !locationError"
                text="Iščem lokacijo..."></Label>
+      </StackLayout>
+      <StackLayout row="1" marginTop="60" v-if="isCreatingUser">
+        <ActivityIndicator :busy="true" :isEnabled="true"></ActivityIndicator>
       </StackLayout>
     </GridLayout>
   </GridLayout>

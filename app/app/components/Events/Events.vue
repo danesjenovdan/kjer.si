@@ -20,11 +20,17 @@
       let pageContainer = this.$refs.appContainer;
       AppService.default.screen.height = pageContainer.nativeView.getMeasuredHeight();
       AppService.default.screen.width = pageContainer.nativeView.getMeasuredWidth();
+
+      this.$refs.pageRef.nativeView.actionBarHidden = true;
     },
     methods: {
       goToDiscoverPage() {
         console.log('TAP: go to discover page');
         this.$navigateTo(Discover);
+      },
+      onBackTap() {
+        console.log('TAP: go back');
+        this.$navigateBack();
       }
     }
   };

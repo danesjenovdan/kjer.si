@@ -1,52 +1,197 @@
 import * as http from "http";
 import * as AppService from './app.service';
+import * as UserService from './user.service';
 import * as axios from 'axios';
+import * as Phx from "~/assets/js/phoenix";
 
 export default new class {
 
-  _baseUrl = 'http://192.168.3.193:4000/api';
+  _baseSocketUrl = 'ws://api.kjer.si/socket';
+  _baseUrl = 'http://api.kjer.si/api';
+  socket = null;
 
-  get(url) {
+  get(url, auth = true) {
 
-    return axios.default.get(url, {
+    const config = {
+      baseURL: this._baseUrl
+    };
+
+    if (auth && UserService.default.user && UserService.default.user.uid) {
+      config.headers = {
+        Authorization: UserService.default.user.uid
+      };
+    }
+
+    return axios.default.get(url, config);
+
+  }
+
+  put(url, body, auth = true) {
+
+    const config = {
       baseURL: this._baseUrl,
-      headers: {
-        uid: AppService.default.uid
-      }
+      headers: {}
+    };
+
+    if (auth && UserService.default.user && UserService.default.user.uid) {
+      config.headers.Authorization = UserService.default.user.uid;
+    }
+
+    return axios.default.post(url, body, config);
+
+  }
+
+  post(url, body, auth = true) {
+
+    const config = {
+      baseURL: this._baseUrl,
+      headers: {}
+    };
+
+    // console.log('UserService.default.user: ', UserService.default.user);
+
+    if (auth && UserService.default.user && UserService.default.user.uid) {
+      console.log('Authorization');
+      config.headers.Authorization = UserService.default.user.uid;
+    }
+
+    return axios.default.post(url, body, config);
+
+  }
+
+  delete(url, body, auth = true) {
+
+    const config = {
+      baseURL: this._baseUrl
+    };
+
+    if (auth && UserService.default.user && UserService.default.user.uid) {
+      config.headers = {
+        Authorization: UserService.default.user.uid
+      };
+    }
+
+    return axios.default.delete(url, config);
+
+  }
+
+  initSocket() {
+
+    // to create a socket connection
+    this.socket = new Phx.Socket(this._baseSocketUrl);
+    this.socket.connect();
+    this.socket.onOpen((state) => {
+      console.log('Socket: ', this.socket.isConnected());
+    });
+
+    this.socket.onError((error) => {
+      console.log('Socket error: ', String(error.error));
     });
 
   }
 
-  put(url, body) {
+  async getCategories() {
 
-    return axios.default.post(url, body, {
-      baseURL: this._baseUrl,
-      headers: {
-        uid: AppService.default.uid
-      }
-    });
-
-  }
-
-  post(url, body) {
-
-    return axios.default.post(url, body, {
-      baseURL: this._baseUrl,
-      headers: {
-        uid: AppService.default.uid
-      }
-    });
+    try {
+      const response = await this.get('/categories');
+      return response.data.categories;
+    } catch (e) {
+      console.log('Error: ', e);
+    }
 
   }
 
-  delete(url, body) {
+  async generateUsername() {
 
-    return axios.default.delete(url, {
-      baseURL: this._baseUrl,
-      headers: {
-        uid: AppService.default.uid
+    try {
+      const response = await this.get('/generate-username');
+      console.log(response);
+      return response.data;
+    } catch (e) {
+      console.log('Error: ', e);
+    }
+
+  }
+
+  async createUser(uid, nickname) {
+
+    try {
+      const user = {
+        uid,
+        nickname
+      };
+
+      console.log('user: ', user);
+
+      const response = await this.post('/users', {
+        user
+      });
+      console.log('User creation response: ', response.data.data);
+      return response.data.data;
+    } catch (e) {
+      console.log('Create user error: ', e.response.data);
+      throw Error('Error when creating user ');
+    }
+
+  }
+
+  async createRoom(name, lat, lng, radius, categoryId) {
+
+    const room = {
+      name, lat, lng, radius,
+      category_id: categoryId
+    };
+
+    console.log('Create room: ', room);
+
+    const response = await this.post('/rooms', {room}, false);
+    return response.data;
+  }
+
+  async getRoomsInRadius(lat, lng) {
+    const response = await this.post('/map/rooms', {
+      lat, lng
+    }, false);
+    return response.data.data;
+  }
+
+  async fetchSelf(uuid) {
+
+    const config = {
+      baseURL: this._baseUrl
+    };
+
+    config.headers = {
+      Authorization: uuid
+    };
+
+    const response = await axios.default.get('/recover-self', config);
+    return response.data.data;
+
+  }
+
+  /**
+   * Joins you to room
+   * @param roomId
+   * @returns {Promise<*>}
+   */
+  async joinRoom(roomId) {
+
+    const postData = {
+      subscription: {
+        room_id: roomId,
+        user_id: UserService.default.user.id
       }
-    });
+    };
+
+    console.log('postData: ', postData);
+
+    const response = await this.post('/subscriptions', postData, true);
+    const responseData = response.data.data;
+
+    console.log('Join room: ', responseData);
+
+    return responseData;
 
   }
 

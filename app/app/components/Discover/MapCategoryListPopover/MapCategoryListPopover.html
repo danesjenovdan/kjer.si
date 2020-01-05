@@ -1,4 +1,4 @@
-<GridLayout :height="layoutHeight-80" ref="container" rows="*, auto" class="map-popover-list-container">
+<GridLayout :height="layoutHeight-80" ref="container" rows="*, auto" class="map-popover-list-container" xmlns:v-bind>
 
   <GridLayout rows="*, auto" row="0">
    <GridLayout row="0" rows="auto, *, auto" class="map-popover-list-inner-container" v-shadow="6">
@@ -11,46 +11,11 @@
     </GridLayout>
 
     <ScrollView class="map-category-list-scrollview" row="1">
-      <StackLayout class="map-popover-list-scroll-container">
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="§§map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
-        </GridLayout>
-        <GridLayout columns="70, *, auto" class="map-popover-list-item-container">
-          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>
-          <Label class="map-popover-list-item-name" col="1" text="Igrajmo igrice"></Label>
+      <ActivityIndicator :busy="true" :isEnabled="true" v-show="!categoriesLoaded" width="40" height="40"></ActivityIndicator>
+      <StackLayout class="map-popover-list-scroll-container" v-if="categoriesLoaded">
+        <GridLayout v-for="category in categories" @tap="onCategoryTap(category)" v-bind:key="category.id" columns="auto, *, auto" class="map-popover-list-item-container">
+<!--          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>-->
+          <Label class="map-popover-list-item-name" col="1" :text="category.name"></Label>
         </GridLayout>
       </StackLayout>
     </ScrollView>

@@ -15,10 +15,15 @@
   export default {
     data() {
       return {
-        layoutHeight: UiService.default.layoutHeight
+        layoutHeight: UiService.default.layoutHeight,
+        categories: [],
+        categoriesLoaded: false
       };
     },
-    mounted() {
+    async mounted() {
+
+      this.categories = await ApiService.default.getCategories();
+      this.categoriesLoaded = true;
 
       const height = this.$refs.container.nativeView.getMeasuredHeight();
 
@@ -26,6 +31,9 @@
     methods: {
       onCloseListTap() {
         this.$emit('closeListTap');
+      },
+      onCategoryTap(category) {
+        this.$emit('categorySelect', category);
       }
     }
   };

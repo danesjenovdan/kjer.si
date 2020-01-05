@@ -9,13 +9,18 @@
              width="100%"
              height="100%"
              @cameraChanged="onCameraChanged"
+             @markerSelect="onMarkerSelected"
              @mapReady="onMapReady"
              @coordinateTapped="onCoordinateTapped"></MapView>
 
     <!-- ROOM NEW_ROOM_LOCATION_SETUP CENTER PIN -->
-    <Image src="~/assets/images/create_group_pin.png" width="40" height="40" stretch="aspectFit"
+    <Image src="~/assets/images/chat_icon_gray.png"
+           width="30"
+           height="30"
+           stretch="aspectFit"
            v-if="currentPageState === PAGE_STATES.NEW_ROOM_LOCATION_SETUP"
-           :translateX="screenWidth/2-6" :translateY="screenHeight/2-41"></Image>
+           :translateX="screenWidth/2 - 15"
+           :translateY="screenHeight/2-28"></Image>
 
     <!-- ROOM NEW_ROOM_LOCATION_SETUP TITLE -->
     <GridLayout v-show="currentPageState === PAGE_STATES.NEW_ROOM_LOCATION_SETUP" v-shadow="15" columns="60, *, 60"
@@ -30,10 +35,19 @@
 
     <!-- ROOM NEW_ROOM_LOCATION_SETUP SLIDER PANEL -->
     <StackLayout v-if="currentPageState === PAGE_STATES.NEW_ROOM_LOCATION_SETUP" v-shadow="15" @tap="catchGestureTap"
-                 class="create-group-range-panel" :translateY="screenHeight-150" width="100%" height="150">
+                 class="create-group-range-panel"
+                 :translateY="screenHeight-170"
+                 width="100%"
+                 height="170">
       <Label text="Nastavi razdaljo" class="create-group-range-title"></Label>
       <StackLayout padding="0 20" marginTop="10">
-        <Slider :value="newRoom.radius" @valueChange="onSliderValueChange" minValue="100" maxValue="500" verticalAlignment="center" color="#22AC9B"
+        <Slider :value="newRoom.radius"
+                @valueChange="onSliderValueChange"
+                minValue="100"
+                maxValue="500"
+                height="37"
+                verticalAlignment="center"
+                color="#22AC9B"
                 backgroundColor="#22AC9B">
         </Slider>
       </StackLayout>
@@ -46,10 +60,23 @@
     </StackLayout>
 
     <!-- FLOATING COMPONENTS -->
-    <MapCategoryListPopover translateY="-50" v-animate-in @closeListTap="onCloseCategoryListTap" v-if="currentPageState === PAGE_STATES.NEW_ROOM_CATEGORY_SELECT"></MapCategoryListPopover>
-    <MapListPopover  translateY="-50" v-animate-in @closeListTap="onCloseListTap" v-if="currentPageState === PAGE_STATES.LIST"></MapListPopover>
-    <MapFabs @listTap="onListTap" @createTap="onCreateTap" v-if="currentPageState === PAGE_STATES.MAP"
-             :translateX="screenWidth - 75" :translateY="screenHeight - 170 - 140"></MapFabs>
-    <MapCard v-show="currentPageState === PAGE_STATES.MAP" @tap="onCardTap" :translateY="screenHeight - 170"></MapCard>
+    <MapCategoryListPopover translateY="-50"
+                            v-animate-in
+                            @closeListTap="onCloseCategoryListTap"
+                            @categorySelect="onCategoryCreateSelect"
+                            v-if="currentPageState === PAGE_STATES.NEW_ROOM_CATEGORY_SELECT"></MapCategoryListPopover>
+    <MapListPopover translateY="-50" v-animate-in
+                    @closeListTap="onCloseListTap"
+                    @roomTap="onRoomTap"
+                    v-if="currentPageState === PAGE_STATES.LIST"></MapListPopover>
+    <MapFabs @listTap="onListTap"
+             @createTap="onCreateTap"
+             v-if="currentPageState === PAGE_STATES.MAP"
+             v-bind:showCreateButton="locationReceived"
+             :translateX="screenWidth - 75"
+             :translateY="selectedRoom?screenHeight - 170 - 140:screenHeight - 170"></MapFabs>
+    <StackLayout :translateY="screenHeight - 170" width="100%">
+      <MapCard v-if="currentPageState === PAGE_STATES.MAP && selectedRoom" v-bind:room="selectedRoom" @tap="onCardTap"></MapCard>
+    </StackLayout>
   </AbsoluteLayout>
 </Page>

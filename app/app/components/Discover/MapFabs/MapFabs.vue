@@ -13,8 +13,13 @@
 
   export default {
     name: 'map-card',
+    props: {
+      showCreateButton: false
+    },
     data() {
-      return {};
+      return {
+        showCreateButton: this.showCreateButton
+      };
     },
     mounted() {
 

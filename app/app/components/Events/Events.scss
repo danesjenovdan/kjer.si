@@ -3,15 +3,64 @@
 // End custom common variables
 
 // Custom styles
-   .fa {
-       color: $kjersi-green;
-   }
+.fa {
+  color: $kjersi-green;
+}
 
 
-.action-bar{
+.action-bar {
   background-color: $kjersi-green;
 }
 
 .info {
-    font-size: 20;
+  font-size: 20;
+}
+
+.events-page-send-icon {
+  width: 50;
+  height: 50;
+  background-color: #f7f7f7;
+  padding: 12 12 8 8;
+}
+
+.events-page-input-container {
+  background-color: #f7f7f7;
+  padding: 5;
+}
+
+.events-page-text-view {
+  border-radius: 30;
+  background-color: #fff;
+  border-width: 1;
+  border-color: #eee;
+  margin-right: 5;
+  padding: 12;
+}
+
+.events-page-header-container {
+  border-bottom-width: 2;
+  border-bottom-color: #eee;
+}
+
+.events-menu-container {
+  background-color: #ffffff;
+  border-radius: 15;
+  margin: 25;
+}
+
+.events-menu-outer-container {
+  margin: 10;
+}
+
+.events-menu-button {
+  padding: 17 50 17 25;
+  border-bottom-width: 1;
+  border-bottom-color: #eee;
+  font-family: MuseoSansRounded;
+  font-size: 18;
+  color: #000;
+}
+
+.events-menu-button-last {
+  border-bottom-width: 0;
 }

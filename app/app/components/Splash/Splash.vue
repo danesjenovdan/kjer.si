@@ -11,6 +11,8 @@
   import * as AppService from '../../services/app.service';
   import * as UiService from '../../services/ui.service';
   import * as MapService from '../../services/map.service';
+  import * as ApiService from '../../services/api.service';
+  import * as UserService from '../../services/user.service';
   import * as LocationService from '../../services/location.service';
   import * as utils from 'tns-core-modules/utils/utils';
   import * as platform from 'tns-core-modules/platform';
@@ -29,12 +31,14 @@
         return "Blank {N}-Vue app";
       }
     },
+
     data() {
       return {
         backgroundLocation: {
           latitude: 46.049131,
           longitude: 14.507172
         },
+        isCreatingUser: false,
         location: null,
         locationError: null,
         get mapBackground() {
@@ -55,6 +59,7 @@
         }
       }
     },
+
     mounted() {
 
       let pageContainer = this.$refs.appContainer;
@@ -70,32 +75,44 @@
       this.requestLocation();
 
     },
+
     methods: {
       async requestLocation() {
 
         try {
+
           this.locationError = null;
           const location = await LocationService.default.requestLocation();
           await new Promise(resolve => setTimeout(resolve, 1000));
           this.location = location;
           this.backgroundLocation.latitude = location.latitude;
           this.backgroundLocation.longitude = location.longitude;
+
         } catch (e) {
           this.location = null;
           this.locationError = e;
         }
 
       },
-      goToDiscoverPage() {
-        console.log('TAP: go to discover page');
-        this.$navigateTo(Discover, {
-          transition: {
-            name: 'slideLeft',
-            duration: 300,
-            curve: 'easeInOut'
-            // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
-          }
-        });
+
+      async onEnterTap() {
+
+        this.isCreatingUser = true;
+        try {
+          const user = await UserService.default.setupUser();
+          this.$navigateTo(Discover, {
+            transition: {
+              name: 'slideLeft',
+              duration: 300,
+              curve: 'easeInOut'
+              // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
+            }
+          });
+          this.isCreatingUser = false;
+        } catch (e) {
+          this.isCreatingUser = false;
+        }
+
       }
     }
   };

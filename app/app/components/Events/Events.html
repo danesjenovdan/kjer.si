@@ -1,9 +1,37 @@
-<Page class="page">
-  <ActionBar class="action-bar">
-    <Label class="action-bar-title" text="Events"></Label>
-  </ActionBar>
+<Page ref="pageRef" class="page">
 
-  <GridLayout ref="appContainer" rows="*, auto, *">
+  <AbsoluteLayout>
 
-  </GridLayout>
+    <GridLayout ref="appContainer" rows="70, *, auto" width="100%" height="100%">
+
+      <GridLayout class="events-page-header-container" row="0" columns="70, *, 70">
+        <Rippler rippleColor="#777777" rippleBorderRadius="50" margin="5" @tap="onBackTap" col="0">
+          <Image class="page-header-icon" src="~/assets/images/back_icon.png" height="60"
+                 stretch="aspectFit"/>
+        </Rippler>
+        <Label verticalAlignment="center" class="page-header-title" text="Dogodki" col="1"></Label>
+        <Rippler rippleColor="#777777" rippleBorderRadius="50" margin="5" @tap="onMenuTap" col="2">
+          <Image class="page-header-icon" src="~/assets/images/more_icon.png" height="60"
+                 stretch="aspectFit"/>
+        </Rippler>
+      </GridLayout>
+
+      <ScrollView row="1">
+        <StackLayout></StackLayout>
+      </ScrollView>
+
+    </GridLayout>
+
+    <GridLayout v-if="showMenu" translateY="-10" v-animate-in @tap="onContainerTap" rows="auto, *" columns="*, auto"
+                width="100%" height="100%" class="events-menu-outer-container">
+      <StackLayout translateY="50" row="0" class="events-menu-container" v-shadow="15" col="1">
+        <Label @tap="onEventsTap" class="events-menu-button" text="Dogodki"></Label>
+        <Label class="events-menu-button" text="Zapusti"></Label>
+        <Label class="events-menu-button" text="Utišaj"></Label>
+        <Label class="events-menu-button events-menu-button-last" text="Nastavitve"></Label>
+      </StackLayout>
+    </GridLayout>
+
+  </AbsoluteLayout>
+
 </Page>

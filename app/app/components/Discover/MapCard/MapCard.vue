@@ -12,10 +12,16 @@
   import * as ApiService from '../../../services/api.service';
 
   export default {
+    props: {
+      room: null
+    },
     data() {
-      return {};
+      return {
+        room: this.room
+      };
     },
     mounted() {
+
 
     },
     methods: {
