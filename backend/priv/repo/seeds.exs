@@ -21,29 +21,29 @@ sport = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Šport"})
 zivali = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Živali"})
 
 # Generate rooms
-ljubitelji_psov = KjerSi.Repo.insert!(%KjerSi.Rooms.Room{
+ljubitelji_psov = KjerSi.Repo.insert!(KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.Room{}, %{
   name: "Ljubitelji psov",
-  category: zivali,
+  category_id: zivali.id,
   lat: 13.0,
   lng: 15.0,
   radius: 2500
-})
+}))
 
-pevski_zbor = KjerSi.Repo.insert!(%KjerSi.Rooms.Room{
+pevski_zbor = KjerSi.Repo.insert!(KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.Room{}, %{
   name: "Pevski zbor",
-  category: kultura,
+  category_id: kultura.id,
   lat: 13.0,
   lng: 15.0,
   radius: 2500
-})
+}))
 
-gre_kdo_basket = KjerSi.Repo.insert!(%KjerSi.Rooms.Room{
+gre_kdo_basket = KjerSi.Repo.insert!(KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.Room{}, %{
   name: "Gre kdo basket?",
-  category: sport,
+  category_id: sport.id,
   lat: 13.0,
   lng: 15.0,
   radius: 2500
-})
+}))
 
 # Generate subscriptions
 KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: polde, room: ljubitelji_psov}
