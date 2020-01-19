@@ -16,9 +16,9 @@ micka = KjerSi.Repo.insert!(%KjerSi.Accounts.User{uid: "2", nickname: "Micka"})
 stef = KjerSi.Repo.insert!(%KjerSi.Accounts.User{uid: "3", nickname: "Štef"})
 
 # Generate room categories
-kultura = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Kultura"})
-sport = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Šport"})
-zivali = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Živali"})
+kultura = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Druženje"})
+sport = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Rekreacija"})
+zivali = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Sosedske usluge"})
 
 # Generate rooms
 ljubitelji_psov = KjerSi.Repo.insert!(KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.Room{}, %{
