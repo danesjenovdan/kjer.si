@@ -33,7 +33,7 @@ defmodule KjerSiWeb.RoomController do
   end
 
   def categories(conn, _params) do
-    render conn, "categories.json", categories: Rooms.list_categories
+    render conn, KjerSiWeb.CategoryView, "categories.json", categories: Rooms.list_categories
   end
 end
 

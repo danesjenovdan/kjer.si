@@ -12,4 +12,8 @@ defmodule KjerSiWeb.CategoryView do
       id: category.id
     }
   end
+
+  def render("categories.json", %{categories: categories}) do
+    %{categories: render_many(categories, CategoryView, "category.json")}
+  end
 end

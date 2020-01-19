@@ -1,6 +1,6 @@
 defmodule KjerSiWeb.RoomView do
   use KjerSiWeb, :view
-  alias KjerSiWeb.RoomView
+  alias KjerSiWeb.CategoryView
 
   def render("show.json", %{room: room}) do
     %{data: render_one(room, RoomView, "room.json")}
@@ -27,20 +27,6 @@ defmodule KjerSiWeb.RoomView do
       lat: room.lat,
       lng: room.lng,
       users: render_many(room.users, KjerSiWeb.UserView, "user_nickname.json")
-    }
-  end
-
-  def render("categories.json", %{categories: categories}) do
-    %{categories: render_many(categories, RoomView, "category.json")}
-  end
-
-  # this is a bit of a hack but it exposes how phoenix works
-  # when you call render_many it assigns the key in the struct
-  # based on the ?module name? or something else beyond our control
-  def render("category.json", %{room: category}) do
-    %{
-      id: category.id,
-      name: category.name
     }
   end
 end
