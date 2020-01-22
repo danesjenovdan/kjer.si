@@ -12,8 +12,8 @@ defmodule KjerSi.Events.UserEvent do
   end
 
   @doc false
-  def changeset(event, params \\ %{}) do
-    event
+  def changeset(struct, params \\ %{}) do
+    struct
     |> cast(params, [:user_id, :event_id])
     |> validate_required([:user_id, :event_id])
     |> foreign_key_constraint(:user_id)

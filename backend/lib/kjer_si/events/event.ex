@@ -5,10 +5,11 @@ defmodule KjerSi.Events.Event do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "events" do
+    field :name, :string
     field :datetime, :utc_datetime
+    field :location, :string
     field :description, :string
     field :max_attending, :integer
-    field :name, :string
     belongs_to :user, KjerSi.Accounts.User
     belongs_to :room, KjerSi.Rooms.Room
 
@@ -20,7 +21,7 @@ defmodule KjerSi.Events.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:datetime, :description, :max_attending, :name, :user_id, :room_id])
-    |> validate_required([:datetime, :description, :max_attending, :name, :user_id, :room_id])
+    |> cast(attrs, [:name, :datetime, :location, :description, :max_attending, :user_id, :room_id])
+    |> validate_required([:name, :datetime, :location, :description, :max_attending, :user_id, :room_id])
   end
 end

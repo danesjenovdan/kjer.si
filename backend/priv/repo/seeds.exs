@@ -52,3 +52,21 @@ KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: polde, room: gre_kdo_basket}
 
 KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: micka, room: ljubitelji_psov}
 KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: stef, room: ljubitelji_psov}
+
+
+
+# Generate event
+bakanje_event = KjerSi.Repo.insert!(KjerSi.Events.Event.changeset(%KjerSi.Events.Event{}, %{
+  name: "tu se baka",
+  datetime: "2019-11-30 12:12:12",
+  location: "Lokacija",
+  description: "description",
+  max_attending: "2",
+  user_id: micka.id,
+  room_id: pevski_zbor.id,
+}))
+
+# Generate event subscriptions
+KjerSi.Repo.insert! %KjerSi.Events.UserEvent{user: polde, event: bakanje_event}
+KjerSi.Repo.insert! %KjerSi.Events.UserEvent{user: micka, event: bakanje_event}
+KjerSi.Repo.insert! %KjerSi.Events.UserEvent{user: stef, event: bakanje_event}

@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 services:
   phoenix:
@@ -29,6 +29,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data

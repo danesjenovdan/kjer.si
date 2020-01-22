@@ -202,19 +202,4 @@ defmodule KjerSi.Events do
   """
   def get_user_event!(uuid), do: Repo.get!(UserEvent, uuid)
 
-  @doc """
-  Unsubscribes user from event.
-
-  ## Examples
-
-      iex> delete_user_event(user_event)
-      {:ok, %UserEvent{}}
-
-      iex> delete_user_event(user_event)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_user_event(%UserEvent{} = user_event) do
-    Repo.delete(user_event)
-  end
 end
