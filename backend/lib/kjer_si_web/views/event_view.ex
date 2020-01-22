@@ -15,8 +15,9 @@ defmodule KjerSiWeb.EventView do
       name: event.name,
       datetime: event.datetime,
       description: event.description,
+      location: event.location,
       max_attending: event.max_attending,
-      author: event.author,
+      user_id: event.user_id,
       room_id: event.room_id
     }
   end
