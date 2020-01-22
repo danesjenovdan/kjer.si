@@ -111,7 +111,7 @@ defmodule KjerSi.Events do
   """
   def update_event(%Event{} = event, attrs) do
     event
-    |> Event.changeset(attrs)
+    |> Event.changesetUpdate(attrs)
     |> Repo.update()
   end
 

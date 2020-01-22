@@ -28,4 +28,19 @@ defmodule KjerSiWeb.EventController do
     end
   end
 
+
+  def update(conn, %{"uid" => uid, "event" => event_params}) do
+    event = Events.get_event_by_id(uid)
+    cond do
+      #event == nil ->
+      #  AccountsHelpers.return_not_found(conn)
+      # AccountsHelpers.get_uid(conn) != user.id ->
+      #   AccountsHelpers.return_unauthorized(conn)
+      true ->
+        with {:ok, %Event{} = event} <- Events.update_event(event, event_params) do
+          render(conn, "show.json", event: event)
+        end
+    end
+  end
+
 end
