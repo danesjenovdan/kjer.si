@@ -14,12 +14,15 @@ import * as localStorage from 'nativescript-localstorage';
 import * as UserService from './services/user.service';
 import * as ApiService from './services/api.service';
 import * as application from 'tns-core-modules/application';
+import {localize} from "nativescript-localize";
 // Vue.config.silent = false;
 
 Vue.registerElement('MapView', () => MapView);
 Vue.registerElement('MapBox', () => Mapbox);
 Vue.registerElement('lottie-view', () => require('nativescript-lottie').LottieView);
 Vue.registerElement('Rippler', () => require('nativescript-ripple').Ripple);
+
+Vue.filter('L', localize);
 
 Vue.use(FontIcon, {
   debug: false, // <-- Optional. Will output the css mapping to console.

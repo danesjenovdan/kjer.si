@@ -6,7 +6,7 @@
       <Image row="0" marginBottom="-20" verticalAlignment="bottom" src="~/assets/images/main_screen_logo.png"
              width="200" height="100" stretch="aspectFit"></Image>
       <StackLayout v-if="!isCreatingUser" row="1" marginTop="20">
-        <Label class="kjer-si-big-button" v-if="location" @tap="onEnterTap" text="Vstopi" width="150"
+        <Label class="kjer-si-big-button" v-if="location" @tap="onEnterTap" :text="'Enter' |L" width="150"
                marginTop="40"></Label>
         <Label class="kjer-si-button" v-if="locationError" @tap="requestLocation" text="Poizkusi ponovno" width="150"
                marginTop="40"></Label>
