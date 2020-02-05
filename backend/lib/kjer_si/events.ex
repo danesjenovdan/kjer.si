@@ -202,4 +202,8 @@ defmodule KjerSi.Events do
   """
   def get_user_event!(uuid), do: Repo.get!(UserEvent, uuid)
 
+  def get_events_of_user(user) do
+    Repo.all(from ur in UserEvent, where: ur.user_id == ^user.id, select: ur)
+  end
+
 end

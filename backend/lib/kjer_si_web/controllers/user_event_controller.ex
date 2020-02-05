@@ -5,6 +5,7 @@ defmodule KjerSiWeb.UserEventController do
   import Logger
 
   alias KjerSi.Events
+  alias KjerSi.Accounts.User
   alias KjerSi.Events.UserEvent
   alias KjerSi.AccountsHelpers
 
@@ -17,9 +18,11 @@ defmodule KjerSiWeb.UserEventController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user_event = Events.get_user_event!(id)
-    render(conn, "show.json", user_event: user_event)
+  def index(conn, _params) do
+    with {:ok, %User{} = user} <- AccountsHelpers.get_auth_user(conn) do
+      user_event = Events.get_events_of_user(user)
+      render(conn, "user_event_of_user.json", user_event: user_event)
+    end
   end
 
   def delete(conn, %{"id" => id}) do

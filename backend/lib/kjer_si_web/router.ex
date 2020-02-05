@@ -11,7 +11,7 @@ defmodule KjerSiWeb.Router do
     resources "/users", UserController, param: "uid", except: [:new, :edit]
     resources "/subscriptions", UserRoomController, only: [:index, :create, :show, :delete]
     resources "/events", EventController, param: "uid", only: [:index, :show, :create, :update]
-    resources "/eventsubscriptions", UserEventController, only: [:create, :delete]
+    resources "/eventsubscriptions", UserEventController, only: [:index, :create, :delete]
     resources "/rooms", RoomController, only: [:create, :delete, :show]
 
     post "/map/rooms", MapController, :get_rooms_in_radius
