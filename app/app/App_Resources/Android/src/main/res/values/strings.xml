@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Kjer.si</string>
-    <string name="title_activity_kimera">Kjer.si</string>
+  <string name="Enter">"Vstopi"</string>
+  <string name="_app_name_1k3Sbz">"Kjer.si"</string>
+  <string name="app_name">"Kjer.si"</string>
+  <string name="title_activity_kimera">"Kjer.si"</string>
 </resources>
