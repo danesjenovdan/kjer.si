@@ -1,0 +1,85 @@
+body {
+  color: #d9eff2;
+  background-color: #012e40;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hero {
+  position: relative;
+  z-index: -1;
+  padding-top: 100vh;
+  margin-bottom: -35vh;
+  background-color: #012e40;
+  background-image: url("map_overlay.png");
+  background-blend-mode: color-burn;
+}
+
+.hero .circle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255,0.25);
+  clip-path: circle(20vw at 50% 35%);
+}
+
+.main-title .title {
+  font-size: 4rem;
+}
+
+.main-title .subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.buttons {
+  margin-top: 2rem;
+}
+
+.get-it-button {
+  display: inline-block;
+  margin: 0 0.25rem;
+  background-color: #03a6a6;
+  padding: 0.5rem 0;
+  width: 17rem;
+  font-weight: 700;
+  color: inherit;
+  font-size: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0px 0px 10px -5px rgba(255,255,255,0.5);
+  transition: all 0.15s ease;
+}
+
+.get-it-button,
+.get-it-button:hover {
+  text-decoration: none;
+}
+
+.get-it-button:hover {
+  color: #fff;
+  box-shadow: 0px 0px 10px 0 rgba(255,255,255,0.25);
+}
+
+hr {
+  height: 0;
+  border: none;
+  border-top: 1px solid #d9eff2;
+  margin: 4rem 10vw;
+}
+
+.faq {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq .title {
+  margin-bottom: 3rem;
+}
+
+.faq dt {
+  margin-top: 2rem;
+}
