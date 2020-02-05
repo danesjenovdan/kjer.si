@@ -78,7 +78,7 @@ export default new class {
   initSocket() {
 
     // to create a socket connection
-    this.socket = new Phx.Socket(this._baseSocketUrl);
+    this.socket = new Phx.Socket(this._baseSocketUrl, { params: { user_uid: UserService.default.user.uid } });
     this.socket.connect();
     this.socket.onOpen((state) => {
       console.log('Socket: ', this.socket.isConnected());

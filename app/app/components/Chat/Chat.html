@@ -20,7 +20,7 @@
         <v-template name="text" if="message.type === 'text'">
           <WrapLayout class="message-container" orientation="vertical" paddingRight="50">
             <Label class="message-user-name-label" text="Some other person"/>
-            <Label class="message-text-label" :text="message.text" textWrap="true"/>
+            <Label class="message-text-label" :text="message.content" textWrap="true"/>
           </WrapLayout>
         </v-template>
 
@@ -29,7 +29,7 @@
           <StackLayout>
             <WrapLayout class="message-container message-me-container" orientation="vertical" horizontalAlignment="right" paddingLeft="50">
               <Label class="message-user-name-label" text="Me" horizontalAlignment="right"/>
-              <Label class="message-text-label message-me-text-label" :text="message.text" textWrap="true"/>
+              <Label class="message-text-label message-me-text-label" :text="message.content" textWrap="true"/>
             </WrapLayout>
           </StackLayout>
         </v-template>
