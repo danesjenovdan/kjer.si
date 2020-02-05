@@ -12,7 +12,7 @@ defmodule KjerSiWeb.UserController do
 
   def index(conn, _params) do
     unless AccountsHelpers.is_admin(conn) do
-      AccountsHelpers.return_unauthorized(conn)
+      AccountsHelpers.return_error(conn, :unauthorized)
     else
       users = Accounts.list_users()
       render(conn, "index.json", users: users)
@@ -32,9 +32,9 @@ defmodule KjerSiWeb.UserController do
     user = Accounts.get_user_by_uid(uid)
     cond do
       user == nil ->
-        AccountsHelpers.return_not_found(conn)
+        AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.uid ->
-      #   AccountsHelpers.return_unauthorized(conn)
+      #   AccountsHelpers.return_error(conn, :unauthorized)
       true ->
         render(conn, "user_nickname.json", user: user)
     end
@@ -44,9 +44,9 @@ defmodule KjerSiWeb.UserController do
     user = Accounts.get_user_by_uid(uid)
     cond do
       user == nil ->
-        AccountsHelpers.return_not_found(conn)
+        AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.id ->
-      #   AccountsHelpers.return_unauthorized(conn)
+      #   AccountsHelpers.return_error(conn, :unauthorized)
       true ->
         with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
           render(conn, "show.json", user: user)
@@ -58,9 +58,9 @@ defmodule KjerSiWeb.UserController do
     user = Accounts.get_user_by_uid(uid)
     cond do
       user == nil ->
-        AccountsHelpers.return_not_found(conn)
+        AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.uid and not AccountsHelpers.is_admin(conn) ->
-      #   AccountsHelpers.return_unauthorized(conn)
+      #   AccountsHelpers.return_error(conn, :unauthorized)
       true ->
         with {:ok, %User{}} <- Accounts.delete_user(user) do
           send_resp(conn, :no_content, "")

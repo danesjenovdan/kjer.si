@@ -29,15 +29,17 @@ defmodule KjerSi.AccountsHelpers do
     end
   end
 
-  def return_unauthorized(conn) do
-    conn
-      |> put_resp_content_type("application/json")
-      |> send_resp(400, "{\"error\": \"unauthorized\"}")
-  end
+  def return_error(conn, type) do
+    messages = %{
+      invalid_auth_header: "Authorization header missing or malformed",
+      invalid_token: "Token could not be decoded",
+      invalid_user: "User not found",
+      unauthorized: "Not authorized to perform action",
+      not_found: "Resource not found",
+    }
 
-  def return_not_found(conn) do
     conn
       |> put_resp_content_type("application/json")
-      |> send_resp(:not_found, "{\"error\": \"not found\"}")
+      |> send_resp(400, "{\"error\": \"#{messages[type]}\"}")
   end
 end
