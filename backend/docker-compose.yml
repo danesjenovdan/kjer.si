@@ -9,6 +9,7 @@ services:
       PGDATABASE: kjer_si
       PGPORT: 5432
       PGHOST: db
+      SECRET_KEY: ThisShouldBeSomethingSecret
     ports:
       - "4000:4000"
     depends_on:
