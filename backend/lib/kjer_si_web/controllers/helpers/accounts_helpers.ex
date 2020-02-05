@@ -3,29 +3,48 @@ defmodule KjerSi.AccountsHelpers do
 
   alias KjerSi.Accounts
 
-  def get_auth(conn) do
-    conn |> get_req_header("authorization") |> to_string
+  defp get_token(conn) do
+    header = conn |> get_req_header("authorization") |> to_string
+    match = Regex.named_captures(~r/^Bearer (?<token>[[:ascii:]]+)/, header)
+
+    if match do
+      {:ok, match["token"]}
+    else
+      {:error, :invalid_auth_header}
+    end
   end
 
-  def get_uid(conn) do
-    conn |> get_auth # pipe will continue at some point
+  defp get_user_id(conn) do
+    with {:ok, token} <- get_token(conn) do
+      case Phoenix.Token.verify(KjerSiWeb.Endpoint, "user salt", token, max_age: 86400) do
+        {:ok, user_id} -> {:ok, user_id}
+        {:error, _} -> {:error, :invalid_token}
+      end
+    end
+  end
+
+  defp get_user(conn, preload \\ []) do
+    with {:ok, user_id} <- get_user_id(conn) do
+      user = Accounts.get_user_with_preload(user_id, preload)
+      if user do
+        {:ok, user}
+      else
+        {:error, :invalid_user}
+      end
+    end
   end
 
   def get_auth_user(conn, preload \\ []) do
-    user = conn |> get_uid |> Accounts.get_user_with_preload(preload)
-    if user do
-      {:ok, user}
-    else
-      return_unauthorized(conn)
+    case get_user(conn, preload) do
+      {:ok, user} -> {:ok, user}
+      {:error, error_type} -> return_error(conn, error_type)
     end
   end
 
   def is_admin(conn) do
-    user = conn |> get_uid |> Accounts.get_user_by_uid
-    if user do
-      user.is_admin
-    else
-      false
+    case get_user(conn) do
+      {:ok, user} -> user.is_admin
+      {:error, error_type} -> return_error(conn, error_type)
     end
   end
 
