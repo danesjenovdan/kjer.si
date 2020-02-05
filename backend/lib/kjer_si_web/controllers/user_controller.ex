@@ -91,9 +91,15 @@ defmodule KjerSiWeb.UserController do
     send_resp(conn, :ok, name)
   end
 
-  def recover_self(conn, _params) do
-    user = conn |> AccountsHelpers.get_uid |> Accounts.get_user_by_uid
-    render(conn, "show.json", user: user)
+  def recover_self(conn, %{"uid" => uid}) do
+    user = Accounts.get_user_by_uid(uid)
+
+    # It's ok for the salt to be hardcoded
+    # https://elixirforum.com/t/phoenix-token-for-api-auth-salt-per-user-or-per-app/13361
+    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user salt", user.id)
+
+    # Phoenix.Token.verify(MyApp.Endpoint, "user salt", token, max_age: 86400)
+    render(conn, "user_with_token.json", %{token: token, user: user})
   end
 end
 
