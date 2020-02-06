@@ -16,7 +16,7 @@ defmodule KjerSi.AccountsHelpers do
 
   defp get_user_id(conn) do
     with {:ok, token} <- get_token(conn) do
-      case Phoenix.Token.verify(KjerSiWeb.Endpoint, "user salt", token, max_age: 86400) do
+      case Phoenix.Token.verify(KjerSiWeb.Endpoint, "user auth", token, max_age: 86400) do
         {:ok, user_id} -> {:ok, user_id}
         {:error, _} -> {:error, :invalid_token}
       end

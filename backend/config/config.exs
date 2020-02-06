@@ -20,6 +20,7 @@ config :kjer_si, KjerSi.Repo,
 config :kjer_si, KjerSiWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: System.get_env("SECRET_KEY"),
+  token_salt: System.get_env("TOKEN_SALT"),
   render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: KjerSi.PubSub, adapter: Phoenix.PubSub.PG2]
 

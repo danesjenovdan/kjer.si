@@ -96,9 +96,9 @@ defmodule KjerSiWeb.UserController do
 
     # It's ok for the salt to be hardcoded
     # https://elixirforum.com/t/phoenix-token-for-api-auth-salt-per-user-or-per-app/13361
-    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user salt", user.id)
+    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
 
-    # Phoenix.Token.verify(MyApp.Endpoint, "user salt", token, max_age: 86400)
+    # Phoenix.Token.verify(MyApp.Endpoint, "user auth", token, max_age: 86400)
     render(conn, "user_with_token.json", %{token: token, user: user})
   end
 end
