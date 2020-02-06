@@ -3,6 +3,10 @@ require Logger
 defmodule KjerSiWeb.ChatChannel do
   use KjerSiWeb, :channel
 
+  defp render_message(message) do
+    KjerSiWeb.MessageView.render "message.json", %{message: message}
+  end
+
   def join("room:" <> _room_id, _payload, socket) do
     if authorized?(socket.assigns.user_id) do
       send(self(), :after_join)
@@ -29,10 +33,13 @@ defmodule KjerSiWeb.ChatChannel do
 
     # Merge with incoming payload and save to DB
     payload = Map.merge(payload, %{"room_id" => room_id, "user_id" => user_id})
-    KjerSi.Messages.Message.changeset(%KjerSi.Messages.Message{}, payload) |> KjerSi.Repo.insert
+    {:ok, message} = KjerSi.Messages.Message.changeset(%KjerSi.Messages.Message{}, payload)
+      |> KjerSi.Repo.insert
+
+    message = KjerSi.Repo.preload(message, :user)
 
     # Broadcast back to everyone in the channel
-    broadcast socket, "shout", payload
+    broadcast socket, "shout", render_message(message)
 
     {:noreply, socket}
   end
@@ -45,11 +52,7 @@ defmodule KjerSiWeb.ChatChannel do
   def handle_info(:after_join, socket) do
     "room:" <> room_id = socket.topic
     KjerSi.Messages.Message.get_messages_for_room(room_id)
-    |> Enum.each(fn msg -> push(socket, "shout", %{
-        user_id: msg.user_id,
-        content: msg.content,
-        room_id: msg.room_id,
-      }) end)
-    {:noreply, socket} # :noreply
+      |> Enum.each(fn msg -> push(socket, "shout", render_message(msg)) end)
+    {:noreply, socket}
   end
 end
