@@ -4,10 +4,8 @@ defmodule KjerSi.Events do
   """
 
   import Ecto.Query, warn: false
+
   alias KjerSi.Repo
-
-  import Logger
-
   alias KjerSi.Events.Event
   alias KjerSi.Events.UserEvent
 

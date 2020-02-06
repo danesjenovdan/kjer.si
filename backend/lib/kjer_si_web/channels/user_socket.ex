@@ -1,5 +1,3 @@
-require Logger
-
 defmodule KjerSiWeb.UserSocket do
   use Phoenix.Socket
 

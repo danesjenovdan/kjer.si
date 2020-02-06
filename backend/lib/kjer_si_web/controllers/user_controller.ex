@@ -2,14 +2,11 @@ defmodule KjerSiWeb.UserController do
   use KjerSiWeb, :controller
 
   import Plug.Conn
-  import Logger
 
   alias KjerSi.Accounts
   alias KjerSi.Accounts.User
   alias KjerSi.AccountsHelpers
   alias KjerSi.UserHelpers
-
-  alias KjerSi.Rooms.Room
 
   action_fallback KjerSiWeb.FallbackController
 
@@ -76,7 +73,7 @@ defmodule KjerSiWeb.UserController do
   #     Room
   #     |> where([room], room.id in ^room_ids)
   #     |> Repo.all()
-    
+
   #   with {:ok, struct} <-
   #     user
   #     |> User.changeset_update_rooms(rooms)

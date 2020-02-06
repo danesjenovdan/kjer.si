@@ -3,7 +3,7 @@ require Logger
 defmodule KjerSiWeb.ChatChannel do
   use KjerSiWeb, :channel
 
-  def join("room:" <> room_id, _payload, socket) do
+  def join("room:" <> _room_id, _payload, socket) do
     if authorized?(socket.assigns.user_id) do
       send(self(), :after_join)
       {:ok, socket}

@@ -2,10 +2,8 @@ defmodule KjerSiWeb.MapController do
   use KjerSiWeb, :controller
 
   import Plug.Conn
-  import Plug.Parsers.JSON
-  alias KjerSi.Rooms
 
-  import Logger
+  alias KjerSi.Rooms
 
   action_fallback KjerSiWeb.FallbackController
 

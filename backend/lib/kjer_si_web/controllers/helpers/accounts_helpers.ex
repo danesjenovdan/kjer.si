@@ -1,5 +1,6 @@
 defmodule KjerSi.AccountsHelpers do
   import Plug.Conn
+
   alias KjerSi.Accounts
 
   def get_auth(conn) do
