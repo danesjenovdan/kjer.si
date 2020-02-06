@@ -74,8 +74,8 @@ defmodule KjerSi.Accounts do
       ** nil
 
   """
-  def get_user_with_preload(uid, preload) do
-    uid
+  def get_user_with_preload(id, preload) do
+    id
     |> get_user!
     |> Repo.preload(preload)
   end
