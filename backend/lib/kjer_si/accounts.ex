@@ -61,7 +61,7 @@ defmodule KjerSi.Accounts do
   def get_user_by_uid(uid), do: Repo.get_by(User, uid: uid)
 
   @doc """
-  Gets a single user by uid and preloads stuff.
+  Gets a single user by id and preloads stuff.
 
   Returns `nil` if the User does not exist.
 
@@ -74,9 +74,9 @@ defmodule KjerSi.Accounts do
       ** nil
 
   """
-  def get_user_with_preload(uid, preload) do
-    uid
-    |> get_user_by_uid
+  def get_user_with_preload(id, preload) do
+    id
+    |> get_user!
     |> Repo.preload(preload)
   end
 

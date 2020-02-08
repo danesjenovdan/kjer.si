@@ -12,7 +12,7 @@ defmodule KjerSiWeb.UserController do
 
   def index(conn, _params) do
     unless AccountsHelpers.is_admin(conn) do
-      AccountsHelpers.return_unauthorized(conn)
+      AccountsHelpers.return_error(conn, :forbidden)
     else
       users = Accounts.list_users()
       render(conn, "index.json", users: users)
@@ -32,9 +32,9 @@ defmodule KjerSiWeb.UserController do
     user = Accounts.get_user_by_uid(uid)
     cond do
       user == nil ->
-        AccountsHelpers.return_not_found(conn)
+        AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.uid ->
-      #   AccountsHelpers.return_unauthorized(conn)
+      #   AccountsHelpers.return_error(conn, :forbidden)
       true ->
         render(conn, "user_nickname.json", user: user)
     end
@@ -44,9 +44,9 @@ defmodule KjerSiWeb.UserController do
     user = Accounts.get_user_by_uid(uid)
     cond do
       user == nil ->
-        AccountsHelpers.return_not_found(conn)
+        AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.id ->
-      #   AccountsHelpers.return_unauthorized(conn)
+      #   AccountsHelpers.return_error(conn, :forbidden)
       true ->
         with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
           render(conn, "show.json", user: user)
@@ -58,9 +58,9 @@ defmodule KjerSiWeb.UserController do
     user = Accounts.get_user_by_uid(uid)
     cond do
       user == nil ->
-        AccountsHelpers.return_not_found(conn)
+        AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.uid and not AccountsHelpers.is_admin(conn) ->
-      #   AccountsHelpers.return_unauthorized(conn)
+      #   AccountsHelpers.return_error(conn, :forbidden)
       true ->
         with {:ok, %User{}} <- Accounts.delete_user(user) do
           send_resp(conn, :no_content, "")
@@ -91,9 +91,15 @@ defmodule KjerSiWeb.UserController do
     send_resp(conn, :ok, name)
   end
 
-  def recover_self(conn, _params) do
-    user = conn |> AccountsHelpers.get_uid |> Accounts.get_user_by_uid
-    render(conn, "show.json", user: user)
+  def recover_self(conn, %{"uid" => uid}) do
+    user = Accounts.get_user_by_uid(uid)
+
+    # It's ok for the salt to be hardcoded
+    # https://elixirforum.com/t/phoenix-token-for-api-auth-salt-per-user-or-per-app/13361
+    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
+
+    # Phoenix.Token.verify(MyApp.Endpoint, "user auth", token, max_age: 86400)
+    render(conn, "user_with_token.json", %{token: token, user: user})
   end
 end
 

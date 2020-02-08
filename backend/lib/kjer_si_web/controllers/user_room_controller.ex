@@ -28,7 +28,7 @@ defmodule KjerSiWeb.UserRoomController do
           |> render("show.json", user_room: user_room)
         end
       else
-        AccountsHelpers.return_unauthorized(conn)
+        AccountsHelpers.return_error(conn, :forbidden)
       end
     end
   end
@@ -54,7 +54,7 @@ defmodule KjerSiWeb.UserRoomController do
             send_resp(conn, :no_content, "")
           end
         else
-          AccountsHelpers.return_unauthorized(conn)
+          AccountsHelpers.return_error(conn, :forbidden)
         end
       end
     end

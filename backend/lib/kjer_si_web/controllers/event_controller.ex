@@ -32,9 +32,9 @@ defmodule KjerSiWeb.EventController do
     event = Events.get_event_by_id(uid)
     cond do
       #event == nil ->
-      #  AccountsHelpers.return_not_found(conn)
+      #  AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.id ->
-      #   AccountsHelpers.return_unauthorized(conn)
+      #   AccountsHelpers.return_error(conn, :forbidden)
       true ->
         with {:ok, %Event{} = event} <- Events.update_event(event, event_params) do
           render(conn, "show.json", event: event)

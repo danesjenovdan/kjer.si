@@ -17,6 +17,6 @@ defmodule KjerSiWeb.Router do
     post "/map/rooms", MapController, :get_rooms_in_radius
     get "/generate-username", UserController, :generate_username
     get "/categories", RoomController, :categories
-    get "/recover-self", UserController, :recover_self
+    post "/recover-self", UserController, :recover_self
   end
 end

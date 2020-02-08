@@ -19,7 +19,8 @@ config :kjer_si, KjerSi.Repo,
 # Configures the endpoint
 config :kjer_si, KjerSiWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "RWXcvmiZMWqdlx9nJWYotq3OHfavqzltRMe2KwlsTlaIR11hTfR/Mnka4TJy6OXC",
+  secret_key_base: System.get_env("SECRET_KEY"),
+  token_salt: System.get_env("TOKEN_SALT"),
   render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: KjerSi.PubSub, adapter: Phoenix.PubSub.PG2]
 
