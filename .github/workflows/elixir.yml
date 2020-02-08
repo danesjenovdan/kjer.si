@@ -1,0 +1,38 @@
+name: Elixir CI
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: mdillon/postgis
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup elixir
+        uses: actions/setup-elixir@v1
+        with:
+          elixir-version: 1.9.4 # Define the elixir version [required]
+          otp-version: 22.2 # Define the OTP version [required]
+      - name: Install Dependencies
+        working-directory: backend
+        run: mix deps.get
+      - name: Run Tests
+        working-directory: backend
+        env:
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          SECRET_KEY: FakeSecretForTests
+          PGDATABASE: kjer_si
+          PGHOST: localhost
+        run: mix test
