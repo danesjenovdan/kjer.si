@@ -1,7 +1,7 @@
 defmodule KjerSi.UserHelpers do
   alias KjerSi.Accounts
 
-  defp generate_name() do
+  defp generate_name do
     {:ok, first} = File.read("lib/kjer_si_web/controllers/helpers/first.txt")
     {:ok, second} = File.read("lib/kjer_si_web/controllers/helpers/second.txt")
     first_bag = String.split(first, "\n")
@@ -10,14 +10,12 @@ defmodule KjerSi.UserHelpers do
     Enum.random(first_bag) <> Enum.random(second_bag)
   end
 
-  def generate_unique_name() do
-    nickname = generate_name
-    cond do
-      not Accounts.unique_nickname?(nickname) ->
-        generate_unique_name
-      true ->
-        nickname
+  def generate_unique_name do
+    nickname = generate_name()
+    if Accounts.unique_nickname?(nickname) do
+      nickname
+    else
+      generate_unique_name()
     end
   end
-
 end
