@@ -1,15 +1,15 @@
 defmodule KjerSiWeb.UserControllerTest do
   use KjerSiWeb.ConnCase
-
+  require Logger
   alias KjerSi.Accounts
   alias KjerSi.Accounts.User
 
   @create_attrs %{
-    uid: 42,
+    uid: "42",
     nickname: "some nickname"
   }
   @update_attrs %{
-    uid: 43,
+    uid: "43",
     nickname: "some updated nickname"
   }
   @invalid_attrs %{uid: nil, nickname: nil}
@@ -39,7 +39,8 @@ defmodule KjerSiWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "uid" => 42,
+               "is_active" => true,
+               "uid" => "42",
                "nickname" => "some nickname"
              } = json_response(conn, 200)["data"]
     end
@@ -61,7 +62,7 @@ defmodule KjerSiWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "uid" => 43,
+               "uid" => "43",
                "nickname" => "some updated nickname"
              } = json_response(conn, 200)["data"]
     end
@@ -85,7 +86,23 @@ defmodule KjerSiWeb.UserControllerTest do
     end
   end
 
+  describe "recover self" do
+    setup [:create_user]
+
+    test "generates token", %{conn: conn, user: user} do
+      conn = post(conn, Routes.user_path(conn, :recover_self), %{ uid: user.uid })
+
+      assert json_response(conn, 200)
+      assert String.length(json_response(conn, 200)["token"]) == 148
+
+      assert_error_sent 404, fn ->
+        get(conn, Routes.user_path(conn, :recover_self), %{ uid: user.uid })
+      end
+    end
+  end
+
   defp create_user(_) do
+    Logger.debug("yeah this is called")
     user = fixture(:user)
     {:ok, user: user}
   end

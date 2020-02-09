@@ -70,26 +70,28 @@ defmodule KjerSi.RoomsTest do
     @invalid_attrs %{lat: nil, lng: nil, name: nil, radius: nil}
 
     def room_fixture(attrs \\ %{}) do
+      test_category = TestHelper.generate_category()
+
       {:ok, room} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> Map.merge(%{category_id: test_category.id})
         |> Rooms.create_room()
-
       room
     end
 
     test "list_rooms/0 returns all rooms" do
-      room = %{ room_fixture() | lat: nil, lng: nil }
+      room = %{ room_fixture() | lat: 120.5, lng: 120.5 }
       assert Rooms.list_rooms() == [room]
     end
 
     test "get_room!/1 returns the room with given id" do
-      room = %{ room_fixture() | lat: nil, lng: nil }
+      room = %{ room_fixture() | lat: 120.5, lng: 120.5 }
       assert Rooms.get_room!(room.id) == room
     end
 
     test "create_room/1 with valid data creates a room" do
-      assert {:ok, %Room{} = room} = Rooms.create_room(@valid_attrs)
+      assert {:ok, %Room{} = room} = Rooms.create_room(Map.merge(@valid_attrs, %{category_id: TestHelper.generate_category().id}))
       assert room.coordinates == %Geo.Point{coordinates: {120.5, 120.5}, srid: 4326}
       assert room.name == "some name"
       assert room.radius == 42
@@ -108,7 +110,7 @@ defmodule KjerSi.RoomsTest do
     end
 
     test "update_room/2 with invalid data returns error changeset" do
-      room = %{ room_fixture() | lat: nil, lng: nil }
+      room = %{ room_fixture() | lat: 120.5, lng: 120.5 }
       assert {:error, %Ecto.Changeset{}} = Rooms.update_room(room, @invalid_attrs)
       assert room == Rooms.get_room!(room.id)
     end
