@@ -6,8 +6,8 @@ defmodule KjerSi.AccountsTest do
   describe "users" do
     alias KjerSi.Accounts.User
 
-    @valid_attrs %{uid: 42, nickname: "some nickname"}
-    @update_attrs %{uid: 43, nickname: "some updated nickname"}
+    @valid_attrs %{uid: "42", nickname: "some nickname"}
+    @update_attrs %{uid: "43", nickname: "some updated nickname"}
     @invalid_attrs %{uid: nil, nickname: nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -31,7 +31,7 @@ defmodule KjerSi.AccountsTest do
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
-      assert user.uid == 42
+      assert user.uid == "42"
       assert user.nickname == "some nickname"
     end
 
@@ -42,7 +42,7 @@ defmodule KjerSi.AccountsTest do
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
       assert {:ok, %User{} = user} = Accounts.update_user(user, @update_attrs)
-      assert user.uid == 43
+      assert user.uid == "43"
       assert user.nickname == "some updated nickname"
     end
 
@@ -67,15 +67,14 @@ defmodule KjerSi.AccountsTest do
   describe "user_rooms" do
     alias KjerSi.Accounts.UserRoom
 
-    @valid_attrs %{}
-    @update_attrs %{}
-    @invalid_attrs %{}
+    def user_room_fixture() do
+      test_user = TestHelper.generate_user()
+      test_room = TestHelper.generate_room()
 
-    def user_room_fixture(attrs \\ %{}) do
-      {:ok, user_room} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_user_room()
+      {:ok, user_room} = Accounts.create_user_room(%{
+        user_id: test_user.id,
+        room_id: test_room.id,
+      })
 
       user_room
     end
@@ -86,11 +85,20 @@ defmodule KjerSi.AccountsTest do
     end
 
     test "create_user_room/1 with valid data creates a user_room" do
-      assert {:ok, %UserRoom{} = user_room} = Accounts.create_user_room(@valid_attrs)
+      test_user = TestHelper.generate_user()
+      test_room = TestHelper.generate_room()
+
+      assert {:ok, %UserRoom{} = user_room} = Accounts.create_user_room(%{
+        user_id: test_user.id,
+        room_id: test_room.id,
+      })
     end
 
     test "create_user_room/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_user_room(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_user_room(%{
+        user_id: "clearly invalid",
+        room_id: -6,
+      })
     end
 
     test "delete_user_room/1 deletes the user_room" do
