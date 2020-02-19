@@ -13,6 +13,7 @@ defmodule KjerSiWeb.EventView do
   def render("event.json", %{event: event}) do
     %{id: event.id,
       name: event.name,
+<<<<<<< HEAD
       datetime: event.datetime,
       description: event.description,
       location: event.location,
@@ -22,3 +23,9 @@ defmodule KjerSiWeb.EventView do
     }
   end
 end
+=======
+      description: event.description
+    }
+  end
+end
+>>>>>>> 3d458a62738855956ff32c424c1eaf0462e31d1b
