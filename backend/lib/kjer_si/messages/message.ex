@@ -24,7 +24,8 @@ defmodule KjerSi.Messages.Message do
   def get_messages_for_room(room_id) do
     query = from m in KjerSi.Messages.Message,
       where: m.room_id == ^room_id,
-      order_by: [asc: m.inserted_at]
+      order_by: [asc: m.inserted_at],
+      preload: [:user]
     KjerSi.Repo.all(query)
   end
 end

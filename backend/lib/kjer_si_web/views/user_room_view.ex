@@ -1,7 +1,6 @@
 defmodule KjerSiWeb.UserRoomView do
   use KjerSiWeb, :view
   alias KjerSiWeb.UserRoomView
-  alias KjerSiWeb.RoomView
 
   def render("show.json", %{user_room: user_room}) do
     %{data: render_one(user_room, UserRoomView, "user_room.json")}

@@ -29,18 +29,8 @@
         channel: null,
         userId: UserService.default.user.id,
         messageText: '',
-        messages: new ObservableArray([
-          {
-            id: '123',
-            type: 'text',
-            text: 'Hello world',
-            user: {
-              id: '1',
-              name: 'Some other user'
-            }
-          }
-        ])
-      }
+        messages: new ObservableArray([]),
+      },
     },
     computed: {
       message() {
@@ -77,13 +67,15 @@
 
         // listen for 'shout' events
         this.channel.on('shout', payload => {
-
+          const message = payload;
           console.log('SHOUT');
 
-          if (payload.body.user.id === this.userId) {
-            payload.body.type = 'my_text';
+          if (message.user_id === this.userId) {
+            message.type = 'my_text';
+          } else {
+            message.type = 'text';
           }
-          this.messages.push(payload.body);
+          this.messages.push(message);
         });
 
 
@@ -126,15 +118,7 @@
 
         // to send messages
         this.channel.push('shout', {
-          body: {
-            type: 'text',
-            text: this.messageText,
-            id: UUID.getUUID(),
-            user: {
-              id: UserService.default.user.id,
-              name: UserService.default.user.name
-            }
-          }
+          content: this.messageText,
         }).receive("ok", (msg) => console.log("created message", msg))
           .receive("error", (reasons) => console.log("create failed", reasons))
           .receive("timeout", () => console.log("Networking issue..."));

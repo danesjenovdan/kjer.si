@@ -2,7 +2,6 @@ defmodule KjerSiWeb.UserEventController do
   use KjerSiWeb, :controller
 
   import Plug.Conn
-  import Logger
 
   alias KjerSi.Events
   alias KjerSi.Accounts.User

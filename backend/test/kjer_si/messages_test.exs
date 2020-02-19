@@ -11,11 +11,17 @@ defmodule KjerSi.MessagesTest do
     @invalid_attrs %{content: nil}
 
     def message_fixture(attrs \\ %{}) do
+      test_user = TestHelper.generate_user()
+      test_room = TestHelper.generate_room()
+
       {:ok, message} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> Map.merge(%{
+          user_id: test_user.id,
+          room_id: test_room.id,
+        })
         |> Messages.create_message()
-
       message
     end
 
@@ -30,7 +36,11 @@ defmodule KjerSi.MessagesTest do
     end
 
     test "create_message/1 with valid data creates a message" do
-      assert {:ok, %Message{} = message} = Messages.create_message(@valid_attrs)
+      assert {:ok, %Message{} = message} = Messages.create_message(%{
+        user_id: TestHelper.generate_user().id,
+        room_id: TestHelper.generate_room().id,
+        content: "some content",
+      })
       assert message.content == "some content"
     end
 

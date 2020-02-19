@@ -36,13 +36,13 @@ defmodule KjerSi.MixProject do
       {:phoenix, "~> 1.4"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.1.0"},
+      {:ecto_sql, "~> 3.3"},
       {:postgrex, "~> 0.15"},
       {:gettext, "~> 0.17"},
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.1"},
-      {:geo, "~> 3.3.2"},
-      {:geo_postgis, "~> 3.3.0"}
+      {:geo, "~> 3.3"},
+      {:geo_postgis, "~> 3.3"}
     ]
   end
 

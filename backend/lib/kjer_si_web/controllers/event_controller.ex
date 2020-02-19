@@ -2,7 +2,6 @@ defmodule KjerSiWeb.EventController do
   use KjerSiWeb, :controller
 
   import Plug.Conn
-  import Logger
 
   alias KjerSi.Events
   alias KjerSi.Events.Event
@@ -34,9 +33,9 @@ defmodule KjerSiWeb.EventController do
     event = Events.get_event_by_id(uid)
     cond do
       #event == nil ->
-      #  AccountsHelpers.return_not_found(conn)
+      #  AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.id ->
-      #   AccountsHelpers.return_unauthorized(conn)
+      #   AccountsHelpers.return_error(conn, :forbidden)
       true ->
         with {:ok, %Event{} = event} <- Events.update_event(event, event_params) do
           render(conn, "show.json", event: event)
@@ -45,6 +44,9 @@ defmodule KjerSiWeb.EventController do
   end
 
 end
+<<<<<<< HEAD
 =======
 end
 >>>>>>> 3d458a62738855956ff32c424c1eaf0462e31d1b
+=======
+>>>>>>> 3234e48bbf98f923ffc0573172e1a941a35a1e17

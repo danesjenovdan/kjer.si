@@ -4,11 +4,15 @@ defmodule KjerSi.Events do
   """
 
   import Ecto.Query, warn: false
+<<<<<<< HEAD
   alias KjerSi.Repo
 
 <<<<<<< HEAD
   import Logger
+=======
+>>>>>>> 3234e48bbf98f923ffc0573172e1a941a35a1e17
 
+  alias KjerSi.Repo
   alias KjerSi.Events.Event
   alias KjerSi.Events.UserEvent
 =======
