@@ -20,6 +20,7 @@
   import * as utils from "tns-core-modules/utils/utils";
   import {isIOS, isAndroid} from "tns-core-modules/platform";
   import * as frame from "tns-core-modules/ui/frame";
+  import NewEvent from "../NewEvent/NewEvent";
 
   export default {
     props: ['roomId', 'roomName'],
@@ -30,7 +31,7 @@
         userId: UserService.default.user.id,
         messageText: '',
         messages: new ObservableArray([]),
-      },
+      }
     },
     computed: {
       message() {
@@ -103,6 +104,19 @@
             } else {
               this.$refs.chatListView.nativeView.scrollToIndex(this.messages.length - 1);
             }
+          }
+        });
+
+      },
+
+      onNewEventTap() {
+
+        this.$navigateTo(NewEvent, {
+          transition: {
+            name: 'slideLeft',
+            duration: 300,
+            curve: 'easeInOut'
+            // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
           }
         });
 

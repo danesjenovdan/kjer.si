@@ -1,0 +1,6 @@
+<GridLayout columns="*, auto" class="toggle-container">
+  <Label @tap="onToggleLabelTap" class="toggle-label" :class="false" :text="label" col="0"></Label>
+  <StackLayout col="1">
+    <Switch :checked="isChecked" v-model="isChecked" @checkedChange="onCheckedChange($event)"></Switch>
+  </StackLayout>
+</GridLayout>

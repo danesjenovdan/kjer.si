@@ -20,6 +20,7 @@
     "nativescript-localstorage": "^2.0.1",
     "nativescript-lottie": "3.0.3",
     "nativescript-mapbox": "^4.4.1",
+    "nativescript-modal-datetimepicker": "^1.2.1",
     "nativescript-ripple": "^2.2.1",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-toast": "^2.0.0",

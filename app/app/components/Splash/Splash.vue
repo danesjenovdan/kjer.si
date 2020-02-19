@@ -17,13 +17,6 @@
   import * as utils from 'tns-core-modules/utils/utils';
   import * as platform from 'tns-core-modules/platform';
   import * as geolocation from "nativescript-geolocation";
-  import {Accuracy} from "tns-core-modules/ui/enums"; // used to describe at what accuracy the location should be get
-
-  // Websockets import is required for Phx to work
-  // there's a modification in the phoenix.js file that requires nativescript-websockets to set the global WebSocket variable
-  import * as websockets from 'nativescript-websockets';
-
-  const Phx = require("../../assets/js/phoenix"); // <- this depends on where you put your file
 
   export default {
     computed: {

@@ -1,0 +1,28 @@
+<Page ref="pageRef" class="page">
+
+  <GridLayout ref="appContainer" rows="70, *, auto" width="100%" height="100%">
+
+    <GridLayout class="events-page-header-container" row="0" columns="70, *, 70">
+      <Rippler rippleColor="#777777" rippleBorderRadius="50" margin="5" @tap="onBackTap" col="0">
+        <Image class="page-header-icon" src="~/assets/images/close_icon.png" height="60"
+               stretch="aspectFit"/>
+      </Rippler>
+      <Label verticalAlignment="center" class="page-header-title" :text="'Create event' |L" col="1"></Label>
+    </GridLayout>
+
+    <ScrollView row="1">
+      <StackLayout>
+        <TextField class="event-title-textfield" :hint="'Event title'|L"></TextField>
+        <TextView class="event-description-textview" :hint="'A caouple of words about the event...'|L"></TextView>
+        <Toggle :label="'Limited event'|L" :checked="limitedEvent" @checkedChange="onLimitedCheckedChange"></Toggle>
+        <TextField v-if="limitedEvent" :value="numSeats"></TextField>
+      </StackLayout>
+    </ScrollView>
+
+    <StackLayout class="event-page-footer" row="2">
+      <Label @tap="confirmRangeTap" class="kjer-si-big-button" text="Potrdi" margin="0 10"></Label>
+    </StackLayout>
+
+  </GridLayout>
+
+</Page>
