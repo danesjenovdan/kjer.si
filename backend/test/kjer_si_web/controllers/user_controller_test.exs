@@ -1,109 +1,156 @@
 defmodule KjerSiWeb.UserControllerTest do
   use KjerSiWeb.ConnCase
-  require Logger
-  alias KjerSi.Accounts
+
+  alias KjerSi.Repo
   alias KjerSi.Accounts.User
 
-  @create_attrs %{
-    uid: "42",
-    nickname: "some nickname"
-  }
-  @update_attrs %{
-    uid: "43",
-    nickname: "some updated nickname"
-  }
-  @invalid_attrs %{uid: nil, nickname: nil}
+  setup %{conn: conn} do
+    {:ok, admin} = Repo.insert(%User{nickname: "admin", uid: "1", is_admin: true})
+    {:ok, user} = Repo.insert(%User{nickname: "user", uid: "2", is_admin: false})
 
-  def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
-    user
+    {:ok, conn: conn, admin: admin, user: user}
   end
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+  defp login_user(conn, user) do
+    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
+    put_req_header(conn, "authorization", "Bearer #{token}")
   end
 
   describe "index" do
-    test "lists all users", %{conn: conn} do
-      conn = get(conn, Routes.user_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+    test "regular user can't list other users", %{conn: conn, user: user} do
+      %{"error" => "Not allowed to perform action"} =
+        conn
+        |> login_user(user)
+        |> get(Routes.user_path(conn, :index))
+        |> json_response(403)
+    end
+
+    test "admin user can list other users", %{conn: conn, admin: admin} do
+      %{"data" => [%{"nickname" => "admin"}, %{"nickname" => "user"}]} =
+        conn
+        |> login_user(admin)
+        |> get(Routes.user_path(conn, :index))
+        |> json_response(200)
     end
   end
 
-  describe "create user" do
-    test "renders user when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.user_path(conn, :create), user: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+  describe "show" do
+    test "user can't list info about another user", %{conn: conn, user: user, admin: admin} do
+      %{"error" => "Not allowed to perform action"} =
+        conn
+        |> login_user(user)
+        |> get(Routes.user_path(conn, :show, admin.id))
+        |> json_response(403)
+    end
 
-      conn = get(conn, Routes.user_path(conn, :show, id))
+    test "user can list info about self", %{conn: conn, user: user} do
+      %{"data" => %{"nickname" => "user"}} =
+        conn
+        |> login_user(user)
+        |> get(Routes.user_path(conn, :show, user.id))
+        |> json_response(200)
+    end
+  end
 
-      assert %{
-               "id" => id,
-               "is_active" => true,
-               "uid" => "42",
-               "nickname" => "some nickname"
-             } = json_response(conn, 200)["data"]
+  describe "create" do
+    test "anyone can create new user", %{conn: conn, admin: admin} do
+      conn
+      |> post(Routes.user_path(conn, :create), user: %{uid: "42", nickname: "some nickname"})
+      |> json_response(201)
+
+      %{"data" => users} =
+        conn
+        |> login_user(admin)
+        |> get(Routes.user_path(conn, :index))
+        |> json_response(200)
+
+      assert [
+               _,
+               _,
+               %{
+                 "uid" => "42",
+                 "nickname" => "some nickname"
+               }
+             ] = users
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.user_path(conn, :create), user: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
+      %{"errors" => %{"detail" => "Unprocessable Entity"}} =
+        conn
+        |> post(Routes.user_path(conn, :create), user: %{uid: nil})
+        |> json_response(422)
     end
   end
 
-  describe "update user" do
-    setup [:create_user]
+  describe "update" do
+    test "users can update themselves", %{conn: conn, user: user} do
+      %{"data" => %{"nickname" => "updated nickname"}} =
+        conn
+        |> login_user(user)
+        |> put(Routes.user_path(conn, :update, user), user: %{nickname: "updated nickname"})
+        |> json_response(200)
+    end
 
-    test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
-      conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+    test "users can't promote themselves to admin", %{conn: conn, user: user} do
+      # if someone adds :is_admin to user.ex changeset, this test should catch it
+      conn
+      |> login_user(user)
+      |> put(Routes.user_path(conn, :update, user), user: %{is_admin: true})
+      |> get(Routes.user_path(conn, :index))
+      |> json_response(403)
+    end
 
-      conn = get(conn, Routes.user_path(conn, :show, id))
+    test "user can't deactivate user", %{conn: conn, user: user} do
+      conn
+      |> login_user(user)
+      |> put(Routes.user_path(conn, :update, user), user: %{is_active: false})
+      |> json_response(403)
+    end
 
-      assert %{
-               "id" => id,
-               "uid" => "43",
-               "nickname" => "some updated nickname"
-             } = json_response(conn, 200)["data"]
+    test "admin can deactivate user", %{conn: conn, user: user, admin: admin} do
+      %{"data" => %{"is_active" => false}} =
+        conn
+        |> login_user(admin)
+        |> put(Routes.user_path(conn, :update, user), user: %{is_active: false})
+        |> json_response(200)
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do
-      conn = put(conn, Routes.user_path(conn, :update, user), user: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
+      %{"errors" => %{"detail" => "Unprocessable Entity"}} =
+        conn
+        |> put(Routes.user_path(conn, :update, user), user: %{uid: nil})
+        |> json_response(422)
     end
   end
 
   describe "delete user" do
-    setup [:create_user]
+    test "admin can delete a user", %{conn: conn, user: user, admin: admin} do
+      conn
+      |> login_user(admin)
+      |> delete(Routes.user_path(conn, :delete, user))
+      |> response(204)
+    end
 
-    test "deletes chosen user", %{conn: conn, user: user} do
-      conn = delete(conn, Routes.user_path(conn, :delete, user))
-      assert response(conn, 204)
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.user_path(conn, :show, user))
-      end
+    test "user can't delete a user", %{conn: conn, user: user} do
+      conn
+      |> login_user(user)
+      |> delete(Routes.user_path(conn, :delete, user))
+      |> response(403)
     end
   end
 
   describe "recover self" do
-    setup [:create_user]
-
     test "generates token", %{conn: conn, user: user} do
-      conn = post(conn, Routes.user_path(conn, :recover_self), %{ uid: user.uid })
+      %{"token" => token} =
+        conn
+        |> post(Routes.user_path(conn, :recover_self), %{uid: user.uid})
+        |> json_response(200)
 
-      assert json_response(conn, 200)
-      assert String.length(json_response(conn, 200)["token"]) == 148
+      assert String.length(token) == 148
 
       assert_error_sent 404, fn ->
-        get(conn, Routes.user_path(conn, :recover_self), %{ uid: user.uid })
+        get(conn, Routes.user_path(conn, :recover_self), %{uid: user.uid})
       end
     end
-  end
-
-  defp create_user(_) do
-    Logger.debug("yeah this is called")
-    user = fixture(:user)
-    {:ok, user: user}
   end
 end
