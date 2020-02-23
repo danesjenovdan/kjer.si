@@ -1,0 +1,13 @@
+# Copy this file and remove the .dist extension to make it active. It's
+# currently intentionally added to .gitignore to allow everyone to make their
+# own customizations.
+#
+# See https://docs.docker.com/compose/extends/ for more details on how
+# override files work.
+
+version: '3.7'
+
+services:
+  db:
+    ports:
+      - "5432:5432"
