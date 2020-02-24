@@ -17,7 +17,3 @@ defmodule KjerSiWeb.MapController do
     render(conn, "rooms.json", rooms: rooms)
   end
 end
-
-# TODO
-# make sure only admins can do admin stuff
-# make sure users can only access info about / delete themselves
