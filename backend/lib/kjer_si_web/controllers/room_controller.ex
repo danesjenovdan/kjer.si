@@ -1,8 +1,6 @@
 defmodule KjerSiWeb.RoomController do
   use KjerSiWeb, :controller
 
-  import Plug.Conn
-
   alias KjerSi.AccountsHelpers
   alias KjerSi.Rooms
   alias KjerSi.Rooms.Room
