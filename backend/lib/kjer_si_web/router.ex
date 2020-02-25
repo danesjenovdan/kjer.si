@@ -3,7 +3,6 @@ defmodule KjerSiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    use Plug.Debugger # TODO Disable before production
   end
 
   scope "/api", KjerSiWeb do
