@@ -123,22 +123,6 @@ defmodule KjerSiWeb.UserControllerTest do
     end
   end
 
-  describe "delete user" do
-    test "admin can delete a user", %{conn: conn, user: user, admin: admin} do
-      conn
-      |> login_user(admin)
-      |> delete(Routes.user_path(conn, :delete, user))
-      |> response(204)
-    end
-
-    test "user can't delete a user", %{conn: conn, user: user} do
-      conn
-      |> login_user(user)
-      |> delete(Routes.user_path(conn, :delete, user))
-      |> response(403)
-    end
-  end
-
   describe "recover self" do
     test "generates token", %{conn: conn, user: user} do
       %{"token" => token} =

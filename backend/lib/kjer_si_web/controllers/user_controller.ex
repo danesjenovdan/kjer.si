@@ -42,12 +42,6 @@ defmodule KjerSiWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    Accounts.delete_user(user)
-    send_resp(conn, :no_content, "")
-  end
-
   def generate_username(conn, _params) do
     # generate nickname and assign to user here TODO
     name = UserHelpers.generate_unique_name()
