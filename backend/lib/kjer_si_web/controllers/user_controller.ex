@@ -8,9 +8,6 @@ defmodule KjerSiWeb.UserController do
 
   action_fallback KjerSiWeb.FallbackController
 
-  plug KjerSiWeb.Plugs.Auth, "is_admin" when action in [:index, :delete]
-  plug KjerSiWeb.Plugs.Auth, "is_self" when action in [:show]
-
   def index(conn, _params) do
     users = Accounts.list_users()
     render(conn, "index.json", users: users)
@@ -23,11 +20,6 @@ defmodule KjerSiWeb.UserController do
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
       |> render("show.json", user: user)
     end
-  end
-
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    render(conn, "show.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
