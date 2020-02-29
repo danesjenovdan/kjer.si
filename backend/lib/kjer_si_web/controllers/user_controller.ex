@@ -8,8 +8,8 @@ defmodule KjerSiWeb.UserController do
 
   action_fallback KjerSiWeb.FallbackController
 
-  plug :is_admin when action in [:index, :delete]
-  plug :is_self when action in [:show]
+  plug KjerSiWeb.Plugs.Auth, "is_admin" when action in [:index, :delete]
+  plug KjerSiWeb.Plugs.Auth, "is_self" when action in [:show]
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -57,23 +57,5 @@ defmodule KjerSiWeb.UserController do
 
     # Phoenix.Token.verify(MyApp.Endpoint, "user auth", token, max_age: 86400)
     render(conn, "user_with_token.json", %{token: token, user: user})
-  end
-
-  defp is_admin(conn, _opts) do
-    if AccountsHelpers.is_admin(conn) do
-      conn
-    else
-      AccountsHelpers.return_error(conn, :forbidden)
-    end
-  end
-
-  defp is_self(%{params: %{"id" => user_id}} = conn, _opts) do
-    with {:ok, %User{} = user} <- AccountsHelpers.get_auth_user(conn) do
-      if user_id == user.id do
-        conn
-      else
-        AccountsHelpers.return_error(conn, :forbidden)
-      end
-    end
   end
 end
