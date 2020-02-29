@@ -13,9 +13,9 @@ defmodule KjerSiWeb.Router do
     resources "/eventsubscriptions", UserEventController, only: [:index, :create, :delete]
     resources "/rooms", RoomController, only: [:create, :delete]
 
-    post "/map/rooms", MapController, :get_rooms_in_radius
-    get "/generate-username", UserController, :generate_username
     get "/categories", RoomController, :categories
+    get "/generate-username", UserController, :generate_username
     post "/recover-self", UserController, :recover_self
+    post "/map/rooms", MapController, :get_rooms_in_radius
   end
 end
