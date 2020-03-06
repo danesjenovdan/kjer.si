@@ -3,7 +3,6 @@ defmodule KjerSiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    use Plug.Debugger # TODO Disable before production
   end
 
   scope "/api", KjerSiWeb do
@@ -14,9 +13,9 @@ defmodule KjerSiWeb.Router do
     resources "/eventsubscriptions", UserEventController, only: [:index, :create, :delete]
     resources "/rooms", RoomController, only: [:create, :delete, :show]
 
-    post "/map/rooms", MapController, :get_rooms_in_radius
-    get "/generate-username", UserController, :generate_username
     get "/categories", RoomController, :categories
+    get "/generate-username", UserController, :generate_username
     post "/recover-self", UserController, :recover_self
+    post "/map/rooms", MapController, :get_rooms_in_radius
   end
 end

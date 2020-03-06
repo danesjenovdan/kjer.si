@@ -73,5 +73,6 @@ defmodule KjerSi.AccountsHelpers do
     conn
       |> put_resp_content_type("application/json")
       |> send_resp(error.code, "{\"error\": \"#{error.message}\"}")
+      |> halt()
   end
 end

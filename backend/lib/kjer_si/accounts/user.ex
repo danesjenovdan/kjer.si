@@ -19,7 +19,7 @@ defmodule KjerSi.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:nickname, :uid])
+    |> cast(attrs, [:nickname, :uid, :is_active])
     |> validate_required([:nickname, :uid])
     |> unique_constraint(:nickname)
     |> unique_constraint(:uid)

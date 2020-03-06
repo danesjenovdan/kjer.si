@@ -1,8 +1,6 @@
 defmodule KjerSiWeb.UserController do
   use KjerSiWeb, :controller
 
-  import Plug.Conn
-
   alias KjerSi.Accounts
   alias KjerSi.Accounts.User
   alias KjerSi.AccountsHelpers
@@ -10,13 +8,12 @@ defmodule KjerSiWeb.UserController do
 
   action_fallback KjerSiWeb.FallbackController
 
+  plug KjerSiWeb.Plugs.Auth, "is_admin" when action in [:index, :delete]
+  plug KjerSiWeb.Plugs.Auth, "is_self" when action in [:show]
+
   def index(conn, _params) do
-    unless AccountsHelpers.is_admin(conn) do
-      AccountsHelpers.return_error(conn, :forbidden)
-    else
-      users = Accounts.list_users()
-      render(conn, "index.json", users: users)
-    end
+    users = Accounts.list_users()
+    render(conn, "index.json", users: users)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -30,41 +27,24 @@ defmodule KjerSiWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
-    cond do
-      user == nil ->
-        AccountsHelpers.return_error(conn, :not_found)
-      true ->
-        render(conn, "show.json", user: user)
-    end
+    render(conn, "show.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Accounts.get_user!(id)
-    cond do
-      user == nil ->
-        AccountsHelpers.return_error(conn, :not_found)
-      true ->
-        with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
-          render(conn, "show.json", user: user)
-        end
-    end
-  end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    cond do
-      user == nil ->
-        AccountsHelpers.return_error(conn, :not_found)
-      true ->
-        with {:ok, %User{}} <- Accounts.delete_user(user) do
-          send_resp(conn, :no_content, "")
-        end
+    if Map.has_key?(user_params, "is_active") and not AccountsHelpers.is_admin(conn) do
+      AccountsHelpers.return_error(conn, :forbidden)
+    else
+      with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
+        render(conn, "show.json", user: user)
+      end
     end
   end
 
   def generate_username(conn, _params) do
     # generate nickname and assign to user here TODO
-    name = UserHelpers.generate_unique_name
+    name = UserHelpers.generate_unique_name()
     send_resp(conn, :ok, name)
   end
 
@@ -79,7 +59,3 @@ defmodule KjerSiWeb.UserController do
     render(conn, "user_with_token.json", %{token: token, user: user})
   end
 end
-
-# TODO
-# make sure only admins can do admin stuff
-# make sure users can only access info about / delete themselves
