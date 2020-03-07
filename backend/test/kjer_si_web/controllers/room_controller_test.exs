@@ -39,24 +39,31 @@ defmodule KjerSiWeb.RoomControllerTest do
     test "regular user can't delete a room", %{conn: conn, user: user, room: room} do
       conn
       |> login_user(user)
-      |> delete(Routes.room_path(conn, :delete, room))
+      |> delete(Routes.admin_room_path(conn, :delete, room))
       |> json_response(403)
     end
 
     test "admin can delete a room", %{conn: conn, admin: admin, room: room} do
       conn
       |> login_user(admin)
-      |> delete(Routes.room_path(conn, :delete, room))
+      |> delete(Routes.admin_room_path(conn, :delete, room))
       |> response(204)
     end
   end
 
-  describe "show" do
-    test "any user can see a room if they know an id", %{conn: conn, user: user, room: room} do
-      %{"name" => "Test room"} =
+  describe "index" do
+    test "regular user can't list all rooms", %{conn: conn, user: user} do
+      conn
+      |> login_user(user)
+      |> get(Routes.admin_room_path(conn, :index))
+      |> json_response(403)
+    end
+
+    test "admin can list all rooms", %{conn: conn, admin: admin} do
+      %{"data" => [%{"lat" => 10.0, "lng" => 2.0}]} =
         conn
-        |> login_user(user)
-        |> get(Routes.room_path(conn, :show, room))
+        |> login_user(admin)
+        |> get(Routes.admin_room_path(conn, :index))
         |> json_response(200)
     end
   end

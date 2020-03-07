@@ -32,7 +32,7 @@ defmodule KjerSiWeb.Router do
       resources "/users", AdminUserController, only: [:index, :update]
 
       # resources "/events", EventController, param: "uid", only: [:index, :show, :create, :update] # commenting out, because it's not used yet
-      resources "/rooms", AdminRoomController, only: [:delete]
+      resources "/rooms", AdminRoomController, only: [:index, :delete]
     end
   end
 end

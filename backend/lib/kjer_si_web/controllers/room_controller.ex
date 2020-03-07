@@ -14,14 +14,6 @@ defmodule KjerSiWeb.RoomController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    room = Rooms.get_room!(id)
-
-    with {:ok, %Room{}} <- Rooms.delete_room(room) do
-      send_resp(conn, :no_content, "")
-    end
-  end
-
   def categories(conn, _params) do
     conn
     |> put_view(KjerSiWeb.CategoryView)
