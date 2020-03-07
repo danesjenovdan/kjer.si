@@ -13,9 +13,11 @@ defmodule KjerSiWeb.Router do
     pipe_through :api
 
     resources "/subscriptions", UserRoomController, only: [:index, :create, :show, :delete]
+
     # resources "/eventsubscriptions", UserEventController, only: [:index, :create, :delete] # commenting out, because it's not used yet
 
-    post "/users", UserController, :create # registration
+    # registration
+    post "/users", UserController, :create
     get "/generate-username", UserController, :generate_username
     post "/recover-self", UserController, :recover_self
     get "/categories", RoomController, :categories
@@ -23,12 +25,14 @@ defmodule KjerSiWeb.Router do
     post "/map/rooms", MapController, :get_rooms_in_radius
 
     # scope "/admin", Admin do # consider moving controller into Admin module
-    scope "/admin" do
+    scope "/admin", Admin do
       pipe_through :admin
 
-      resources "/users", UserController, only: [:index, :edit] # list & deactivate
+      # list & deactivate
+      resources "/users", AdminUserController, only: [:index, :update]
+
       # resources "/events", EventController, param: "uid", only: [:index, :show, :create, :update] # commenting out, because it's not used yet
-      resources "/rooms", RoomController, only: [:delete]
+      resources "/rooms", AdminRoomController, only: [:delete]
     end
   end
 end

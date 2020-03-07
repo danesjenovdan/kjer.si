@@ -3,6 +3,7 @@ defmodule KjerSiWeb.UserControllerTest do
 
   alias KjerSi.Repo
   alias KjerSi.Accounts.User
+  import Ecto.Query
 
   setup %{conn: conn} do
     {:ok, admin} = Repo.insert(%User{nickname: "admin", uid: "1", is_admin: true})
@@ -21,7 +22,7 @@ defmodule KjerSiWeb.UserControllerTest do
       %{"error" => "Not allowed to perform action"} =
         conn
         |> login_user(user)
-        |> get(Routes.user_path(conn, :index))
+        |> get(Routes.admin_user_path(conn, :index))
         |> json_response(403)
     end
 
@@ -29,25 +30,7 @@ defmodule KjerSiWeb.UserControllerTest do
       %{"data" => [%{"nickname" => "admin"}, %{"nickname" => "user"}]} =
         conn
         |> login_user(admin)
-        |> get(Routes.user_path(conn, :index))
-        |> json_response(200)
-    end
-  end
-
-  describe "show" do
-    test "user can't list info about another user", %{conn: conn, user: user, admin: admin} do
-      %{"error" => "Not allowed to perform action"} =
-        conn
-        |> login_user(user)
-        |> get(Routes.user_path(conn, :show, admin.id))
-        |> json_response(403)
-    end
-
-    test "user can list info about self", %{conn: conn, user: user} do
-      %{"data" => %{"nickname" => "user"}} =
-        conn
-        |> login_user(user)
-        |> get(Routes.user_path(conn, :show, user.id))
+        |> get(Routes.admin_user_path(conn, :index))
         |> json_response(200)
     end
   end
@@ -61,7 +44,7 @@ defmodule KjerSiWeb.UserControllerTest do
       %{"data" => users} =
         conn
         |> login_user(admin)
-        |> get(Routes.user_path(conn, :index))
+        |> get(Routes.admin_user_path(conn, :index))
         |> json_response(200)
 
       assert [
@@ -83,42 +66,54 @@ defmodule KjerSiWeb.UserControllerTest do
   end
 
   describe "update" do
-    test "users can update themselves", %{conn: conn, user: user} do
-      %{"data" => %{"nickname" => "updated nickname"}} =
-        conn
-        |> login_user(user)
-        |> put(Routes.user_path(conn, :update, user), user: %{nickname: "updated nickname"})
-        |> json_response(200)
-    end
-
     test "users can't promote themselves to admin", %{conn: conn, user: user} do
-      # if someone adds :is_admin to user.ex changeset, this test should catch it
       conn
       |> login_user(user)
-      |> put(Routes.user_path(conn, :update, user), user: %{is_admin: true})
-      |> get(Routes.user_path(conn, :index))
+      |> put(Routes.admin_user_path(conn, :update, user), user: %{is_admin: true})
       |> json_response(403)
+    end
+
+    test "not even admin can promote any user to admin", %{conn: conn, user: user, admin: admin} do
+      conn
+      |> login_user(admin)
+      |> put(Routes.admin_user_path(conn, :update, user), user: %{is_admin: true})
+      |> json_response(200)
+
+      admins =
+        User
+        |> where(is_admin: true)
+        |> Repo.all()
+
+      # if someone adds :is_admin to user.ex changeset, this test should catch it
+      assert length(admins) == 1
     end
 
     test "user can't deactivate user", %{conn: conn, user: user} do
       conn
       |> login_user(user)
-      |> put(Routes.user_path(conn, :update, user), user: %{is_active: false})
+      |> put(Routes.admin_user_path(conn, :update, user), user: %{is_active: false})
       |> json_response(403)
     end
 
     test "admin can deactivate user", %{conn: conn, user: user, admin: admin} do
+      deactivated_users = User |> where(is_active: false) |> Repo.all()
+      assert length(deactivated_users) == 0
+
       %{"data" => %{"is_active" => false}} =
         conn
         |> login_user(admin)
-        |> put(Routes.user_path(conn, :update, user), user: %{is_active: false})
+        |> put(Routes.admin_user_path(conn, :update, user), user: %{is_active: false})
         |> json_response(200)
+
+      deactivated_users_after = User |> where(is_active: false) |> Repo.all()
+      assert length(deactivated_users_after) == 1
     end
 
-    test "renders errors when data is invalid", %{conn: conn, user: user} do
+    test "renders errors when data is invalid", %{conn: conn, admin: admin, user: user} do
       %{"errors" => %{"detail" => "Unprocessable Entity"}} =
         conn
-        |> put(Routes.user_path(conn, :update, user), user: %{uid: nil})
+        |> login_user(admin)
+        |> put(Routes.admin_user_path(conn, :update, user), user: %{uid: nil})
         |> json_response(422)
     end
   end
