@@ -7,9 +7,8 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
   import Ecto.Query
 
   setup %{conn: conn} do
-    {:ok, admin} = Repo.insert(%User{nickname: "admin", uid: "1", is_admin: true})
-    {:ok, user} = Repo.insert(%User{nickname: "user", uid: "2", is_admin: false})
-
+    admin = Repo.insert!(%User{nickname: "admin", uid: "1", is_admin: true})
+    user = Repo.insert!(%User{nickname: "user", uid: "2", is_admin: false})
     {:ok, conn: conn, admin: admin, user: user}
   end
 

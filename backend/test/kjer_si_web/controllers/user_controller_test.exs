@@ -5,8 +5,7 @@ defmodule KjerSiWeb.UserControllerTest do
   alias KjerSi.Accounts.User
 
   setup %{conn: conn} do
-    {:ok, user} = Repo.insert(%User{nickname: "user", uid: "2", is_admin: false})
-
+    user = Repo.insert!(%User{nickname: "user", uid: "2", is_admin: false})
     {:ok, conn: conn, user: user}
   end
 
