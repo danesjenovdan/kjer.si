@@ -15,13 +15,14 @@ defmodule KjerSiWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(%{"user_uid" => user_uid}, socket, _connect_info) do
-    user = KjerSi.Accounts.get_user_by_uid(user_uid)
+  def connect(%{"token" => token}, socket, _connect_info) do
+    case KjerSi.AccountsHelpers.get_user(token) do
+      {:ok, user} ->
+        {:ok, assign(socket, :user_id, user.id)}
 
-    if user do
-      {:ok, assign(socket, :user_id, user.id)}
-    else
-      {:error, %{reason: "user does not exist"}}
+      {:error, error_type} ->
+        error = KjerSi.AccountsHelpers.get_error_from_type(error_type)
+        {:error, %{reason: error.message}}
     end
   end
 
