@@ -49,7 +49,7 @@ defmodule KjerSi.AccountsHelpers do
     end
   end
 
-  def return_error(conn, type) do
+  def get_error_from_type(type) do
     errors = %{
       invalid_auth_header: %{
         message: "Authorization header missing or malformed",
@@ -58,6 +58,10 @@ defmodule KjerSi.AccountsHelpers do
       invalid_token: %{
         message: "Token could not be decoded",
         code: 401
+      },
+      invalid_user: %{
+        message: "User does not exist",
+        code: 403
       },
       forbidden: %{
         message: "Not allowed to perform action",
@@ -69,7 +73,11 @@ defmodule KjerSi.AccountsHelpers do
       }
     }
 
-    error = errors[type]
+    errors[type]
+  end
+
+  def return_error(conn, type) do
+    error = get_error_from_type(type)
 
     conn
     |> put_resp_content_type("application/json")
