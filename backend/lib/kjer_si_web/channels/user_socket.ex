@@ -20,9 +20,11 @@ defmodule KjerSiWeb.UserSocket do
       {:ok, user} ->
         {:ok, assign(socket, :user_id, user.id)}
 
-      {:error, error_type} ->
-        error = KjerSi.AccountsHelpers.get_error_from_type(error_type)
-        {:error, %{reason: error.message}}
+      {:error, _} ->
+        # We could get a more precise error message here with:
+        # KjerSi.AccountsHelpers.get_error_from_type(error_type)
+        # But the docs say we can't return more than :error.
+        :error
     end
   end
 

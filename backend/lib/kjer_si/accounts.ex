@@ -38,6 +38,14 @@ defmodule KjerSi.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user.
+
+  Returns `nil` if the User does not exist.
+
+  """
+  def get_user(id), do: Repo.get(User, id)
+
+  @doc """
   Checks if nickname is unique.
   """
   def unique_nickname?(nickname) do
@@ -49,14 +57,6 @@ defmodule KjerSi.Accounts do
 
   Returns `nil` if the User does not exist.
 
-  ## Examples
-
-      iex> get_user!('asdf')
-      %User{}
-
-      iex> get_user!('fdsa')
-      ** nil
-
   """
   def get_user_by_uid(uid), do: Repo.get_by(User, uid: uid)
 
@@ -65,18 +65,10 @@ defmodule KjerSi.Accounts do
 
   Returns `nil` if the User does not exist.
 
-  ## Examples
-
-      iex> get_user!('asdf')
-      %User{}
-
-      iex> get_user!('fdsa')
-      ** nil
-
   """
   def get_user_with_preload(id, preload) do
     id
-    |> get_user!
+    |> get_user
     |> Repo.preload(preload)
   end
 
