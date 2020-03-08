@@ -7,14 +7,13 @@ defmodule KjerSiWeb.RoomControllerTest do
   alias KjerSi.Rooms.Category
 
   setup %{conn: conn} do
-    admin = Repo.insert!(%User{nickname: "admin", uid: "1", is_admin: true})
     user = Repo.insert!(%User{nickname: "user", uid: "2", is_admin: false})
     category = Repo.insert!(%Category{name: "Test category"})
 
     room =
       Repo.insert!(%Room{name: "Test room", category: category, lat: 10.0, lng: 2.0, radius: 10})
 
-    {:ok, conn: conn, room: room, admin: admin, user: user, category: category}
+    {:ok, conn: conn, room: room, user: user, category: category}
   end
 
   describe "create" do
