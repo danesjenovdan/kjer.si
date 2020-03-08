@@ -26,6 +26,7 @@ defmodule KjerSi.AccountsHelpers do
   defp get_user(conn, preload \\ []) do
     with {:ok, user_id} <- get_user_id(conn) do
       user = Accounts.get_user_with_preload(user_id, preload)
+
       if user do
         {:ok, user}
       else
@@ -52,27 +53,27 @@ defmodule KjerSi.AccountsHelpers do
     errors = %{
       invalid_auth_header: %{
         message: "Authorization header missing or malformed",
-        code: 401,
+        code: 401
       },
       invalid_token: %{
         message: "Token could not be decoded",
-        code: 401,
+        code: 401
       },
       forbidden: %{
         message: "Not allowed to perform action",
-        code: 403,
+        code: 403
       },
       not_found: %{
         message: "Resource not found",
-        code: 404,
-      },
+        code: 404
+      }
     }
 
     error = errors[type]
 
     conn
-      |> put_resp_content_type("application/json")
-      |> send_resp(error.code, "{\"error\": \"#{error.message}\"}")
-      |> halt()
+    |> put_resp_content_type("application/json")
+    |> send_resp(error.code, "{\"error\": \"#{error.message}\"}")
+    |> halt()
   end
 end

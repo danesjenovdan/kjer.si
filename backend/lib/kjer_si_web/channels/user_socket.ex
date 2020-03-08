@@ -17,6 +17,7 @@ defmodule KjerSiWeb.UserSocket do
   # performing token verification on connect.
   def connect(%{"user_uid" => user_uid}, socket, _connect_info) do
     user = KjerSi.Accounts.get_user_by_uid(user_uid)
+
     if user do
       {:ok, assign(socket, :user_id, user.id)}
     else
