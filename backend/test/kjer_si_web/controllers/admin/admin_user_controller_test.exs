@@ -13,16 +13,11 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
     {:ok, conn: conn, admin: admin, user: user}
   end
 
-  defp login_user(conn, user) do
-    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
-    put_req_header(conn, "authorization", "Bearer #{token}")
-  end
-
   describe "index" do
     test "regular user can't list other users", %{conn: conn, user: user} do
       %{"error" => "Not allowed to perform action"} =
         conn
-        |> login_user(user)
+        |> TestHelper.login_user(user)
         |> get(Routes.admin_user_path(conn, :index))
         |> json_response(403)
     end
@@ -30,7 +25,7 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
     test "admin user can list other users", %{conn: conn, admin: admin} do
       %{"data" => [%{"nickname" => "admin"}, %{"nickname" => "user"}]} =
         conn
-        |> login_user(admin)
+        |> TestHelper.login_user(admin)
         |> get(Routes.admin_user_path(conn, :index))
         |> json_response(200)
     end
@@ -39,7 +34,7 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
   describe "update" do
     test "users can't promote themselves to admin", %{conn: conn, user: user} do
       conn
-      |> login_user(user)
+      |> TestHelper.login_user(user)
       |> put(Routes.admin_user_path(conn, :update, user), user: %{is_admin: true})
       |> json_response(403)
     end
@@ -50,7 +45,7 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
       assert length(admins) == 1
 
       conn
-      |> login_user(admin)
+      |> TestHelper.login_user(admin)
       |> put(Routes.admin_user_path(conn, :update, user), user: %{is_admin: true})
       |> json_response(200)
 
@@ -61,7 +56,7 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
 
     test "user can't deactivate user", %{conn: conn, user: user} do
       conn
-      |> login_user(user)
+      |> TestHelper.login_user(user)
       |> put(Routes.admin_user_path(conn, :update, user), user: %{is_active: false})
       |> json_response(403)
     end
@@ -72,7 +67,7 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
 
       %{"data" => %{"is_active" => false}} =
         conn
-        |> login_user(admin)
+        |> TestHelper.login_user(admin)
         |> put(Routes.admin_user_path(conn, :update, user), user: %{is_active: false})
         |> json_response(200)
 
@@ -83,7 +78,7 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
     test "renders errors when data is invalid", %{conn: conn, admin: admin, user: user} do
       %{"errors" => %{"detail" => "Unprocessable Entity"}} =
         conn
-        |> login_user(admin)
+        |> TestHelper.login_user(admin)
         |> put(Routes.admin_user_path(conn, :update, user), user: %{uid: nil})
         |> json_response(422)
     end

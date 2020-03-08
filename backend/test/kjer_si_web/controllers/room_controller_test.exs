@@ -17,16 +17,11 @@ defmodule KjerSiWeb.RoomControllerTest do
     {:ok, conn: conn, room: room, admin: admin, user: user, category: category}
   end
 
-  defp login_user(conn, user) do
-    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
-    put_req_header(conn, "authorization", "Bearer #{token}")
-  end
-
   describe "create" do
     test "regular user can create a room", %{conn: conn, user: user, category: category} do
       %{"name" => "New room", "radius" => 5} =
         conn
-        |> login_user(user)
+        |> TestHelper.login_user(user)
         |> post(
           Routes.room_path(conn, :create),
           room: %{name: "New room", lat: 10.1, lng: 2.3, radius: 5, category_id: category.id}
@@ -39,7 +34,7 @@ defmodule KjerSiWeb.RoomControllerTest do
     test "any user can list room categories", %{conn: conn, user: user} do
       %{"categories" => [%{"name" => "Test category"}]} =
         conn
-        |> login_user(user)
+        |> TestHelper.login_user(user)
         |> get(Routes.room_path(conn, :categories))
         |> json_response(200)
     end
