@@ -2,6 +2,8 @@ ExUnit.start()
 Ecto.Adapters.SQL.Sandbox.mode(KjerSi.Repo, :manual)
 
 defmodule TestHelper do
+  use KjerSiWeb.ConnCase
+
   def generate_category do
     {:ok, category} = KjerSi.Rooms.create_category(%{
       name: "Test category",
@@ -27,5 +29,10 @@ defmodule TestHelper do
       category_id: test_category.id,
     })
     room
+  end
+
+  def login_user(conn, user) do
+    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
+    put_req_header(conn, "authorization", "Bearer #{token}")
   end
 end

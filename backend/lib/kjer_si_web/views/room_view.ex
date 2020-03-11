@@ -9,7 +9,7 @@ defmodule KjerSiWeb.RoomView do
       category_id: room.category_id,
       lat: room.lat,
       lng: room.lng,
-      users: [],
+      users: []
     }
   end
 
