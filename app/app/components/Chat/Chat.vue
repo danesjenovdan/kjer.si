@@ -30,7 +30,7 @@
         userId: UserService.default.user.id,
         messageText: '',
         messages: new ObservableArray([]),
-      },
+      };
     },
     computed: {
       message() {
