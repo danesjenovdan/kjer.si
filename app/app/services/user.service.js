@@ -12,8 +12,8 @@ export default new class {
     return userData;
   }
 
-  saveLocalUserData(id, deviceUid, nickname) {
-    const userData = {id, uid: deviceUid, nickname};
+  saveLocalUserData(id, deviceUid, nickname, token) {
+    const userData = {id, uid: deviceUid, nickname, token};
     localStorage.setItem('user', JSON.stringify(userData));
     this.user = userData;
     return userData;
@@ -23,9 +23,9 @@ export default new class {
 
     const user = this.initLocalUserData();
 
-    if (user) {
-      console.log('User already generated');
-    } else {
+    // if (user) {
+    //   console.log('User already generated');
+    // } else {
 
       const fetchedUser = await ApiService.default.fetchSelf(platform.device.uuid);
       console.log('fetchedUser: ', fetchedUser);
@@ -44,11 +44,13 @@ export default new class {
           fetchedUser.id,
           platform.device.uuid,
           fetchedUser.nickname,
+          fetchedUser.token,
         );
+        ApiService.default.configureAxios(fetchedUser.token);
         ApiService.default.initSocket();
       }
 
-    }
+    // }
 
   }
 

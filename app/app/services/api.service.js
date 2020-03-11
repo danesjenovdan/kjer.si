@@ -10,17 +10,21 @@ export default new class {
   _baseUrl = 'http://api.kjer.si/api';
   socket = null;
 
+  configureAxios(token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+
   get(url, auth = true) {
 
     const config = {
       baseURL: this._baseUrl
     };
 
-    if (auth && UserService.default.user && UserService.default.user.uid) {
-      config.headers = {
-        Authorization: UserService.default.user.uid
-      };
-    }
+    // if (auth && UserService.default.user && UserService.default.user.uid) {
+    //   config.headers = {
+    //     Authorization: UserService.default.user.uid
+    //   };
+    // }
 
     return axios.default.get(url, config);
 
@@ -33,9 +37,9 @@ export default new class {
       headers: {}
     };
 
-    if (auth && UserService.default.user && UserService.default.user.uid) {
-      config.headers.Authorization = UserService.default.user.uid;
-    }
+    // if (auth && UserService.default.user && UserService.default.user.uid) {
+    //   config.headers.Authorization = UserService.default.user.uid;
+    // }
 
     return axios.default.post(url, body, config);
 
@@ -50,35 +54,19 @@ export default new class {
 
     // console.log('UserService.default.user: ', UserService.default.user);
 
-    if (auth && UserService.default.user && UserService.default.user.uid) {
-      console.log('Authorization');
-      config.headers.Authorization = UserService.default.user.uid;
-    }
+    // if (auth && UserService.default.user && UserService.default.user.uid) {
+    //   console.log('Authorization');
+    //   config.headers.Authorization = UserService.default.user.uid;
+    // }
 
     return axios.default.post(url, body, config);
-
-  }
-
-  delete(url, body, auth = true) {
-
-    const config = {
-      baseURL: this._baseUrl
-    };
-
-    if (auth && UserService.default.user && UserService.default.user.uid) {
-      config.headers = {
-        Authorization: UserService.default.user.uid
-      };
-    }
-
-    return axios.default.delete(url, config);
 
   }
 
   initSocket() {
 
     // to create a socket connection
-    this.socket = new Phx.Socket(this._baseSocketUrl, { params: { user_uid: UserService.default.user.uid } });
+    this.socket = new Phx.Socket(this._baseSocketUrl, { params: { token: UserService.default.user.token } });
     this.socket.connect();
     this.socket.onOpen((state) => {
       console.log('Socket: ', this.socket.isConnected());
@@ -161,12 +149,8 @@ export default new class {
       baseURL: this._baseUrl
     };
 
-    config.headers = {
-      Authorization: uuid
-    };
-
-    const response = await axios.default.get('/recover-self', config);
-    return response.data.data;
+    const response = await axios.default.post('/recover-self', { uid: uuid }, config);
+    return response.data;
 
   }
 
