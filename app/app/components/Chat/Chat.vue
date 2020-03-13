@@ -31,7 +31,11 @@
         userId: UserService.default.user.id,
         messageText: '',
         messages: new ObservableArray([]),
+<<<<<<< HEAD
       }
+=======
+      };
+>>>>>>> ae08ae21f8b8d0e6e55afb1c6da783d52f5ccecd
     },
     computed: {
       message() {
