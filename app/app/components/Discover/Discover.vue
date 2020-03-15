@@ -7,7 +7,6 @@
 
 <script>
 
-
   import {Marker, Position, Circle} from 'nativescript-google-maps-sdk';
   import * as utils from 'tns-core-modules/utils/utils';
   import {Color} from 'tns-core-modules/color';
@@ -43,8 +42,8 @@
         },
         locationReceived: false,
         limitMeters: 500,
-        zoom: 15,
-        minZoom: 0,
+        zoom: 17,
+        minZoom: 15,
         maxZoom: 22,
         roomMarkers: [],
         bearing: 0,

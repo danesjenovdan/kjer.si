@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "528267439018",
+    "firebase_url": "https://kjer-si.firebaseio.com",
+    "project_id": "kjer-si",
+    "storage_bucket": "kjer-si.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528267439018:android:c53c5e051c2141e92d99d3",
+        "android_client_info": {
+          "package_name": "si.djnd.kjer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528267439018-b5eftq0a3f57e7ld0psr5npuc8klqtu8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "si.djnd.kjer",
+            "certificate_hash": "94bc59efd7a31f8c7ac291a9ef4b253098e899bc"
+          }
+        },
+        {
+          "client_id": "528267439018-4vb5bumpvtcr32s2tuf698dl322a0d89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3TZRcItk1UTYUbse7RYbv-GCS3liHnug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528267439018-4vb5bumpvtcr32s2tuf698dl322a0d89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
