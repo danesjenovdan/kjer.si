@@ -42,7 +42,9 @@ defmodule KjerSi.MixProject do
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.1"},
       {:geo, "~> 3.3"},
-      {:geo_postgis, "~> 3.3"}
+      {:geo_postgis, "~> 3.3"},
+      {:pigeon, "~> 1.5.0"},
+      {:kadabra, "~> 0.4.4"}
     ]
   end
 

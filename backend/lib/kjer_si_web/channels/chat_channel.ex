@@ -38,6 +38,18 @@ defmodule KjerSiWeb.ChatChannel do
       KjerSi.Messages.Message.changeset(%KjerSi.Messages.Message{}, payload)
       |> KjerSi.Repo.insert()
 
+    msg = %{
+      "title" => "your title",
+      "body" => "your message"
+    }
+    n = Pigeon.FCM.Notification.new(
+      [
+        "fNozZOPAM40:APA91bHWnMO-zitiBF1avzbpjMatVWku-4L90DeFRacWgGrpgGGQP0Pz0kD0DoRLe7WTpGjsTLq5wqkTlgjO953FofQ-n-OnEEK-IvY3XuFYQKT5MVV_iOgC4VrMQ46C0Vz8QSEjvBZP"
+      ],
+      msg
+    )
+    Pigeon.FCM.push(n)
+
     message = KjerSi.Repo.preload(message, :user)
 
     # Broadcast back to everyone in the channel
