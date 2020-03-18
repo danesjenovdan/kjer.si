@@ -32,4 +32,9 @@ defmodule KjerSiWeb.UserController do
     # Phoenix.Token.verify(MyApp.Endpoint, "user auth", token, max_age: 86400)
     render(conn, "user_with_token.json", %{token: token, user: user})
   end
+
+  def self(conn, _params) do
+    conn
+    |> render("show.json", user: conn.assigns[:current_user])
+  end
 end

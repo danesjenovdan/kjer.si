@@ -24,6 +24,23 @@ defmodule KjerSiWeb.UserControllerTest do
     end
   end
 
+  describe "self" do
+    test "returns themselves to authenticated user", %{conn: conn, user: user} do
+      %{"data" => %{"nickname" => "user", "uid" => "2"}} =
+        conn
+        |> TestHelper.login_user(user)
+        |> get(Routes.user_path(conn, :self))
+        |> json_response(200)
+    end
+
+    test "fails for unauthenticated calls", %{conn: conn} do
+      %{"error" => "Authorization header missing or malformed"} =
+        conn
+        |> get(Routes.user_path(conn, :self))
+        |> json_response(401)
+    end
+  end
+
   describe "recover self" do
     test "generates token", %{conn: conn, user: user} do
       %{"token" => token} =

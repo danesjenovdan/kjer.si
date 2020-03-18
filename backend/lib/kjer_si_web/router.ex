@@ -5,6 +5,10 @@ defmodule KjerSiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug KjerSiWeb.Plugs.Auth, "is_logged_in"
+  end
+
   pipeline :admin do
     plug KjerSiWeb.Plugs.Auth, "is_admin"
   end
@@ -16,7 +20,12 @@ defmodule KjerSiWeb.Router do
 
     # resources "/eventsubscriptions", UserEventController, only: [:index, :create, :delete] # commenting out, because it's not used yet
 
-    # registration
+    scope "/" do
+      pipe_through :auth
+
+      get "/users/self", UserController, :self
+    end
+
     post "/users", UserController, :create
     get "/generate-username", UserController, :generate_username
     post "/recover-self", UserController, :recover_self
