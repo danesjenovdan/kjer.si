@@ -11,8 +11,12 @@
   import * as utils from 'tns-core-modules/utils/utils';
   import {Color} from 'tns-core-modules/color';
   import * as ApiService from '../../services/api.service';
-  import * as websockets from 'nativescript-websockets';
-  import * as Phx from '../../assets/js/phoenix';
+  import * as UserService from '../../services/user.service';
+  import {localize} from 'nativescript-localize';
+  import * as app from 'tns-core-modules/application';
+  import {AndroidActivityBackPressedEventData, AndroidApplication} from 'tns-core-modules/application';
+  import * as firebase from 'nativescript-plugin-firebase';
+  import * as dialogs from "tns-core-modules/ui/dialogs";
 
   // Components
   import MapFabs from './MapFabs/MapFabs.vue';
@@ -25,7 +29,7 @@
   import * as MapService from '../../services/map.service';
   import * as LocationService from '../../services/location.service';
   import * as UiService from '../../services/ui.service';
-
+  import {isAndroid} from "@nativescript/core";
 
   export default {
     components: {
@@ -69,10 +73,15 @@
         },
         rangeCircle: null,
         limitCircle: null,
-        lastMapCamera: null
+        lastMapCamera: null,
+        _backTap: null
       }
     },
     async mounted() {
+
+      this._backTap = this.onBackTap.bind(this);
+
+      console.log('Local user: ', UserService.default.user);
 
       this.currentPageState = this.PAGE_STATES.MAP;
       this.$refs.pageRef.nativeView.actionBarHidden = true;
@@ -87,42 +96,35 @@
         this.screenWidth = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredWidth());
       }
 
-      // // to create a socket connection
-      // var socket = new Phx.Socket(ApiService.default._baseSocketUrl, {params: {userToken: '123'}});
-      // socket.connect();
-      // socket.onOpen((state) => {
-      //   // console.log('Socket: ', socket.isConnected());
-      // });
-      //
-      // // to create a channel
-      // const channel = socket.channel('room:lobby', {});
-      //
-      // // listen for 'shout' events
-      // channel.on('shout', payload => {
-      //   // do your own thing
-      //   // alert(payload.body);
-      // });
-      //
-      // // join the channel, with success and failure callbacks
-      // channel.join()
-      //   .receive('ok', resp => console.log('Joined channel successfully', resp))
-      //   .receive('error', resp => console.log('Failed to join channel', resp));
-      //
-      // // to send messages
-      // channel.push('shout', {body: 'This is a shoutout!'});
-      //
-      // // to leave a channel
-      // // channel.leave();
+      this.setupAndroidBackButton();
 
     },
+    destroyed() {
+      if (isAndroid) {
+        app.android.off(AndroidApplication.activityBackPressedEvent, this._backTap);
+      }
+    },
     methods: {
+
+      setupAndroidBackButton() {
+        if (isAndroid) {
+          app.android.on(AndroidApplication.activityBackPressedEvent, this._backTap);
+        }
+      },
+
+      onBackTap(data) {
+        if (this.currentPageState !== this.PAGE_STATES.MAP) {
+          this.currentPageState = this.PAGE_STATES.MAP;
+          data.cancel = true; // prevents default back button behavior
+          this.resetMapState();
+        }
+      },
 
       async updateRoomsInRadius(lat, lng) {
 
         this.selectedMarker = null;
         this.selectedRoom = null;
 
-        console.log('updateRoomsInRadius()');
         try {
           const rooms = await ApiService.default.getRoomsInRadius(lat, lng);
 
@@ -147,6 +149,10 @@
 
       onMarkerSelected(event) {
 
+        if (this.currentPageState !== this.PAGE_STATES.MAP) {
+          return;
+        }
+
         const userData = event.marker.userData;
 
         if (userData.type === 'ROOM') {
@@ -155,7 +161,7 @@
           this.deselectSelectedMarker();
 
           this.selectedRoom = room;
-          this.selectedMarker = this.roomMarkers.filter((roomMarker) => roomMarker.userData.id === room.id)[0];
+          this.selectedMarker = this.roomMarkers.filter((roomMarker) => roomMarker.userData._id === room._id)[0];
           this.selectedMarker.icon = 'room_pin_selected';
         }
       },
@@ -192,9 +198,9 @@
 
         this.mapView.padding = [
           utils.layout.toDevicePixels(this.screenHeight) - utils.layout.toDevicePixels(100),
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0)
+          utils.layout.toDevicePixels(10),
+          utils.layout.toDevicePixels(10),
+          utils.layout.toDevicePixels(10)
         ];
 
         this.mapView.mapAnimationsEnabled = false;
@@ -215,8 +221,8 @@
         this.selectedRoom = null;
         this.selectedMarker = null;
         this.rangeCircle = null;
-        this.roomMarkers = [];
-        this.mapView.clear();
+        // this.roomMarkers = [];
+        // this.mapView.clear();
 
         setTimeout(() => {
           this.currentPageState = this.PAGE_STATES.NEW_ROOM_LOCATION_SETUP;
@@ -238,6 +244,23 @@
 
       confirmRangeTap() {
 
+        const distanceToMe = LocationService.default.getDistance({
+          lat: this.lastMapCamera.latitude,
+          lng: this.lastMapCamera.longitude
+        }, {
+          lat: LocationService.default.location.latitude,
+          lng: LocationService.default.location.longitude
+        });
+
+        if (distanceToMe > this.newRoom.radius - 10) {
+          dialogs.alert({
+            title: 'Izven dometa sobe',
+            message: 'Vaša trenutna lokacija mora biti v dometu sobe oziroma znotraj označenega kroga.',
+            okButtonText: 'Velja, popravim'
+          });
+          return;
+        }
+
         this.newRoom.location = {
           latitude: this.lastMapCamera.latitude,
           longitude: this.lastMapCamera.longitude
@@ -247,9 +270,9 @@
 
         this.mapView.padding = [
           utils.layout.toDevicePixels(this.screenHeight) - utils.layout.toDevicePixels(100),
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0)
+          utils.layout.toDevicePixels(10),
+          utils.layout.toDevicePixels(10),
+          utils.layout.toDevicePixels(10)
         ];
 
         this.createMarker(this.newRoom.location.latitude, this.newRoom.location.longitude, 'room_pin', null, [0.5, 1]);
@@ -291,7 +314,16 @@
           return;
         }
 
+        const distanceToMe = LocationService.default.getDistance({
+          lat: this.lastMapCamera.latitude,
+          lng: this.lastMapCamera.longitude
+        }, {
+          lat: LocationService.default.location.latitude,
+          lng: LocationService.default.location.longitude
+        });
+
         if (this.rangeCircle && !forceRedraw) {
+          this.rangeCircle.strokeColor = distanceToMe > (this.newRoom.radius - 10) ? new Color('rgba(167,15,15,0.61)') : new Color('#22AC9B');
           this.rangeCircle.radius = this.newRoom.radius;
           return;
         }
@@ -306,9 +338,8 @@
         circle.visible = true;
         circle.radius = this.newRoom.radius;
         circle.fillColor = new Color('#1122AC9B');
-        circle.strokeColor = new Color('#22AC9B');
+        circle.strokeColor = distanceToMe > (this.newRoom.radius - 10) ? new Color('rgba(167,15,15,0.61)') : new Color('#22AC9B');
         circle.strokeWidth = 10;
-
 
         this.rangeCircle = circle;
 
@@ -318,8 +349,15 @@
 
       async onCardTap() {
 
+        firebase.subscribeToTopic(this.selectedRoom._id).then(() => console.log("Subscribed to topic"));
+
         try {
-          const room = await ApiService.default.joinRoom(this.selectedRoom.id);
+          console.log('this.selectedRoom._id: ', this.selectedRoom._id);
+          const room = await ApiService.default.joinRoom(this.selectedRoom._id);
+          if (!this.selectedRoom.amMember) {
+            this.selectedRoom.amMember = true;
+            this.selectedRoom.memberCount++;
+          }
         } catch (e) {
           console.log('Join room error: ', e.response.data);
         }
@@ -332,8 +370,9 @@
             // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
           },
           props: {
-            roomId: this.selectedRoom.id,
-            roomName: this.selectedRoom.name
+            roomId: this.selectedRoom._id,
+            roomName: this.selectedRoom.name,
+            room: this.selectedRoom
           }
         });
 
@@ -361,15 +400,16 @@
 
       onCloseCategoryListTap() {
 
+        this.resetMapState();
+
+      },
+
+      resetMapState() {
+
         this.currentPageState = this.PAGE_STATES.MAP;
         this.mapView.clear();
 
-        this.mapView.padding = [
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0)
-        ];
+        this.resetMapPadding();
 
         this.mapView.mapAnimationsEnabled = false;
         this.mapView.latitude = this.location.latitude;
@@ -381,12 +421,14 @@
 
       },
 
-      async onCategoryCreateSelect(category) {
+      async onCategoryCreateSelect(data) {
+
+        const category = data.category;
+        const description = data.description;
 
         this.newRoom.categoryId = category.id;
-        this.newRoom.name = category.name;
-
-        console.log('New room: ', this.newRoom.name);
+        this.newRoom.description = description;
+        this.newRoom.name = localize(category.id);
 
         let indicator;
 
@@ -399,7 +441,8 @@
             this.newRoom.location.latitude,
             this.newRoom.location.longitude,
             this.newRoom.radius,
-            this.newRoom.categoryId
+            this.newRoom.categoryId,
+            this.newRoom.description
           );
           indicator.hide();
           UiService.default.showToast('Soba ustvarjena!');
@@ -421,12 +464,7 @@
 
         this.currentPageState = this.PAGE_STATES.MAP;
 
-        this.mapView.padding = [
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0),
-          utils.layout.toDevicePixels(0)
-        ];
+        this.resetMapPadding()
 
         this.mapView.mapAnimationsEnabled = false;
         this.mapView.latitude = this.location.latitude;
@@ -434,6 +472,17 @@
         this.mapView.mapAnimationsEnabled = true;
 
         this.setupMyLocation();
+
+      },
+
+      resetMapPadding() {
+
+        this.mapView.padding = [
+          utils.layout.toDevicePixels(10),
+          utils.layout.toDevicePixels(10),
+          utils.layout.toDevicePixels(10),
+          utils.layout.toDevicePixels(10)
+        ];
 
       },
 
@@ -508,12 +557,14 @@
       },
 
       async onMapReady(event) {
-        // console.log('Map ready!');
+
         this.mapView = event.object;
         this.mapView.settings.myLocationButtonEnabled = true;
         this.mapView.settings.mapToolbarEnabled = false;
         this.mapView.myLocationEnabled = true;
         this.mapView.setStyle(MapService.default.lightMapStyle);
+
+        this.resetMapPadding();
 
         if (LocationService.default.location.latitude) {
           this.location.latitude = LocationService.default.location.latitude;

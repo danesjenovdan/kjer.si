@@ -18,7 +18,7 @@
     <style name="LaunchScreenTheme" parent="LaunchScreenThemeBase">
     </style>
 
-    <!-- theme to use AFTER launch screen is loaded-->
+    <!-- theme to use AFTER launch screen is loading-->
     <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="toolbarStyle">@style/NativeScriptToolbarStyle</item>
 

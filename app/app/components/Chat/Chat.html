@@ -20,22 +20,31 @@
         <Label class="event-label" text="Ni dogodkov. Ustvari novega?"></Label>
       </StackLayout>
 
-      <ListView ref="chatListView" row="2" for="message in messages" @itemTap="onItemTap" separatorColor="#ffffff"
+      <ListView ref="chatListView"
+                row="2"
+                for="message in messages"
+                @itemTap="onItemTap"
+                separatorColor="#ffffff"
                 verticalAlignment="bottom">
-        <v-template name="text" if="message.type === 'text'">
+        <v-template name="text" if="message.type === 'TEXT'">
           <WrapLayout class="message-container" orientation="vertical" paddingRight="50">
-            <Label class="message-user-name-label" text="Some other person"/>
-            <Label class="message-text-label" :text="message.content" textWrap="true"/>
+            <Label class="message-user-name-label" :text="message.author?message.author.nickname:'Nekdo drug'"/>
+            <StackLayout horizontalAlignment="left" class="message-text-label-container">
+              <Label class="message-text-label" :text="message.text" textWrap="true"/>
+            </StackLayout>
           </WrapLayout>
         </v-template>
 
-        <v-template name="my_text" if="message.type === 'my_text'">
+        <v-template name="my_text" if="message.type === 'MY_TEXT'">
           <!-- Shows the list item label in the default color and style. -->
           <StackLayout>
             <WrapLayout class="message-container message-me-container" orientation="vertical"
                         horizontalAlignment="right" paddingLeft="50">
-              <Label class="message-user-name-label" text="Me" horizontalAlignment="right"/>
-              <Label class="message-text-label message-me-text-label" :text="message.content" textWrap="true"/>
+              <Label class="message-user-name-label" text="Jaz" horizontalAlignment="right"/>
+              <StackLayout horizontalAlignment="left"
+                           class="message-text-label-container message-me-text-label-container">
+                <Label class="message-text-label" :text="message.text" textWrap="true"/>
+              </StackLayout>
             </WrapLayout>
           </StackLayout>
         </v-template>
@@ -45,7 +54,11 @@
       <GridLayout row="3" class="chat-page-input-container" columns="*, 50">
         <!-- v-keyboard-send-->
         <!-- v-auto-focus -->
-        <TextView ref="messageTextView" v-model="messageText" hint="Napiši sporočilo..." class="chat-page-text-view"
+        <TextView ref="messageTextView"
+                  @tap="onTextViewTap"
+                  v-model="messageText"
+                  hint="Napiši sporočilo..."
+                  class="chat-page-text-view"
                   col="0"></TextView>
         <Image class="chat-page-send-icon" @tap="onSendTap" col="1" verticalAlignment="top"
                src="~/assets/images/send_message_icon.png"
@@ -58,9 +71,24 @@
                 width="100%" height="100%" class="chat-menu-outer-container">
       <StackLayout translateY="50" row="0" class="chat-menu-container" v-shadow="6" col="1">
         <!--        <Label @tap="onEventsTap" class="chat-menu-button" text="Dogodki"></Label>-->
-        <Label class="chat-menu-button" text="Zapusti"></Label>
+        <StackLayout @tap="onNotificationToggleTap" orientation="horizontal"
+                     class="chat-menu-button" width="220">
+          <Label text="Notifikacije" verticalAlignment="center"></Label>
+          <StackLayout class="chat-menu-button-toggle-container" horizontalAlignment="right" verticalAlignment="center">
+            <Switch marginLeft="20" :checked="enabledNotifications" v-model="enabledNotifications"
+                    @checkedChange="onNotificationCheckedChange($event)"></Switch>
+          </StackLayout>
+        </StackLayout>
+
+        <StackLayout @tap="onLeaveRoomTap" orientation="horizontal"
+                     class="chat-menu-button chat-menu-button-last">
+          <Label verticalAlignment="center" text="Zapusti"></Label>
+        </StackLayout>
+
         <!--        <Label class="chat-menu-button" text="Utišaj"></Label>-->
-        <Label class="chat-menu-button chat-menu-button-last" text="Nastavitve"></Label>
+        <!--        <StackLayout orientation="horizontal" class="chat-menu-button chat-menu-button-last">-->
+        <!--          <Label verticalAlignment="center" text="Nastavitve"></Label>-->
+        <!--        </StackLayout>-->
       </StackLayout>
     </GridLayout>
 

@@ -11,7 +11,7 @@
   import * as AppService from '../../services/app.service';
   import * as UiService from '../../services/ui.service';
   import * as MapService from '../../services/map.service';
-  import * as ApiService from '../../services/api.service';
+  import * as SocketService from '../../services/socket.service';
   import * as UserService from '../../services/user.service';
   import * as LocationService from '../../services/location.service';
   import * as utils from 'tns-core-modules/utils/utils';
@@ -66,6 +66,8 @@
       }, 200);
 
       this.requestLocation();
+
+      SocketService.default.init();
 
     },
 

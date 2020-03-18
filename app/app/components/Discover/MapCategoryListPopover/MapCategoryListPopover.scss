@@ -56,3 +56,32 @@
 .pointer-down {
   z-index: 100;
 }
+
+.description-characters-count-label {
+  margin: 2 12;
+  font-family: MuseoSansRounded;
+}
+
+.description-characters-count-label-danger {
+  color: $kjersi-red;
+  opacity: 0.6;
+}
+
+.description-textview {
+  font-size: 20;
+  font-family: MuseoSansRounded;
+  padding: 20 10;
+  border-radius: 10;
+  border-width: 1;
+  border-color: #eee;
+  background-color: #fafafa;
+  margin: 10;
+}
+
+.room-description-label {
+  font-family: MuseoSansRoundedBold;
+  text-align: center;
+  padding: 5 30;
+  color: #444;
+  font-size: 16;
+}

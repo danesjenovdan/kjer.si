@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="NEIGHBOUR_ASSISTANCE">"Sosedska pomoč"</string>
+  <string name="RECREATION">"Rekreacija"</string>
+  <string name="ANIMALS">"Živali"</string>
   <string name="_Limited_event_Z1U1xL6">"Udeležba omejena"</string>
   <string name="_A_caouple_of_words_about_the_event____2ikOVR">"Nekaj besed o dogodku..."</string>
   <string name="_Create_event_gkUrX">"Ustvari dogodek"</string>

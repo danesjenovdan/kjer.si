@@ -22,6 +22,8 @@
     "@nstudio/nativescript-loading-indicator": "^2.0.0",
     "@vue/devtools": "^5.0.6",
     "axios": "^0.19.0",
+    "install": "^0.13.0",
+    "nativescript-datetimepicker": "^1.2.2",
     "nativescript-geolocation": "^5.1.0",
     "nativescript-google-maps-sdk": "^2.8.1",
     "nativescript-localize": "^4.2.0",
@@ -40,8 +42,10 @@
     "nativescript-vue-fonticon": "^1.0.3",
     "nativescript-vue-shadow": "^0.1.0",
     "nativescript-websockets": "^1.5.5",
+    "npm": "^6.14.2",
     "tns-core-modules": "^6.0.0",
-    "vuex": "^3.1.1"
+    "vuex": "^3.1.1",
+    "wolfy87-eventemitter": "^5.2.9"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

@@ -1,4 +1,4 @@
-<Page ref="pageRef" class="page">
+<Page ref="pageRef" class="page" xmlns:v-bind>
 
   <GridLayout ref="appContainer" rows="70, *, auto" width="100%" height="100%">
 
@@ -12,15 +12,21 @@
 
     <ScrollView row="1">
       <StackLayout>
-        <TextField class="event-title-textfield" :hint="'Event title'|L"></TextField>
-        <TextView class="event-description-textview" :hint="'A caouple of words about the event...'|L"></TextView>
+        <TextField v-model="title" v-auto-focus class="event-title-textfield" :hint="'Event title'|L"></TextField>
+        <TextView v-model="description" class="event-description-textview" :hint="'A caouple of words about the event...'|L"></TextView>
         <Toggle :label="'Limited event'|L" :checked="limitedEvent" @checkedChange="onLimitedCheckedChange"></Toggle>
-        <TextField v-if="limitedEvent" :value="numSeats"></TextField>
+        <TextField v-auto-focus @textChange="onSeatsChange" horizontalAlignment="center" class="textfield-num-seats" keyboardType="number"
+                   v-if="limitedEvent" v-model="numSeats" :value="numSeats"></TextField>
+        <Label v-if="limitedEvent" class="seats-label" horizontalAlignment="center" :text="seatsString"></Label>
+        <GridLayout columns="5*, 5*" class="date-container">
+          <DatePickerField @dateChange="onDateChange" :date="date" :minDate="minDate" col="0" class="choose-date-field" hint="Izberi dan"></DatePickerField>
+          <TimePickerField @timeChange="onTimeChange" :time="time" col="1" class="choose-date-field" hint="Izberi čas"></TimePickerField>
+        </GridLayout>
       </StackLayout>
     </ScrollView>
 
     <StackLayout class="event-page-footer" row="2">
-      <Label @tap="confirmRangeTap" class="kjer-si-big-button" text="Potrdi" margin="0 10"></Label>
+      <Label v-bind:class="{ 'deactivate-button': !isActive, 'text-danger': hasError }" @tap="confirmRangeTap" class="kjer-si-big-button" text="Potrdi" margin="0 10"></Label>
     </StackLayout>
 
   </GridLayout>

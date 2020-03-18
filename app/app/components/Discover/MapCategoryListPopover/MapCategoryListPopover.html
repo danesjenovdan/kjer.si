@@ -1,26 +1,46 @@
 <GridLayout :height="layoutHeight-80" ref="container" rows="*, auto" class="map-popover-list-container" xmlns:v-bind>
 
   <GridLayout rows="*, auto" row="0">
-   <GridLayout row="0" rows="auto, *, auto" class="map-popover-list-inner-container" v-shadow="6">
+    <GridLayout row="0" rows="auto, *, auto" class="map-popover-list-inner-container" v-shadow="6">
 
-    <GridLayout columns="60, *, 60" class="map-popover-list-title-container">
-      <StackLayout @tap="onCloseListTap" col="0" verticalAlignment="center" horizontalAlignment="center" width="40" height="40">
-        <Image src="~/assets/images/close_icon.png" width="20" height="20" stretch="aspectFit"></Image>
-      </StackLayout>
-      <Label col="1" class="map-popover-list-title" text="Izberi ime"></Label>
+      <GridLayout columns="60, *, 60" class="map-popover-list-title-container">
+        <StackLayout @tap="onCloseListTap" col="0" verticalAlignment="center" horizontalAlignment="center" width="40"
+                     height="40">
+          <Image src="~/assets/images/close_icon.png" width="20" height="20" stretch="aspectFit"></Image>
+        </StackLayout>
+        <Label col="1" class="map-popover-list-title"
+               :text="currentViewState === ViewState.DESCRIPTION?'Kratek opis':'Kategorija'"></Label>
+      </GridLayout>
+
+      <ScrollView v-if="currentViewState === ViewState.CATEGORY" class="map-category-list-scrollview" row="1">
+        <ActivityIndicator :busy="true" :isEnabled="true" v-show="!categoriesLoaded" width="40"
+                           height="40"></ActivityIndicator>
+        <StackLayout class="map-popover-list-scroll-container" v-if="categoriesLoaded">
+          <GridLayout v-for="category in categories" @tap="onCategoryTap(category)" v-bind:key="category.id"
+                      columns="auto, *, auto" class="map-popover-list-item-container">
+            <!--          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>-->
+            <Label class="map-popover-list-item-name" col="1" :text="category.id | L"></Label>
+          </GridLayout>
+        </StackLayout>
+      </ScrollView>
+
+      <GridLayout @tap="catchTap" rows="*, auto" v-if="currentViewState === ViewState.DESCRIPTION" row="1">
+        <StackLayout row="0" verticalAlignment="center">
+          <Label class="room-description-label" text="Napši kratek opis sobe ali pusti prazno" textWrap="true"></Label>
+          <TextField verticalAlignment="center" @textChange="onDescriptionChange" v-auto-focus
+                     hint="Kratek opis sobe..." class="description-textview"
+                     v-model="description"></TextField>
+          <Label v-bind:class="{ 'description-characters-count-label-danger': tooLong }"
+                 class="description-characters-count-label"
+                 :text="descriptionCharactersLabelString"></Label>
+        </StackLayout>
+        <StackLayout row="1">
+          <Label v-bind:class="{ 'button-danger': tooLong }" @tap="confirmTap" class="kjer-si-big-button" text="Potrdi"
+                 margin="0 10"></Label>
+        </StackLayout>
+      </GridLayout>
+
     </GridLayout>
-
-    <ScrollView class="map-category-list-scrollview" row="1">
-      <ActivityIndicator :busy="true" :isEnabled="true" v-show="!categoriesLoaded" width="40" height="40"></ActivityIndicator>
-      <StackLayout class="map-popover-list-scroll-container" v-if="categoriesLoaded">
-        <GridLayout v-for="category in categories" @tap="onCategoryTap(category)" v-bind:key="category.id" columns="auto, *, auto" class="map-popover-list-item-container">
-<!--          <Image class="map-popover-list-item-icon" horizontalAlignment="center" src="~/assets/images/gaming_icon.png" width="30" height="30" stretch="aspectFit" col="0"></Image>-->
-          <Label class="map-popover-list-item-name" col="1" :text="category.name"></Label>
-        </GridLayout>
-      </StackLayout>
-    </ScrollView>
-
-   </GridLayout>
 
     <StackLayout row="1" marginTop="-20" class="pointer-down">
       <Image src="~/assets/images/box_pointer_down.png" height="40"></Image>

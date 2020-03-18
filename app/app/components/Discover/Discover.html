@@ -74,8 +74,8 @@
              v-if="currentPageState === PAGE_STATES.MAP"
              v-bind:showCreateButton="locationReceived"
              :translateX="screenWidth - 75"
-             :translateY="selectedRoom?screenHeight - 170 - 140:screenHeight - 170"></MapFabs>
-    <StackLayout :translateY="screenHeight - 170" width="100%">
+             :translateY="(selectedRoom?screenHeight - 132 - 140:screenHeight - 170) - (selectedRoom && selectedRoom.description?54:0)"></MapFabs>
+    <StackLayout :translateY="screenHeight - 132 - (selectedRoom && selectedRoom.description?54:0)" width="100%">
       <MapCard v-if="currentPageState === PAGE_STATES.MAP && selectedRoom" v-bind:room="selectedRoom" @tap="onCardTap"></MapCard>
     </StackLayout>
   </AbsoluteLayout>

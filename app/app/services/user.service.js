@@ -5,6 +5,7 @@ import * as platform from "tns-core-modules/platform";
 export default new class {
 
   user = null;
+  firebaseToken = null;
 
   initLocalUserData() {
     const userData = JSON.parse(localStorage.getItem('user'));
@@ -12,56 +13,79 @@ export default new class {
     return userData;
   }
 
-  saveLocalUserData(id, deviceUid, nickname, token) {
-    const userData = {id, uid: deviceUid, nickname, token};
+  saveLocalUserData(_id, deviceUid, nickname, token) {
+    const userData = {_id, uid: deviceUid, nickname, token};
     localStorage.setItem('user', JSON.stringify(userData));
     this.user = userData;
     return userData;
   }
 
+  isRoomMuted(roomId) {
+    const mutedRooms = JSON.parse(localStorage.getItem('mutedRooms'));
+    if (!mutedRooms || !Array.isArray(mutedRooms)) {
+      return false;
+    }
+    const isMuted = !!mutedRooms.filter((r) => r === roomId)[0];
+    return isMuted;
+  }
+
+  removeFromMutedRooms(roomId) {
+    const mutedRooms = JSON.parse(localStorage.getItem('mutedRooms'));
+    if (!mutedRooms || !Array.isArray(mutedRooms)) {
+      return;
+    }
+    const index = mutedRooms.indexOf(roomId);
+    mutedRooms.splice(index, 1);
+    localStorage.setItem('mutedRooms', JSON.stringify(mutedRooms));
+  }
+
+  addMutedRoom(roomId) {
+    let mutedRooms = JSON.parse(localStorage.getItem('mutedRooms'));
+    if (!mutedRooms || !Array.isArray(mutedRooms)) {
+      mutedRooms = [];
+    }
+    const exists = !!mutedRooms.filter((id) => roomId === id).length;
+    if (exists) {
+      return;
+    }
+    mutedRooms.push(roomId);
+    localStorage.setItem('mutedRooms', JSON.stringify(mutedRooms));
+  }
+
   async setupUser() {
 
-    const user = this.initLocalUserData();
-
-    // if (user) {
-    //   console.log('User already generated');
-    // } else {
-
-    // android.util.Log.v("KJERSI device uuid:", platform.device.uuid);
-    console.log('platform.device.uuid: ', platform.device.uuid);
+    this.initLocalUserData();
 
     let fetchedUser;
     try {
       fetchedUser = await ApiService.default.fetchSelf(platform.device.uuid);
+      console.log('Fetched user: ', fetchedUser);
     } catch (e) {
       console.log('Fetched user error: ', e);
     }
-    // android.util.Log.v("KJERSI fetched user:", fetchedUser);
+
     if (!fetchedUser) {
-      const username = await ApiService.default.generateUsername();
-      // android.util.Log.v("KJERSI username:", username);
-      const user = await ApiService.default.createUser(platform.device.uuid, username);
-      // android.util.Log.v("KJERSI user:", user);
+      const user = await ApiService.default.createUser(platform.device.uuid);
 
       this.saveLocalUserData(
-        user.id,
+        user._id,
         platform.device.uuid,
         user.nickname,
+        user.accessToken
       );
+      ApiService.default.configureAxios();
       this.initLocalUserData();
       ApiService.default.initSocket();
     } else {
       this.saveLocalUserData(
-        fetchedUser.id,
+        fetchedUser._id,
         platform.device.uuid,
         fetchedUser.nickname,
         fetchedUser.token,
       );
-      ApiService.default.configureAxios(fetchedUser.token);
+      ApiService.default.configureAxios();
       ApiService.default.initSocket();
     }
-
-    // }
 
   }
 
