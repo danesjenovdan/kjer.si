@@ -39,7 +39,7 @@ defmodule KjerSi.MixProject do
       {:ecto_sql, "~> 3.3"},
       {:postgrex, "~> 0.15"},
       {:gettext, "~> 0.17"},
-      {:jason, "~> 1.1"},
+      {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.1"},
       {:geo, "~> 3.3"},
       {:geo_postgis, "~> 3.3"}
