@@ -10,16 +10,45 @@ defmodule KjerSiWeb.UserControllerTest do
   end
 
   describe "create" do
-    test "anyone can create new user", %{conn: conn} do
-      conn
-      |> post(Routes.user_path(conn, :create), user: %{uid: "42", nickname: "some nickname"})
-      |> json_response(201)
+    test "performs login for existing uids", %{conn: conn} do
+      users_before = TestHelper.get_user_count()
+
+      %{"data" => %{"nickname" => "user"}} =
+        conn
+        |> post(Routes.user_path(conn, :create), uid: "2")
+        |> json_response(200)
+
+      users_after = TestHelper.get_user_count()
+
+      assert users_after == users_before
+    end
+
+    test "returns token upon successful login", %{conn: conn} do
+      %{"data" => %{"token" => token}} =
+        conn
+        |> post(Routes.user_path(conn, :create), uid: "2")
+        |> json_response(200)
+
+      assert String.length(token) == 148
+    end
+
+    test "performs registration for new uids", %{conn: conn} do
+      users_before = TestHelper.get_user_count()
+
+      %{"data" => %{"uid" => "1337"}} =
+        conn
+        |> post(Routes.user_path(conn, :create), uid: "1337")
+        |> json_response(201)
+
+      users_after = TestHelper.get_user_count()
+
+      assert users_after == users_before + 1
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
       %{"errors" => %{"detail" => "Unprocessable Entity"}} =
         conn
-        |> post(Routes.user_path(conn, :create), user: %{uid: nil})
+        |> post(Routes.user_path(conn, :create), uid: "")
         |> json_response(422)
     end
   end

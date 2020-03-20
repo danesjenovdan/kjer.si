@@ -42,4 +42,9 @@ defmodule TestHelper do
     token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
     put_req_header(conn, "authorization", "Bearer #{token}")
   end
+
+  def get_user_count do
+    users = KjerSi.Accounts.User |> KjerSi.Repo.all()
+    length(users)
+  end
 end

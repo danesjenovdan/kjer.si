@@ -16,11 +16,15 @@ defmodule KjerSiWeb.UserView do
 
   def render("user_with_token.json", %{token: token, user: user}) do
     %{
-      id: user.id,
-      nickname: user.nickname,
-      uid: user.uid,
-      is_active: user.is_active,
-      token: token
+      data: %{
+        id: user.id,
+        nickname: user.nickname,
+        uid: user.uid,
+        isActive: user.is_active,
+        isAdmin: user.is_admin,
+        createdAt: user.inserted_at,
+        token: token,
+      }
     }
   end
 
