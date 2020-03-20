@@ -8,7 +8,7 @@ jobs:
 
     services:
       db:
-        image: mdillon/postgis
+        image: postgis/postgis
         ports:
           - 5432:5432
         options: >-

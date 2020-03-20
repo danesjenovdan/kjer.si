@@ -25,7 +25,7 @@ services:
       ./entrypoint.sh
 
   db:
-    image: mdillon/postgis
+    image: postgis/postgis
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
