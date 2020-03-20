@@ -38,6 +38,7 @@ defmodule KjerSi.MixProject do
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.3"},
       {:postgrex, "~> 0.15"},
+      {:phoenix_html, "~> 2.11"},
       {:gettext, "~> 0.17"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.1"},

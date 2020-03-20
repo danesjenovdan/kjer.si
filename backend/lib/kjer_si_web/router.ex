@@ -5,6 +5,14 @@ defmodule KjerSiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   pipeline :auth do
     plug KjerSiWeb.Plugs.Auth, "is_logged_in"
   end
@@ -31,7 +39,6 @@ defmodule KjerSiWeb.Router do
     post "/rooms", RoomController, :create
     post "/map/rooms", MapController, :get_rooms_in_radius
 
-    # scope "/admin", Admin do # consider moving controller into Admin module
     scope "/admin", Admin do
       pipe_through :admin
 
@@ -41,5 +48,12 @@ defmodule KjerSiWeb.Router do
       # resources "/events", EventController, param: "uid", only: [:index, :show, :create, :update] # commenting out, because it's not used yet
       resources "/rooms", AdminRoomController, only: [:index, :delete]
     end
+  end
+
+  scope "/admin", KjerSiWeb do
+    pipe_through :browser
+    # pipe_through :admin
+
+    get "/", AdminController, :index
   end
 end

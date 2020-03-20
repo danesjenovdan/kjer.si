@@ -1,0 +1,22 @@
+<h2>Registered users</h2>
+
+<table>
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Nickname</td>
+      <td>Is Active?</td>
+      <td>Is Admin?</td>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for user <- @users do %>
+    <tr>
+      <td><%= user.uid %></td>
+      <td><%= user.nickname %></td>
+      <td><%= user.is_active %></td>
+      <td><%= user.is_admin %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
