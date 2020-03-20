@@ -40,19 +40,4 @@ defmodule KjerSiWeb.UserControllerTest do
         |> json_response(401)
     end
   end
-
-  describe "recover self" do
-    test "generates token", %{conn: conn, user: user} do
-      %{"token" => token} =
-        conn
-        |> post(Routes.user_path(conn, :recover_self), %{uid: user.uid})
-        |> json_response(200)
-
-      assert String.length(token) == 148
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.user_path(conn, :recover_self), %{uid: user.uid})
-      end
-    end
-  end
 end

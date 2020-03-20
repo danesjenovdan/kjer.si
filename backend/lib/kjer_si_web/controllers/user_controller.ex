@@ -16,23 +16,6 @@ defmodule KjerSiWeb.UserController do
     end
   end
 
-  def generate_username(conn, _params) do
-    # generate nickname and assign to user here TODO
-    name = UserHelpers.generate_unique_name()
-    send_resp(conn, :ok, name)
-  end
-
-  def recover_self(conn, %{"uid" => uid}) do
-    user = Accounts.get_user_by_uid(uid)
-
-    # It's ok for the salt to be hardcoded
-    # https://elixirforum.com/t/phoenix-token-for-api-auth-salt-per-user-or-per-app/13361
-    token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
-
-    # Phoenix.Token.verify(MyApp.Endpoint, "user auth", token, max_age: 86400)
-    render(conn, "user_with_token.json", %{token: token, user: user})
-  end
-
   def self(conn, _params) do
     conn
     |> render("show.json", user: conn.assigns[:current_user])
