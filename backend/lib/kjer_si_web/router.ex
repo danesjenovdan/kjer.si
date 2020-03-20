@@ -27,8 +27,6 @@ defmodule KjerSiWeb.Router do
     end
 
     post "/users", UserController, :create
-    get "/generate-username", UserController, :generate_username
-    post "/recover-self", UserController, :recover_self
     get "/categories", RoomController, :categories
     post "/rooms", RoomController, :create
     post "/map/rooms", MapController, :get_rooms_in_radius
