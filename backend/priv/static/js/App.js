@@ -1,3 +1,4 @@
+// TODO: split app to users and rooms
 import { defineComponent, reactive } from './vue.esm.prod.js'
 
 async function fetchUsers(token) {

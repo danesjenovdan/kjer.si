@@ -3,17 +3,12 @@ defmodule KjerSiWeb.Endpoint do
 
   # Uncomment this and add a comma above to return JSON errors
   # render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(json), layout: false]
-  @session_options [
-    store: :cookie,
-    key: "_kjer_si_key",
-    signing_salt: "m0B32x0W"
-  ]
 
   plug Plug.Static,
     at: "/",
     from: :kjer_si,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(admin css fonts images js favicon.ico robots.txt)
 
   socket "/socket", KjerSiWeb.UserSocket,
     websocket: true,
@@ -35,6 +30,5 @@ defmodule KjerSiWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug Plug.Session, @session_options
   plug KjerSiWeb.Router
 end
