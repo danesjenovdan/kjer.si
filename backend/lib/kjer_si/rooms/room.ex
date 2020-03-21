@@ -11,6 +11,7 @@ defmodule KjerSi.Rooms.Room do
     field :lng, :float
     field :coordinates, Geo.PostGIS.Geometry
     field :radius, :integer
+    has_many :events, KjerSi.Events.Event
 
     many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Accounts.UserRoom, unique: true
 

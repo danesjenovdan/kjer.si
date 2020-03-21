@@ -118,6 +118,8 @@ defmodule KjerSi.Rooms do
     Room
     |> Repo.all
     |> Repo.preload(:users)
+    |> Repo.preload(:category)
+    |> Repo.preload(:events)
   end
 
   @doc """
