@@ -81,7 +81,7 @@ defmodule KjerSi.RoomsTest do
     end
 
     test "list_rooms/0 returns all rooms" do
-      room = %{ room_fixture() | lat: 120.5, lng: 120.5, users: [] }
+      room = %{ room_fixture() | lat: 120.5, lng: 120.5, users: [], events: [], category: %{ name: "Test category" } }
       assert Rooms.list_rooms() == [room]
     end
 
