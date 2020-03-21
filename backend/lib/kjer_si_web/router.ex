@@ -52,8 +52,7 @@ defmodule KjerSiWeb.Router do
 
   scope "/admin", KjerSiWeb do
     pipe_through :browser
-    # pipe_through :admin
 
-    get "/", AdminController, :index
+    get "/", AdminController, :index # TODO: consider renaming this to AdminUIController so it's more explicit
   end
 end

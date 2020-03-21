@@ -11,9 +11,8 @@
       <h1>Kjer.si Admin</h1>
     </header>
     <main>
-      <p class="alert-info"><%= get_flash(@conn, :info) %></p>
-      <p class="alert-danger"><%= get_flash(@conn, :error) %></p>
       <%= render @view_module, @view_template, assigns %>
     </main>
+    <script src="/js/main.js" type="module"></script>
   </body>
 </html>
