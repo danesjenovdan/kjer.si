@@ -22,7 +22,7 @@ defmodule KjerSiWeb.Admin.AdminUserControllerTest do
     end
 
     test "admin user can list other users", %{conn: conn, admin: admin} do
-      %{"data" => [%{"nickname" => "admin"}, %{"nickname" => "user"}]} =
+      %{"data" => [%{"nickname" => "user"}]} =
         conn
         |> TestHelper.login_user(admin)
         |> get(Routes.admin_user_path(conn, :index))
