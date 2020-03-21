@@ -53,7 +53,10 @@ KjerSi.Repo.insert! %KjerSi.Accounts.Subscription{user: polde, room: gre_kdo_bas
 KjerSi.Repo.insert! %KjerSi.Accounts.Subscription{user: micka, room: ljubitelji_psov}
 KjerSi.Repo.insert! %KjerSi.Accounts.Subscription{user: stef, room: ljubitelji_psov}
 
-
+# Generate messages
+KjerSi.Repo.insert! %KjerSi.Messages.Message{content: "kako ste?", room: ljubitelji_psov, user: polde}
+KjerSi.Repo.insert! %KjerSi.Messages.Message{content: "gre kdo na sprehod?", room: ljubitelji_psov, user: polde}
+KjerSi.Repo.insert! %KjerSi.Messages.Message{content: "ja, čez 5 minut", room: ljubitelji_psov, user: micka}
 
 # Generate event
 bakanje_event = KjerSi.Repo.insert!(KjerSi.Events.Event.changeset(%KjerSi.Events.Event{}, %{
