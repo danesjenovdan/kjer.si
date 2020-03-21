@@ -28,3 +28,18 @@ export async function deleteRoom(room, token) {
     method: 'DELETE'
   })
 }
+
+export async function getAdminUserToken(uid) {
+  const request = await window.fetch('/api/users', {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    body: JSON.stringify({ uid })
+  })
+
+  const response = await request.json()
+  if (response?.data?.isAdmin === false) {
+    throw Error('Intruder!')
+  }
+
+  return response?.data?.token
+}
