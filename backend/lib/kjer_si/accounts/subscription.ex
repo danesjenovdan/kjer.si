@@ -1,10 +1,10 @@
-defmodule KjerSi.Accounts.UserRoom do
+defmodule KjerSi.Accounts.Subscription do
   use Ecto.Schema
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "users_rooms" do
+  schema "subscriptions" do
     belongs_to :user, KjerSi.Accounts.User
     belongs_to :room, KjerSi.Rooms.Room
 
