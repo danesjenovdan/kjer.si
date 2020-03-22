@@ -37,17 +37,17 @@ defmodule KjerSi.MessagesTest do
     end
 
     test "list_messages accepts 'before' as first argument", %{user_id: user_id, room_id: room_id} do
-      _message1 = message_fixture(user_id, room_id)
-      _message2 = message_fixture(user_id, room_id)
+      message_fixture(user_id, room_id)
+      message_fixture(user_id, room_id)
       a_long_time_ago = "1986-04-26T01:23:40+0400"
 
       assert Messages.list_messages(a_long_time_ago) == []
     end
 
-    test "list_messages accepts limit as second argument", %{user_id: user_id, room_id: room_id} do
-      message1 = message_fixture(user_id, room_id)
-      _message2 = message_fixture(user_id, room_id)
-      assert Messages.list_messages(nil, 1) == [message1]
+    test "list_messages accepts 'limit' as second argument", %{user_id: user_id, room_id: room_id} do
+      message = message_fixture(user_id, room_id)
+      message_fixture(user_id, room_id)
+      assert Messages.list_messages(nil, 1) == [message]
     end
 
     test "get_message!/1 returns the message with given id", %{user_id: user_id, room_id: room_id} do
