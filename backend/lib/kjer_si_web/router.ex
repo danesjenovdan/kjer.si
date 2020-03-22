@@ -31,7 +31,6 @@ defmodule KjerSiWeb.Router do
     post "/rooms", RoomController, :create
     post "/map/rooms", MapController, :get_rooms_in_radius
 
-    # scope "/admin", Admin do # consider moving controller into Admin module
     scope "/admin", Admin do
       pipe_through :admin
 

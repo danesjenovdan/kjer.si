@@ -117,7 +117,7 @@ defmodule KjerSi.Rooms do
   def list_rooms do
     Room
     |> Repo.all
-    |> Repo.preload(:users)
+    |> Repo.preload([:users, :events, :category])
   end
 
   @doc """

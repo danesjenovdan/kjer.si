@@ -81,8 +81,8 @@ defmodule KjerSi.RoomsTest do
     end
 
     test "list_rooms/0 returns all rooms" do
-      room = %{ room_fixture() | lat: 120.5, lng: 120.5, users: [] }
-      assert Rooms.list_rooms() == [room]
+      room_fixture()
+      [%{ users: [], events: [], category: %KjerSi.Rooms.Category{ name: "Test category" } }] = Rooms.list_rooms()
     end
 
     test "get_room!/1 returns the room with given id" do
