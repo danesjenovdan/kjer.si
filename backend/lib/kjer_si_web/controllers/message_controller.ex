@@ -3,10 +3,12 @@ defmodule KjerSiWeb.MessageController do
   use Params
 
   alias KjerSi.Messages
+  alias KjerSi.Rooms.Room
 
   action_fallback KjerSiWeb.FallbackController
 
   defparams message_index(%{
+              room_id!: :binary_id,
               before!: :date,
               limit!: :integer
             })
@@ -15,12 +17,12 @@ defmodule KjerSiWeb.MessageController do
     changeset = message_index(params)
 
     if changeset.valid? do
-      messages =
-        Messages.list_messages(params["before"], params["limit"])
-        |> KjerSi.Repo.preload([:user])
+      %{"room_id" => room_id, "before" => before, "limit" => limit} = params
 
-      conn
-      |> render("index.json", messages: messages)
+      with {:ok, %Room{}} <- KjerSi.Rooms.get_room(room_id) do
+        messages = Messages.list_messages(room_id, before, limit)
+        render(conn, "index.json", messages: messages)
+      end
     else
       {:error, changeset}
     end

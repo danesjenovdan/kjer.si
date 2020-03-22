@@ -13,40 +13,50 @@ defmodule KjerSi.MessagesTest do
   describe "messages" do
     alias KjerSi.Messages.Message
 
-    @valid_attrs %{content: "some content"}
-    @update_attrs %{content: "some updated content"}
-    @invalid_attrs %{content: nil}
-
-    def message_fixture(attrs \\ %{}, user_id, room_id) do
-      {:ok, message} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Map.merge(%{
-          user_id: user_id,
-          room_id: room_id
-        })
-        |> Messages.create_message()
-
-      message
+    def message_fixture(user_id, room_id) do
+      Repo.insert!(%Message{content: "message content", user_id: user_id, room_id: room_id})
+      |> KjerSi.Repo.preload([:user])
     end
 
-    test "list_messages returns all messages by default", %{user_id: user_id, room_id: room_id} do
+    test "list_messages/3 returns a list of messages for given room_id", %{
+      user_id: user_id,
+      room_id: room_id
+    } do
+      future_date = "2100-01-01T00:00:00"
+      limit = 1000
+      irrelevant_room = TestHelper.generate_room()
+
       message1 = message_fixture(user_id, room_id)
       message2 = message_fixture(user_id, room_id)
-      assert Messages.list_messages() == [message1, message2]
+      message_fixture(user_id, irrelevant_room.id)
+
+      assert Messages.list_messages(room_id, future_date, limit) == [message1, message2]
     end
 
-    test "list_messages accepts 'before' as first argument", %{user_id: user_id, room_id: room_id} do
-      message_fixture(user_id, room_id)
-      message_fixture(user_id, room_id)
-      a_long_time_ago = "1986-04-26T01:23:40+0400"
+    test "list_messages/3 can be filtered with a `before` date", %{
+      user_id: user_id,
+      room_id: room_id
+    } do
+      past_date = "1950-01-01T00:00:00"
+      limit = 1000
 
-      assert Messages.list_messages(a_long_time_ago) == []
+      message_fixture(user_id, room_id)
+      message_fixture(user_id, room_id)
+
+      assert Messages.list_messages(room_id, past_date, limit) == []
     end
 
-    test "list_messages accepts 'limit' as second argument", %{user_id: user_id, room_id: room_id} do
+    test "list_messages/3 result count can be limited with `limit`", %{
+      user_id: user_id,
+      room_id: room_id
+    } do
+      future_date = "2100-01-01T00:00:00"
+      limit = 1
+
       message = message_fixture(user_id, room_id)
       message_fixture(user_id, room_id)
-      assert Messages.list_messages(nil, 1) == [message]
+
+      assert Messages.list_messages(room_id, future_date, limit) == [message]
     end
+  end
 end

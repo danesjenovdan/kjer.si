@@ -9,31 +9,19 @@ defmodule KjerSi.Messages do
   alias KjerSi.Messages.Message
 
   @doc """
-  Returns the list of messages.
+  Returns a list of messages for given room_id.
 
   ## Examples
 
-      iex> list_messages()
+      iex> list_messages("123", "2020-01-13T13:20:02", "20")
       [%Message{}, ...]
 
   """
-  def list_messages(before \\ nil, limit \\ nil) do
-    query = Message
-
-    query =
-      if before do
-        where(query, [m], m.inserted_at < ^before)
-      else
-        query
-      end
-
-    query =
-      if limit do
-        limit(query, [m], ^limit)
-      else
-        query
-      end
-
-    Repo.all(query)
+  def list_messages(room_id, before, limit) do
+    Message
+    |> where([m], m.inserted_at < ^before and m.room_id == ^room_id)
+    |> limit([m], ^limit)
+    |> Repo.all()
+    |> Repo.preload([:user])
   end
 end
