@@ -46,12 +46,12 @@ gre_kdo_basket = KjerSi.Repo.insert!(KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.R
 }))
 
 # Generate subscriptions
-KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: polde, room: ljubitelji_psov}
-KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: polde, room: pevski_zbor}
-KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: polde, room: gre_kdo_basket}
+KjerSi.Repo.insert! %KjerSi.Accounts.Subscription{user: polde, room: ljubitelji_psov}
+KjerSi.Repo.insert! %KjerSi.Accounts.Subscription{user: polde, room: pevski_zbor}
+KjerSi.Repo.insert! %KjerSi.Accounts.Subscription{user: polde, room: gre_kdo_basket}
 
-KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: micka, room: ljubitelji_psov}
-KjerSi.Repo.insert! %KjerSi.Accounts.UserRoom{user: stef, room: ljubitelji_psov}
+KjerSi.Repo.insert! %KjerSi.Accounts.Subscription{user: micka, room: ljubitelji_psov}
+KjerSi.Repo.insert! %KjerSi.Accounts.Subscription{user: stef, room: ljubitelji_psov}
 
 
 

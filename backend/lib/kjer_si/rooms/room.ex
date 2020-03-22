@@ -12,7 +12,7 @@ defmodule KjerSi.Rooms.Room do
     field :coordinates, Geo.PostGIS.Geometry
     field :radius, :integer
 
-    many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Accounts.UserRoom, unique: true
+    many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Accounts.Subscription, unique: true
 
     timestamps()
   end

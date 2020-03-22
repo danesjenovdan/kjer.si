@@ -58,47 +58,47 @@ defmodule KjerSi.AccountsTest do
     end
   end
 
-  describe "user_rooms" do
-    alias KjerSi.Accounts.UserRoom
+  describe "subscriptions" do
+    alias KjerSi.Accounts.Subscription
 
-    def user_room_fixture() do
+    def subscription_fixture() do
       test_user = TestHelper.generate_user()
       test_room = TestHelper.generate_room()
 
-      {:ok, user_room} = Accounts.create_user_room(%{
+      {:ok, subscription} = Accounts.create_subscription(%{
         user_id: test_user.id,
         room_id: test_room.id,
       })
 
-      user_room
+      subscription
     end
 
-    test "list_user_rooms/0 returns all user_rooms" do
-      user_room = user_room_fixture()
-      assert Accounts.list_user_rooms() == [user_room]
+    test "list_subscriptions/0 returns all subscriptions" do
+      subscription = subscription_fixture()
+      assert Accounts.list_subscriptions() == [subscription]
     end
 
-    test "create_user_room/1 with valid data creates a user_room" do
+    test "create_subscription/1 with valid data creates a subscription" do
       test_user = TestHelper.generate_user()
       test_room = TestHelper.generate_room()
 
-      assert {:ok, %UserRoom{} = user_room} = Accounts.create_user_room(%{
+      assert {:ok, %Subscription{} = subscription} = Accounts.create_subscription(%{
         user_id: test_user.id,
         room_id: test_room.id,
       })
     end
 
-    test "create_user_room/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_user_room(%{
+    test "create_subscription/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_subscription(%{
         user_id: "clearly invalid",
         room_id: -6,
       })
     end
 
-    test "delete_user_room/1 deletes the user_room" do
-      user_room = user_room_fixture()
-      assert {:ok, %UserRoom{}} = Accounts.delete_user_room(user_room)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user_room!(user_room.id) end
+    test "delete_subscription/1 deletes the subscription" do
+      subscription = subscription_fixture()
+      assert {:ok, %Subscription{}} = Accounts.delete_subscription(subscription)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_subscription!(subscription.id) end
     end
   end
 end

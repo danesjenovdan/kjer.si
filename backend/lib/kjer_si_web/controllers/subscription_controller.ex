@@ -1,9 +1,9 @@
-defmodule KjerSiWeb.UserRoomController do
+defmodule KjerSiWeb.SubscriptionController do
   use KjerSiWeb, :controller
 
   alias KjerSi.Accounts
   alias KjerSi.Accounts.User
-  alias KjerSi.Accounts.UserRoom
+  alias KjerSi.Accounts.Subscription
   alias KjerSi.AccountsHelpers
   alias KjerSi.Rooms
 
@@ -11,19 +11,19 @@ defmodule KjerSiWeb.UserRoomController do
 
   def index(conn, _params) do
     with {:ok, %User{} = user} <- AccountsHelpers.get_auth_user(conn) do
-      user_rooms = Accounts.list_user_rooms_by_user(user)
-      render(conn, "user_rooms_of_user.json", user_rooms: user_rooms)
+      subscriptions = Accounts.list_subscriptions_by_user(user)
+      render(conn, "subscriptions_of_user.json", subscriptions: subscriptions)
     end
   end
 
   def create(conn, %{"subscription" => subscription_params}) do
     with {:ok, user} = AccountsHelpers.get_auth_user(conn) do
       if subscription_params["user_id"] == user.id do
-        with {:ok, %UserRoom{} = user_room} <- Accounts.create_user_room(subscription_params) do
+        with {:ok, %Subscription{} = subscription} <- Accounts.create_subscription(subscription_params) do
           conn
           |> put_status(:created)
-          |> put_resp_header("location", Routes.user_room_path(conn, :show, user_room.id))
-          |> render("show.json", user_room: user_room)
+          |> put_resp_header("location", Routes.subscription_path(conn, :show, subscription.id))
+          |> render("show.json", subscription: subscription)
         end
       else
         AccountsHelpers.return_error(conn, :forbidden)
@@ -32,17 +32,17 @@ defmodule KjerSiWeb.UserRoomController do
   end
 
   def show(conn, %{"id" => id}) do
-    user_room = Accounts.get_user_room!(id)
-    render(conn, "show.json", user_room: user_room)
+    subscription = Accounts.get_subscription!(id)
+    render(conn, "show.json", subscription: subscription)
   end
 
   def delete(conn, %{"id" => id}) do
-    with user_room = Accounts.get_user_room!(id) do
+    with subscription = Accounts.get_subscription!(id) do
       with {:ok, user} = AccountsHelpers.get_auth_user(conn) do
-        if user_room.user_id == user.id do
+        if subscription.user_id == user.id do
           # save room ID for later
-          room_id = user_room.room_id
-          with {:ok, %UserRoom{}} <- Accounts.delete_user_room(user_room) do
+          room_id = subscription.room_id
+          with {:ok, %Subscription{}} <- Accounts.delete_subscription(subscription) do
             # check if room is empty and delete room
             with room = Rooms.get_room!(room_id, [:users]) do
               if length(room.users) == 0 do
