@@ -39,28 +39,28 @@ defmodule KjerSiWeb.RoomControllerTest do
     end
 
     test "requires lng param to be present", %{conn: conn} do
-      %{"errors" => %{}} =
+      %{"errors" => %{"fields" => %{"lng" => ["can't be blank"]}}} =
         conn
         |> get(Routes.room_path(conn, :index, lat: "10.001"))
         |> json_response(422)
     end
 
     test "requires lng param to be a valid float", %{conn: conn} do
-      %{"errors" => %{}} =
+      %{"errors" => %{"fields" => %{"lng" => ["is invalid"]}}} =
         conn
         |> get(Routes.room_path(conn, :index, lat: "10.001", lng: "two"))
         |> json_response(422)
     end
 
     test "requires lat param to be present", %{conn: conn} do
-      %{"errors" => %{}} =
+      %{"errors" => %{"fields" => %{"lat" => ["can't be blank"]}}} =
         conn
         |> get(Routes.room_path(conn, :index, lng: "2.001"))
         |> json_response(422)
     end
 
     test "requires lat param to be a valid float", %{conn: conn} do
-      %{"errors" => %{}} =
+      %{"errors" => %{"fields" => %{"lat" => ["is invalid"]}}} =
         conn
         |> get(Routes.room_path(conn, :index, lng: "2.001", lat: true))
         |> json_response(422)

@@ -32,7 +32,7 @@ defmodule KjerSiWeb.MessageControllerTest do
     end
 
     test "requires before param to be present", %{conn: conn, room: room} do
-      %{"errors" => %{}} =
+      %{"errors" => %{"fields" => %{"before" => ["can't be blank"]}}} =
         conn
         |> get(Routes.room_message_path(conn, :index, room.id, limit: 10))
         |> json_response(422)
@@ -41,7 +41,7 @@ defmodule KjerSiWeb.MessageControllerTest do
     test "requires before param to be a valid date", %{conn: conn, room: room} do
       invalid_date = "like, yesterday"
 
-      %{"errors" => %{}} =
+      %{"errors" => %{"fields" => %{"before" => ["is invalid"]}}} =
         conn
         |> get(Routes.room_message_path(conn, :index, room.id, before: invalid_date, limit: 10))
         |> json_response(422)
@@ -50,7 +50,7 @@ defmodule KjerSiWeb.MessageControllerTest do
     test "requires limit param to be present", %{conn: conn, room: room} do
       future_date = "2100-01-01T00:00:00"
 
-      %{"errors" => %{}} =
+      %{"errors" => %{"fields" => %{"limit" => ["can't be blank"]}}} =
         conn
         |> get(Routes.room_message_path(conn, :index, room.id, before: future_date))
         |> json_response(422)
@@ -59,7 +59,7 @@ defmodule KjerSiWeb.MessageControllerTest do
     test "requires limit param to be a valid integer", %{conn: conn, room: room} do
       future_date = "2100-01-01T00:00:00"
 
-      %{"errors" => %{}} =
+      %{"errors" => %{"fields" => %{"limit" => ["is invalid"]}}} =
         conn
         |> get(Routes.room_message_path(conn, :index, room.id, before: future_date, limit: "3.4"))
         |> json_response(422)
