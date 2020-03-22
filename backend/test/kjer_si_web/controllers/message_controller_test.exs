@@ -10,7 +10,10 @@ defmodule KjerSiWeb.MessageControllerTest do
   setup %{conn: conn} do
     user = Repo.insert!(%User{nickname: "user", uid: "2", is_admin: false})
     category = Repo.insert!(%Category{name: "Test category"})
-    room = Repo.insert!(%Room{name: "Test room", category: category, lat: 10.0, lng: 2.0, radius: 10})
+
+    room =
+      Repo.insert!(%Room{name: "Test room", category: category, lat: 10.0, lng: 2.0, radius: 10})
+
     conn = TestHelper.login_user(conn, user)
     Repo.insert!(%Message{content: "message 1", room: room, user: user})
     Repo.insert!(%Message{content: "message 2", room: room, user: user})

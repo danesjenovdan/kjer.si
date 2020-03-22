@@ -23,9 +23,10 @@ defmodule KjerSi.MessagesTest do
         |> Enum.into(@valid_attrs)
         |> Map.merge(%{
           user_id: user_id,
-          room_id: room_id,
+          room_id: room_id
         })
         |> Messages.create_message()
+
       message
     end
 
@@ -54,12 +55,17 @@ defmodule KjerSi.MessagesTest do
       assert Messages.get_message!(message.id) == message
     end
 
-    test "create_message/1 with valid data creates a message", %{user_id: user_id, room_id: room_id} do
-      assert {:ok, %Message{} = message} = Messages.create_message(%{
-        user_id: user_id,
-        room_id: room_id,
-        content: "some content",
-      })
+    test "create_message/1 with valid data creates a message", %{
+      user_id: user_id,
+      room_id: room_id
+    } do
+      assert {:ok, %Message{} = message} =
+               Messages.create_message(%{
+                 user_id: user_id,
+                 room_id: room_id,
+                 content: "some content"
+               })
+
       assert message.content == "some content"
     end
 
@@ -67,13 +73,19 @@ defmodule KjerSi.MessagesTest do
       assert {:error, %Ecto.Changeset{}} = Messages.create_message(@invalid_attrs)
     end
 
-    test "update_message/2 with valid data updates the message", %{user_id: user_id, room_id: room_id} do
+    test "update_message/2 with valid data updates the message", %{
+      user_id: user_id,
+      room_id: room_id
+    } do
       message = message_fixture(user_id, room_id)
       assert {:ok, %Message{} = message} = Messages.update_message(message, @update_attrs)
       assert message.content == "some updated content"
     end
 
-    test "update_message/2 with invalid data returns error changeset", %{user_id: user_id, room_id: room_id} do
+    test "update_message/2 with invalid data returns error changeset", %{
+      user_id: user_id,
+      room_id: room_id
+    } do
       message = message_fixture(user_id, room_id)
       assert {:error, %Ecto.Changeset{}} = Messages.update_message(message, @invalid_attrs)
       assert message == Messages.get_message!(message.id)

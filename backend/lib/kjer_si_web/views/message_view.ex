@@ -13,7 +13,7 @@ defmodule KjerSiWeb.MessageView do
       room_id: message.room_id,
       user_id: message.user.id,
       user_nickname: message.user.nickname,
-      created: message.inserted_at,
+      created: message.inserted_at
     }
   end
 end

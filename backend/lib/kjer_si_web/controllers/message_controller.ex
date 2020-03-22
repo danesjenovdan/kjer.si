@@ -6,10 +6,10 @@ defmodule KjerSiWeb.MessageController do
 
   action_fallback KjerSiWeb.FallbackController
 
-  defparams message_index %{
-    before!: :date,
-    limit!: :integer,
-  }
+  defparams message_index(%{
+              before!: :date,
+              limit!: :integer
+            })
 
   def index(conn, params) do
     changeset = message_index(params)
