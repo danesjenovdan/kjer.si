@@ -25,7 +25,7 @@ defmodule KjerSiWeb.Router do
 
       get "/users/self", UserController, :self
 
-      resources "/rooms", RoomController, only: [:create] do
+      resources "/rooms", RoomController, only: [:index, :create] do
         resources "/messages", MessageController, only: [:index]
         # get "/messages", MessageController, :get_room_history
       end
@@ -33,7 +33,6 @@ defmodule KjerSiWeb.Router do
 
     post "/users", UserController, :create
     get "/categories", RoomController, :categories
-    post "/map/rooms", MapController, :get_rooms_in_radius
 
     scope "/admin", Admin do
       pipe_through :admin
