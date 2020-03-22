@@ -24,11 +24,15 @@ defmodule KjerSiWeb.Router do
       pipe_through :auth
 
       get "/users/self", UserController, :self
+
+      resources "/rooms", RoomController, only: [:create] do
+        resources "/messages", MessageController, only: [:index]
+        # get "/messages", MessageController, :get_room_history
+      end
     end
 
     post "/users", UserController, :create
     get "/categories", RoomController, :categories
-    post "/rooms", RoomController, :create
     post "/map/rooms", MapController, :get_rooms_in_radius
 
     scope "/admin", Admin do
