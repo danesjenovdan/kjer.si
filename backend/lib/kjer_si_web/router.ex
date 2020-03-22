@@ -26,8 +26,7 @@ defmodule KjerSiWeb.Router do
       get "/users/self", UserController, :self
 
       resources "/rooms", RoomController, only: [:index, :create] do
-        resources "/messages", MessageController, only: [:index]
-        # get "/messages", MessageController, :get_room_history
+        get "/messages", MessageController, :index
       end
     end
 
