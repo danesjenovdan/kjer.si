@@ -150,10 +150,14 @@ defmodule KjerSi.Rooms do
       {:error, :not_found}
 
   """
-  def get_room(id) do
+  def get_room(id, preload \\ []) do
     case Repo.get(Room, id) do
-      nil -> {:error, :not_found}
-      room -> {:ok, room}
+      nil ->
+        {:error, :not_found}
+
+      room ->
+        preloaded_room = Repo.preload(room, preload)
+        {:ok, preloaded_room}
     end
   end
 

@@ -90,6 +90,21 @@ defmodule KjerSi.RoomsTest do
       assert Rooms.get_room!(room.id) == room
     end
 
+    test "get_room/1 returns {:ok, room} if room with given id exists" do
+      room = %{ room_fixture() | lat: 120.5, lng: 120.5 }
+      assert Rooms.get_room(room.id) == {:ok, room}
+    end
+
+    test "get_room/1 supports preload as second argument" do
+      room = %{ room_fixture() | lat: 120.5, lng: 120.5, users: [] }
+      assert Rooms.get_room(room.id, [:users]) == {:ok, room}
+    end
+
+    test "get_room/1 returns {:error, :not_found} if room with given id does not exist" do
+      fake_id = "ba294533-82b6-4cbb-abc1-167cd7bf4bb1"
+      assert Rooms.get_room(fake_id) == {:error, :not_found}
+    end
+
     test "create_room/1 with valid data creates a room" do
       assert {:ok, %Room{} = room} = Rooms.create_room(Map.merge(@valid_attrs, %{category_id: TestHelper.generate_category().id}))
       assert room.coordinates == %Geo.Point{coordinates: {120.5, 120.5}, srid: 4326}
