@@ -6,7 +6,7 @@ defmodule KjerSi.RoomsTest do
   describe "categories" do
     alias KjerSi.Rooms.Category
 
-    @valid_attrs %{name: "some name"}
+    @valid_attrs %{name: "some name", description: "some description"}
     @update_attrs %{name: "some updated name"}
     @invalid_attrs %{name: nil}
 
@@ -65,7 +65,7 @@ defmodule KjerSi.RoomsTest do
   describe "rooms" do
     alias KjerSi.Rooms.Room
 
-    @valid_attrs %{lat: 120.5, lng: 120.5, name: "some name", radius: 42}
+    @valid_attrs %{lat: 120.5, lng: 120.5, name: "some name", description: "some description", radius: 42}
     @update_attrs %{lat: 456.7, lng: 456.7, name: "some updated name", radius: 43}
     @invalid_attrs %{lat: nil, lng: nil, name: nil, radius: nil}
 

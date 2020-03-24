@@ -24,10 +24,11 @@ defmodule TestHelper do
     KjerSi.Repo.insert!(
       KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.Room{}, %{
         lat: 120.5,
-        lng: 120.5,
-        name: "some name",
+        lng: 121.4,
+        name: "Test room",
         radius: 42,
-        category_id: category.id
+        category_id: category.id,
+        description: "Test description"
       })
     )
   end

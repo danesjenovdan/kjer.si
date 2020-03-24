@@ -17,6 +17,7 @@ defmodule KjerSiWeb.RoomView do
       categoryId: room.category_id,
       lat: room.lat,
       lng: room.lng,
+      description: room.description,
       users: render_many(room.users, KjerSiWeb.UserView, "user_nickname.json")
     }
   end
