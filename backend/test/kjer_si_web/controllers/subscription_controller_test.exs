@@ -31,7 +31,7 @@ defmodule KjerSiWeb.SubscriptionControllerTest do
       new_room_id = new_room.id
       user_id = user.id
 
-      %{"data" => %{"room_id" => ^new_room_id, "user_id" => ^user_id}} =
+      %{"data" => %{"roomId" => ^new_room_id, "userId" => ^user_id}} =
         conn
         |> post(Routes.subscription_path(conn, :create), room_id: new_room_id)
         |> json_response(201)

@@ -10,7 +10,7 @@ defmodule KjerSiWeb.RoomView do
       id: room.id,
       name: room.name,
       radius: room.radius,
-      category_id: room.category_id,
+      categoryId: room.category_id,
       lat: room.lat,
       lng: room.lng,
       users: []
@@ -22,7 +22,7 @@ defmodule KjerSiWeb.RoomView do
       id: room.id,
       name: room.name,
       radius: room.radius,
-      category_id: room.category_id,
+      categoryId: room.category_id,
       lat: room.lat,
       lng: room.lng,
       users: render_many(room.users, KjerSiWeb.UserView, "user_nickname.json")
