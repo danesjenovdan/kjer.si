@@ -173,6 +173,25 @@ defmodule KjerSi.Accounts do
   def get_subscription!(id), do: Repo.get!(Subscription, id)
 
   @doc """
+  Gets a single subscription.
+
+  ## Examples
+
+      iex> get_subscription(123)
+      {:ok, %Subscription{}}
+
+      iex> get_subscription(456)
+      {:error, :not_found}
+
+  """
+  def get_subscription(id) do
+    case Repo.get(Subscription, id) do
+      nil -> {:error, :not_found}
+      subscription -> {:ok, subscription}
+    end
+  end
+
+  @doc """
   Unsubscribes user from room.
 
   ## Examples

@@ -79,6 +79,16 @@ defmodule KjerSi.AccountsTest do
       assert Accounts.list_subscriptions(user_id) == [subscription]
     end
 
+    test "get_subscrition/1 returns {:ok, subscription} if subscription with given id exists" do
+      subscription = subscription_fixture()
+      assert Accounts.get_subscription(subscription.id) == {:ok, subscription}
+    end
+
+    test "get_subscrition/1 returns {:error, :not_found} if subscription with given id does not exist" do
+      fake_id = "ba294533-82b6-4cbb-abc1-167cd7bf4bb1"
+      assert Accounts.get_subscription(fake_id) == {:error, :not_found}
+    end
+
     test "create_subscription/1 with valid data creates a subscription" do
       test_user = TestHelper.generate_user()
       test_room = TestHelper.generate_room()
