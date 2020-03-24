@@ -73,9 +73,10 @@ defmodule KjerSi.AccountsTest do
       subscription
     end
 
-    test "list_subscriptions/0 returns all subscriptions" do
+    test "list_subscriptions/0 returns all subscriptions for given user_id" do
       subscription = subscription_fixture()
-      assert Accounts.list_subscriptions() == [subscription]
+      user_id = subscription.user_id
+      assert Accounts.list_subscriptions(user_id) == [subscription]
     end
 
     test "create_subscription/1 with valid data creates a subscription" do

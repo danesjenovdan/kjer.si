@@ -126,29 +126,16 @@ defmodule KjerSi.Accounts do
   alias KjerSi.Accounts.Subscription
 
   @doc """
-  Returns the list of subscriptions.
+  Returns a list of subscriptions for given user id
 
   ## Examples
 
-      iex> list_subscriptions()
+      iex> list_subscriptions(user_id)
       [%Subscription{}, ...]
 
   """
-  def list_subscriptions do
-    Repo.all(Subscription)
-  end
-
-  @doc """
-  Returns the list of subscriptions.
-
-  ## Examples
-
-      iex> list_subscriptions()
-      [%Subscription{}, ...]
-
-  """
-  def list_subscriptions_by_user(user) do
-    Repo.all(from ur in Subscription, where: ur.user_id == ^user.id, select: ur)
+  def list_subscriptions(user_id) do
+    Repo.all(from Subscription, where: [user_id: ^user_id])
   end
 
   @doc """
