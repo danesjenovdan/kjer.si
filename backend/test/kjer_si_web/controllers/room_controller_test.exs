@@ -69,12 +69,12 @@ defmodule KjerSiWeb.RoomControllerTest do
 
   describe "create" do
     test "regular user can create a room", %{conn: conn, user: user, category: category} do
-      %{"name" => "New room", "radius" => 5} =
+      %{"data" => %{"name" => "New room", "radius" => 5}} =
         conn
         |> TestHelper.login_user(user)
         |> post(
           Routes.room_path(conn, :create),
-          room: %{name: "New room", lat: 10.1, lng: 2.3, radius: 5, category_id: category.id}
+          %{name: "New room", lat: 10.1, lng: 2.3, radius: 5, category_id: category.id}
         )
         |> json_response(201)
     end

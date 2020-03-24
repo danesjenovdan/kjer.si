@@ -26,7 +26,7 @@ defmodule KjerSiWeb.Router do
       resources "/subscriptions", SubscriptionController, only: [:index, :create, :show, :delete]
       get "/categories", CategoryController, :index
 
-      resources "/rooms", RoomController, only: [:index, :create] do
+      resources "/rooms", RoomController, only: [:index, :create, :show] do
         get "/messages", MessageController, :index
       end
     end

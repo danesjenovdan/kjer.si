@@ -174,9 +174,14 @@ defmodule KjerSi.Rooms do
 
   """
   def create_room(attrs \\ %{}) do
-    %Room{}
-    |> Room.changeset(attrs)
-    |> Repo.insert()
+    case %Room{} |> Room.changeset(attrs) |> Repo.insert() do
+      {:ok, room} ->
+        preloaded_room = Repo.preload(room, [:users])
+        {:ok, preloaded_room}
+
+      {:error, error} ->
+        {:error, error}
+    end
   end
 
   @doc """

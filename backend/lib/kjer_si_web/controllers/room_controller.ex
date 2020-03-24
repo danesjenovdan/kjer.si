@@ -18,17 +18,23 @@ defmodule KjerSiWeb.RoomController do
     if changeset.valid? do
       point = %Geo.Point{coordinates: {params["lng"], params["lat"]}, srid: 4326}
       rooms = Rooms.get_rooms_around_point(point)
-      render(conn, "rooms.json", rooms: rooms)
+      render(conn, "index.json", rooms: rooms)
     else
       {:error, changeset}
     end
   end
 
-  def create(conn, %{"room" => room_params}) do
+  def show(conn, %{"id" => id}) do
+    room = Rooms.get_room!(id)
+    render(conn, "show.json", room: room)
+  end
+
+  def create(conn, room_params) do
     with {:ok, %Room{} = room} <- Rooms.create_room(room_params) do
       conn
       |> put_status(:created)
-      |> render("new.json", room: room)
+      |> put_resp_header("location", Routes.room_path(conn, :show, room))
+      |> render("show.json", room: room)
     end
   end
 end
