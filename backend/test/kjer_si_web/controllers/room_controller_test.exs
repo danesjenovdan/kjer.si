@@ -79,14 +79,4 @@ defmodule KjerSiWeb.RoomControllerTest do
         |> json_response(201)
     end
   end
-
-  describe "categories" do
-    test "any user can list room categories", %{conn: conn, user: user} do
-      %{"categories" => [%{"name" => "Test category"}]} =
-        conn
-        |> TestHelper.login_user(user)
-        |> get(Routes.room_path(conn, :categories))
-        |> json_response(200)
-    end
-  end
 end

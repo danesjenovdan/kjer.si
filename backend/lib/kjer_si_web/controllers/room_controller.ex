@@ -31,10 +31,4 @@ defmodule KjerSiWeb.RoomController do
       |> render("new.json", room: room)
     end
   end
-
-  def categories(conn, _params) do
-    conn
-    |> put_view(KjerSiWeb.CategoryView)
-    |> render("categories.json", categories: Rooms.list_categories())
-  end
 end

@@ -24,6 +24,7 @@ defmodule KjerSiWeb.Router do
 
       get "/users/self", UserController, :self
       resources "/subscriptions", SubscriptionController, only: [:index, :create, :show, :delete]
+      get "/categories", CategoryController, :index
 
       resources "/rooms", RoomController, only: [:index, :create] do
         get "/messages", MessageController, :index
@@ -31,7 +32,6 @@ defmodule KjerSiWeb.Router do
     end
 
     post "/users", UserController, :create
-    get "/categories", RoomController, :categories
 
     scope "/admin", Admin do
       pipe_through :admin
