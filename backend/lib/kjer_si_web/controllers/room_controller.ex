@@ -25,8 +25,9 @@ defmodule KjerSiWeb.RoomController do
   end
 
   def show(conn, %{"id" => id}) do
-    room = Rooms.get_room!(id)
-    render(conn, "show.json", room: room)
+    with {:ok, room} = Rooms.get_room(id, [:users]) do
+      render(conn, "show.json", room: room)
+    end
   end
 
   def create(conn, room_params) do

@@ -6,11 +6,11 @@ defmodule KjerSiWeb.RoomControllerTest do
 
   setup %{conn: conn} do
     user = Repo.insert!(%User{nickname: "user", uid: "2", is_admin: false})
-    TestHelper.generate_room()
+    room = TestHelper.generate_room()
 
     conn = TestHelper.login_user(conn, user)
 
-    {:ok, conn: conn, user: user}
+    {:ok, conn: conn, room: room}
   end
 
   describe "index" do
@@ -55,12 +55,20 @@ defmodule KjerSiWeb.RoomControllerTest do
     end
   end
 
+  describe "show" do
+    test "regular user get room details", %{conn: conn, room: room} do
+      %{"data" => %{"name" => "Test room", "radius" => 42}} =
+        conn
+        |> get(Routes.room_path(conn, :show, room.id))
+        |> json_response(200)
+    end
+  end
+
   describe "create" do
-    test "regular user can create a room", %{conn: conn, user: user} do
+    test "regular user can create a room", %{conn: conn} do
       category = TestHelper.generate_category()
       %{"data" => %{"name" => "New room", "radius" => 5}} =
         conn
-        |> TestHelper.login_user(user)
         |> post(
           Routes.room_path(conn, :create),
           %{name: "New room", description: "room description", lat: 10.1, lng: 2.3, radius: 5, category_id: category.id}
