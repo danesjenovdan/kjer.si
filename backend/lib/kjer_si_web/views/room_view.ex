@@ -1,6 +1,10 @@
 defmodule KjerSiWeb.RoomView do
   use KjerSiWeb, :view
 
+  def render("rooms.json", %{rooms: rooms}) do
+    %{data: render_many(rooms, KjerSiWeb.RoomView, "room.json")}
+  end
+
   def render("new.json", %{room: room}) do
     %{
       id: room.id,
