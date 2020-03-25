@@ -5,37 +5,32 @@ defmodule TestHelper do
   use KjerSiWeb.ConnCase
 
   def generate_category do
-    {:ok, category} =
-      KjerSi.Rooms.create_category(%{
-        name: "Test category"
-      })
-
-    category
+    name = "category " <> Integer.to_string(Enum.random(0..1000000))
+    KjerSi.Repo.insert!(%KjerSi.Rooms.Category{
+      name: name
+    })
   end
 
   def generate_user do
-    {:ok, user} =
-      KjerSi.Accounts.create_user(%{
-        nickname: "TestNickname",
-        uid: "1337"
-      })
-
-    user
+    KjerSi.Repo.insert!(%KjerSi.Accounts.User{
+      nickname: "TestNickname",
+      uid: "1337"
+    })
   end
 
   def generate_room do
-    test_category = generate_category()
+    category = generate_category()
 
-    {:ok, room} =
-      KjerSi.Rooms.create_room(%{
+    KjerSi.Repo.insert!(
+      KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.Room{}, %{
         lat: 120.5,
-        lng: 120.5,
-        name: "some name",
+        lng: 121.4,
+        name: "Test room",
         radius: 42,
-        category_id: test_category.id
+        category_id: category.id,
+        description: "Test description"
       })
-
-    room
+    )
   end
 
   def login_user(conn, user) do

@@ -11,8 +11,8 @@ defmodule KjerSi.Rooms.Room do
     field :lng, :float
     field :coordinates, Geo.PostGIS.Geometry
     field :radius, :integer
+    field :description, :string
     has_many :events, KjerSi.Events.Event
-
     many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Accounts.Subscription, unique: true
 
     timestamps()
@@ -21,9 +21,9 @@ defmodule KjerSi.Rooms.Room do
   @doc false
   def changeset(room, attrs) do
     room
-    |> cast(attrs, [:name, :lat, :lng, :radius, :category_id])
+    |> cast(attrs, [:name, :category_id, :lat, :lng, :radius, :description])
     |> cast_coordinates()
-    |> validate_required([:name, :lat, :lng, :radius, :category_id, :coordinates])
+    |> validate_required([:name, :category_id, :lat, :lng, :radius, :coordinates, :description])
   end
 
   def cast_coordinates(changeset) do

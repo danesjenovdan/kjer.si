@@ -8,6 +8,8 @@ defmodule KjerSi.Repo.Migrations.CreateUsers do
       add :id, :binary_id, primary_key: true
       add :nickname, :string, null: false
       add :uid, :string, null: false
+      add :is_active, :boolean
+      add :is_admin, :boolean
 
       timestamps()
     end

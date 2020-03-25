@@ -23,9 +23,9 @@ defmodule KjerSiWeb.ChatChannelTest do
       content: "test chat message",
       created: _,
       id: _,
-      room_id: ^room_id,
-      user_id: ^user_id,
-      user_nickname: ^user_nickname,
+      roomId: ^room_id,
+      userId: ^user_id,
+      userNickname: ^user_nickname,
     }
   end
 

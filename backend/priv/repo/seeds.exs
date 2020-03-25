@@ -18,19 +18,20 @@ micka = KjerSi.Repo.insert!(%KjerSi.Accounts.User{uid: "2", nickname: "Micka"})
 stef = KjerSi.Repo.insert!(%KjerSi.Accounts.User{uid: "3", nickname: "Štef"})
 
 # Generate room categories
-kultura = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Druženje"})
-sport = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Rekreacija"})
-zivali = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "Sosedske usluge"})
+druzenje = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "SOCIAL"})
+sport = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "RECREATION"})
+pomoc = KjerSi.Repo.insert!(%KjerSi.Rooms.Category{name: "HELP"})
 
 # Generate rooms
 ljubitelji_psov =
   KjerSi.Repo.insert!(
     KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.Room{}, %{
       name: "Ljubitelji psov",
-      category_id: zivali.id,
+      category_id: pomoc.id,
       lat: 13.0,
       lng: 15.0,
-      radius: 2500
+      radius: 2500,
+      description: "Tukaj se zmenimo za skupne sprehode z našimi kosmatinci"
     })
   )
 
@@ -38,10 +39,11 @@ pevski_zbor =
   KjerSi.Repo.insert!(
     KjerSi.Rooms.Room.changeset(%KjerSi.Rooms.Room{}, %{
       name: "Pevski zbor",
-      category_id: kultura.id,
+      category_id: druzenje.id,
       lat: 13.0,
       lng: 15.0,
-      radius: 2500
+      radius: 2500,
+      description: "Ženska vokalna skupina Marjetice vabi vse pevke v svojo sredino"
     })
   )
 
@@ -52,7 +54,8 @@ gre_kdo_basket =
       category_id: sport.id,
       lat: 13.0,
       lng: 15.0,
-      radius: 2500
+      radius: 2500,
+      description: "Ponavadi ob četrtkih zvečer, na igrišču pri osnovni šoli"
     })
   )
 

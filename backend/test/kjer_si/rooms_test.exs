@@ -6,7 +6,7 @@ defmodule KjerSi.RoomsTest do
   describe "categories" do
     alias KjerSi.Rooms.Category
 
-    @valid_attrs %{name: "some name"}
+    @valid_attrs %{name: "some name", description: "some description"}
     @update_attrs %{name: "some updated name"}
     @invalid_attrs %{name: nil}
 
@@ -65,33 +65,40 @@ defmodule KjerSi.RoomsTest do
   describe "rooms" do
     alias KjerSi.Rooms.Room
 
-    @valid_attrs %{lat: 120.5, lng: 120.5, name: "some name", radius: 42}
+    @valid_attrs %{lat: 120.5, lng: 120.5, name: "some name", description: "some description", radius: 42}
     @update_attrs %{lat: 456.7, lng: 456.7, name: "some updated name", radius: 43}
     @invalid_attrs %{lat: nil, lng: nil, name: nil, radius: nil}
 
-    def room_fixture(attrs \\ %{}) do
-      test_category = TestHelper.generate_category()
-
-      {:ok, room} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Map.merge(%{category_id: test_category.id})
-        |> Rooms.create_room()
-      room
-    end
-
     test "list_rooms/0 returns all rooms" do
-      room_fixture()
-      [%{ users: [], events: [], category: %KjerSi.Rooms.Category{ name: "Test category" } }] = Rooms.list_rooms()
+      TestHelper.generate_room()
+      [%{ users: [], events: [], category: %KjerSi.Rooms.Category{} }] = Rooms.list_rooms()
     end
 
     test "get_room!/1 returns the room with given id" do
-      room = %{ room_fixture() | lat: 120.5, lng: 120.5 }
+      room = TestHelper.generate_room()
       assert Rooms.get_room!(room.id) == room
     end
 
+    test "get_room/1 returns {:ok, room} if room with given id exists" do
+      room = TestHelper.generate_room()
+      assert Rooms.get_room(room.id) == {:ok, room}
+    end
+
+    test "get_room/1 supports preload as second argument" do
+      room = %{ TestHelper.generate_room() | users: [] }
+      assert Rooms.get_room(room.id, [:users]) == {:ok, room}
+    end
+
+    test "get_room/1 returns {:error, :not_found} if room with given id does not exist" do
+      fake_id = "ba294533-82b6-4cbb-abc1-167cd7bf4bb1"
+      assert Rooms.get_room(fake_id) == {:error, :not_found}
+    end
+
     test "create_room/1 with valid data creates a room" do
-      assert {:ok, %Room{} = room} = Rooms.create_room(Map.merge(@valid_attrs, %{category_id: TestHelper.generate_category().id}))
+      category_id = TestHelper.generate_category().id
+      attrs = Map.merge(@valid_attrs, %{category_id: category_id})
+
+      assert {:ok, %Room{} = room} = Rooms.create_room(attrs)
       assert room.coordinates == %Geo.Point{coordinates: {120.5, 120.5}, srid: 4326}
       assert room.name == "some name"
       assert room.radius == 42
@@ -102,7 +109,7 @@ defmodule KjerSi.RoomsTest do
     end
 
     test "update_room/2 with valid data updates the room" do
-      room = room_fixture()
+      room = TestHelper.generate_room()
       assert {:ok, %Room{} = room} = Rooms.update_room(room, @update_attrs)
       assert room.coordinates == %Geo.Point{coordinates: {456.7, 456.7}, srid: 4326}
       assert room.name == "some updated name"
@@ -110,19 +117,19 @@ defmodule KjerSi.RoomsTest do
     end
 
     test "update_room/2 with invalid data returns error changeset" do
-      room = %{ room_fixture() | lat: 120.5, lng: 120.5 }
+      room = TestHelper.generate_room()
       assert {:error, %Ecto.Changeset{}} = Rooms.update_room(room, @invalid_attrs)
       assert room == Rooms.get_room!(room.id)
     end
 
     test "delete_room/1 deletes the room" do
-      room = room_fixture()
+      room = TestHelper.generate_room()
       assert {:ok, %Room{}} = Rooms.delete_room(room)
       assert_raise Ecto.NoResultsError, fn -> Rooms.get_room!(room.id) end
     end
 
     test "change_room/1 returns a room changeset" do
-      room = room_fixture()
+      room = TestHelper.generate_room()
       assert %Ecto.Changeset{} = Rooms.change_room(room)
     end
   end

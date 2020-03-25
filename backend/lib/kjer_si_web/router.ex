@@ -16,7 +16,6 @@ defmodule KjerSiWeb.Router do
   scope "/api", KjerSiWeb do
     pipe_through :api
 
-    resources "/subscriptions", SubscriptionController, only: [:index, :create, :show, :delete]
 
     # resources "/eventsubscriptions", UserEventController, only: [:index, :create, :delete] # commenting out, because it's not used yet
 
@@ -24,14 +23,15 @@ defmodule KjerSiWeb.Router do
       pipe_through :auth
 
       get "/users/self", UserController, :self
+      resources "/subscriptions", SubscriptionController, only: [:index, :create, :show, :delete]
+      get "/categories", CategoryController, :index
 
-      resources "/rooms", RoomController, only: [:index, :create] do
+      resources "/rooms", RoomController, only: [:index, :create, :show] do
         get "/messages", MessageController, :index
       end
     end
 
     post "/users", UserController, :create
-    get "/categories", RoomController, :categories
 
     scope "/admin", Admin do
       pipe_through :admin
