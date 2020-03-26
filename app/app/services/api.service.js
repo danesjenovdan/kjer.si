@@ -43,7 +43,7 @@ export default new class {
 
   async getCategories() {
     try {
-      const response = await this.get('/v1/rooms/categories');
+      const response = await this.get('/categories');
       return response.data.data;
     } catch (e) {
       console.log('Get categories error: ', e);
