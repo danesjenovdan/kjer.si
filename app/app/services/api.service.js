@@ -92,9 +92,7 @@ export default new class {
   }
 
   async getRoomsInRadius(lat, lng) {
-    const response = await this.post('/v1/map/rooms', {
-      lat, lng
-    }, false);
+    const response = await this.get(`/rooms?lat=${lat}&lng=${lng}`, false);
     return response.data.data;
   }
 
