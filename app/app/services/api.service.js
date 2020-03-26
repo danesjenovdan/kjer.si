@@ -67,7 +67,7 @@ export default new class {
         firebaseToken: UserService.default.firebaseToken
       };
       console.log('user: ', user);
-      const response = await this.post('/v1/users/register', user);
+      const response = await this.post('/users', user);
       return response.data.data;
     } catch (e) {
       throw Error('Error when creating user');
