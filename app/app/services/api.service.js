@@ -87,7 +87,7 @@ export default new class {
       category_id: categoryId
     };
 
-    const response = await this.post('/v1/rooms', room, false);
+    const response = await this.post('/rooms', room, false);
     return response.data.data;
   }
 
