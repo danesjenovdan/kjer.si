@@ -15,7 +15,7 @@ export default new class {
     if (!UserService.default.user || !UserService.default.user.token) {
       throw new Error('Configure axios error: no user or token available');
     }
-    axios.defaults.headers.common['Authorization'] = `${UserService.default.user.token}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${UserService.default.user.token}`;
   }
 
   get(url, auth = true) {
