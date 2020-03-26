@@ -88,9 +88,18 @@
 
         // join the channel, with success and failure callbacks
         this.channel.join()
-          .receive('ok', resp => console.log('Joined channel successfully', resp))
-          .receive('error', resp => console.log('Failed to join channel', resp))
-          .receive("timeout", () => console.log("Networking issue..."));
+          .receive('ok', resp => {
+            console.log('Joined channel successfully', resp);
+            android.util.Log.v("KJERSI Joined channel successfully:", "");
+          })
+          .receive('error', resp => {
+            console.log('Failed to join channel', resp);
+            android.util.Log.v("KJERSI Failed to join channel:", String(resp));
+          })
+          .receive("timeout", (resp) => {
+            console.log("Networking issue...")
+            android.util.Log.v("KJERSI Networking issue...:", resp + "");
+          });
 
       },
 

@@ -1,17 +1,23 @@
-# Kjer.si NativeScript Vue app
+# Kjer.Si
 
-## Basics
+> Kjer.Si
 
-* [Nativescript general requirements](https://docs.nativescript.org/start/general-requirements)
-* [Vue DevTools](https://nativescript-vue.org/en/docs/getting-started/vue-devtools/)
-* [NativeScript Vue docs](https://nativescript-vue.org/en/docs/introduction/)
+## Usage
 
-## Prerequisites
-* `$ npm install -g nativescript`
+``` bash
+# Install dependencies
+npm install
 
-## Installation
-* `$ npm install`
+# Preview on device
+tns preview
 
-## Running
-* `$ tns run android --no-hmr`
-* `$ tns run ios`
+# Build, watch for changes and run the application
+tns run
+
+# Build, watch for changes and debug the application
+tns debug <platform>
+
+# Build for production
+tns build <platform> --env.production
+
+```

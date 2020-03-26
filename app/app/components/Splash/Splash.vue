@@ -103,6 +103,7 @@
           });
           this.isCreatingUser = false;
         } catch (e) {
+          alert('Error: ' + e);
           this.isCreatingUser = false;
         }
 

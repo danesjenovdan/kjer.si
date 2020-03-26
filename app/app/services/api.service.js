@@ -66,13 +66,15 @@ export default new class {
   initSocket() {
 
     // to create a socket connection
-    this.socket = new Phx.Socket(this._baseSocketUrl, { params: { token: UserService.default.user.token } });
+    this.socket = new Phx.Socket(this._baseSocketUrl, {params: {token: UserService.default.user.token}});
     this.socket.connect();
     this.socket.onOpen((state) => {
+      android.util.Log.v("KJERSI Socket:", this.socket.isConnected()+"");
       console.log('Socket: ', this.socket.isConnected());
     });
 
     this.socket.onError((error) => {
+      android.util.Log.v("KJERSI Socket error:", String(error.error));
       console.log('Socket error: ', String(error.error));
     });
 
@@ -149,7 +151,7 @@ export default new class {
       baseURL: this._baseUrl
     };
 
-    const response = await axios.default.post('/recover-self', { uid: uuid }, config);
+    const response = await axios.default.post('/recover-self', {uid: uuid}, config);
     return response.data;
 
   }

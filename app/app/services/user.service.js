@@ -27,28 +27,39 @@ export default new class {
     //   console.log('User already generated');
     // } else {
 
-      const fetchedUser = await ApiService.default.fetchSelf(platform.device.uuid);
-      console.log('fetchedUser: ', fetchedUser);
-      if (!fetchedUser) {
-        const username = await ApiService.default.generateUsername();
-        const user = await ApiService.default.createUser(platform.device.uuid, username);
+    // android.util.Log.v("KJERSI device uuid:", platform.device.uuid);
+    console.log('platform.device.uuid: ', platform.device.uuid);
 
-        this.saveLocalUserData(
-          user.id,
-          platform.device.uuid,
-          user.nickname,
-        );
-        ApiService.default.initSocket();
-      } else {
-        this.saveLocalUserData(
-          fetchedUser.id,
-          platform.device.uuid,
-          fetchedUser.nickname,
-          fetchedUser.token,
-        );
-        ApiService.default.configureAxios(fetchedUser.token);
-        ApiService.default.initSocket();
-      }
+    let fetchedUser;
+    try {
+      fetchedUser = await ApiService.default.fetchSelf(platform.device.uuid);
+    } catch (e) {
+      console.log('Fetched user error: ', e);
+    }
+    // android.util.Log.v("KJERSI fetched user:", fetchedUser);
+    if (!fetchedUser) {
+      const username = await ApiService.default.generateUsername();
+      // android.util.Log.v("KJERSI username:", username);
+      const user = await ApiService.default.createUser(platform.device.uuid, username);
+      // android.util.Log.v("KJERSI user:", user);
+
+      this.saveLocalUserData(
+        user.id,
+        platform.device.uuid,
+        user.nickname,
+      );
+      this.initLocalUserData();
+      ApiService.default.initSocket();
+    } else {
+      this.saveLocalUserData(
+        fetchedUser.id,
+        platform.device.uuid,
+        fetchedUser.nickname,
+        fetchedUser.token,
+      );
+      ApiService.default.configureAxios(fetchedUser.token);
+      ApiService.default.initSocket();
+    }
 
     // }
 
