@@ -16,10 +16,13 @@
   font-size: 20;
 }
 
-.map-card-title-container {
+.map-card-header-container {
   border-bottom-width: 1;
   border-bottom-color: #f7f7f7;
-  padding: 10 10 5 10;
+}
+
+.map-card-title-container {
+  padding: 10 10 0 10;
 }
 
 .map-card-content-container {
@@ -31,6 +34,18 @@
   font-size: 22;
   margin-top: 2;
   font-family: MuseoSansRounded;
+}
+
+.map-card-description {
+  color: #777;
+  font-size: 16;
+  margin-top: 4;
+  font-family: MuseoSansRounded;
+  padding: 0 15;
+}
+
+.map-card-description-container {
+  margin-bottom: 6;
 }
 
 .map-card-icon-image {

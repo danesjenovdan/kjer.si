@@ -1,98 +1,56 @@
-import * as http from "http";
-import * as AppService from './app.service';
 import * as UserService from './user.service';
 import * as axios from 'axios';
-import * as Phx from "~/assets/js/phoenix";
 
 export default new class {
 
-  _baseSocketUrl = 'ws://api.kjer.si/socket';
-  _baseUrl = 'http://api.kjer.si/api';
+  _baseSocketUrl = 'http://10.0.0.11:3088';
+  _baseUrl = 'http://10.0.0.11:3088/';
   socket = null;
 
-  configureAxios(token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  initSocket() {
+    // placeholder
+  }
+
+  configureAxios() {
+    if (!UserService.default.user || !UserService.default.user.token) {
+      throw new Error('Configure axios error: no user or token available');
+    }
+    axios.defaults.headers.common['Authorization'] = `${UserService.default.user.token}`;
   }
 
   get(url, auth = true) {
-
     const config = {
       baseURL: this._baseUrl
     };
-
-    // if (auth && UserService.default.user && UserService.default.user.uid) {
-    //   config.headers = {
-    //     Authorization: UserService.default.user.uid
-    //   };
-    // }
-
     return axios.default.get(url, config);
-
   }
 
   put(url, body, auth = true) {
-
     const config = {
       baseURL: this._baseUrl,
       headers: {}
     };
-
-    // if (auth && UserService.default.user && UserService.default.user.uid) {
-    //   config.headers.Authorization = UserService.default.user.uid;
-    // }
-
     return axios.default.post(url, body, config);
-
   }
 
-  post(url, body, auth = true) {
-
+  post(url, body) {
     const config = {
       baseURL: this._baseUrl,
       headers: {}
     };
-
-    // console.log('UserService.default.user: ', UserService.default.user);
-
-    // if (auth && UserService.default.user && UserService.default.user.uid) {
-    //   console.log('Authorization');
-    //   config.headers.Authorization = UserService.default.user.uid;
-    // }
-
     return axios.default.post(url, body, config);
-
-  }
-
-  initSocket() {
-
-    // to create a socket connection
-    this.socket = new Phx.Socket(this._baseSocketUrl, {params: {token: UserService.default.user.token}});
-    this.socket.connect();
-    this.socket.onOpen((state) => {
-      android.util.Log.v("KJERSI Socket:", this.socket.isConnected()+"");
-      console.log('Socket: ', this.socket.isConnected());
-    });
-
-    this.socket.onError((error) => {
-      android.util.Log.v("KJERSI Socket error:", String(error.error));
-      console.log('Socket error: ', String(error.error));
-    });
-
   }
 
   async getCategories() {
-
     try {
-      const response = await this.get('/categories');
-      return response.data.categories;
+      const response = await this.get('/v1/rooms/categories');
+      return response.data.data;
     } catch (e) {
-      console.log('Error: ', e);
+      console.log('Get categories error: ', e);
     }
-
   }
 
   async generateUsername() {
-
     try {
       const response = await this.get('/generate-username');
       console.log(response);
@@ -100,60 +58,52 @@ export default new class {
     } catch (e) {
       console.log('Error: ', e);
     }
-
   }
 
-  async createUser(uid, nickname) {
-
+  async createUser(uid) {
     try {
       const user = {
         uid,
-        nickname
+        firebaseToken: UserService.default.firebaseToken
       };
-
       console.log('user: ', user);
-
-      const response = await this.post('/users', {
-        user
-      });
-      console.log('User creation response: ', response.data.data);
+      const response = await this.post('/v1/users/register', user);
       return response.data.data;
     } catch (e) {
-      console.log('Create user error: ', e.response.data);
-      throw Error('Error when creating user ');
+      throw Error('Error when creating user');
     }
-
   }
 
-  async createRoom(name, lat, lng, radius, categoryId) {
+  async updateFirebaseToken() {
+    const response = await this.post('/v1/users/self/firebaseToken', {
+      firebaseToken: UserService.default.firebaseToken
+    }, false);
+    return response.data.data;
+  }
 
+  async createRoom(name, lat, lng, radius, categoryId, description) {
     const room = {
-      name, lat, lng, radius,
+      name, lat, lng, radius, description,
       category_id: categoryId
     };
 
-    console.log('Create room: ', room);
-
-    const response = await this.post('/rooms', {room}, false);
-    return response.data;
+    const response = await this.post('/v1/rooms', room, false);
+    return response.data.data;
   }
 
   async getRoomsInRadius(lat, lng) {
-    const response = await this.post('/map/rooms', {
+    const response = await this.post('/v1/map/rooms', {
       lat, lng
     }, false);
     return response.data.data;
   }
 
   async fetchSelf(uuid) {
-
     const config = {
       baseURL: this._baseUrl
     };
-
-    const response = await axios.default.post('/recover-self', {uid: uuid}, config);
+    const response = await axios.default.post('/v1/users/self', {uid: uuid}, config);
     return response.data;
-
   }
 
   /**
@@ -162,23 +112,22 @@ export default new class {
    * @returns {Promise<*>}
    */
   async joinRoom(roomId) {
-
-    const postData = {
-      subscription: {
-        room_id: roomId,
-        user_id: UserService.default.user.id
-      }
-    };
-
-    console.log('postData: ', postData);
-
-    const response = await this.post('/subscriptions', postData, true);
+    const response = await this.post(`/v1/rooms/${roomId}/join`, {}, true);
     const responseData = response.data.data;
-
-    console.log('Join room: ', responseData);
-
     return responseData;
+  }
 
+  async leaveRoom(roomId) {
+    const response = await this.post(`/v1/rooms/${roomId}/leave`, {}, true);
+    const responseData = response.data.data;
+    return responseData;
+  }
+
+  async getRoomMessages(roomId, beforeDate) {
+    console.log('beforeDate: ', beforeDate);
+    const response = await this.post(`/v1/rooms/${roomId}/messages`, {beforeDate}, true);
+    const responseData = response.data.data;
+    return responseData;
   }
 
 }

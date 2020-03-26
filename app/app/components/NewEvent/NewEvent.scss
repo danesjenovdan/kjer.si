@@ -16,6 +16,21 @@
   font-size: 20;
 }
 
+.textfield-num-seats {
+  width: 100;
+  text-align: center;
+  font-size: 40;
+  font-family: MuseoSansRoundedBold;
+  color: #333;
+  border-radius: 10;
+  background-color: $almost-white;
+}
+
+.seats-label {
+  font-family: MuseoSansRoundedBold;
+  margin-top: 4;
+}
+
 .events-page-send-icon {
   width: 50;
   height: 50;
@@ -65,6 +80,19 @@
   border-bottom-width: 0;
 }
 
+.choose-date-field {
+  padding: 20 5;
+  font-family: MuseoSansRounded;
+  margin: 0 15;
+}
+
+.date-container {
+  border-top-color: #eee;
+  border-top-width: 1;
+  margin-top: 15;
+  padding-top: 10;
+}
+
 .event-title-textfield {
   padding: 20 10;
   text-align: center;
@@ -86,4 +114,8 @@
 
 .event-page-footer {
   padding: 10 0;
+}
+
+.deactivate-button {
+  opacity: 0.3;
 }

@@ -14,15 +14,18 @@ export default new class {
     timestamp: null
   };
 
+  lastLocationTime;
+
   async requestLocation() {
 
     try {
       const location = await geolocation.getCurrentLocation({
-        desiredAccuracy: Accuracy.high,
+        desiredAccuracy: Accuracy.any,
         maximumAge: 5000,
         timeout: 20000
       });
       this.location = location;
+      this.lastLocationTime = new Date();
       return location;
     } catch (e) {
       console.log('Location error: ', e);

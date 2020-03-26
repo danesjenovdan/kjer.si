@@ -53,12 +53,17 @@
 }
 
 .chat-menu-button {
-  padding: 17 50 17 25;
+  padding: 0 25 0 25;
   border-bottom-width: 1;
   border-bottom-color: #eee;
   font-family: MuseoSansRounded;
   font-size: 18;
   color: #000;
+  height: 65;
+}
+
+.chat-menu-button-toggle-container {
+
 }
 
 .chat-menu-button-last {
@@ -82,14 +87,17 @@
 
 .message-text-label {
   font-family: MuseoSansRounded;
-  padding: 15;
-  border-radius: 10;
-  background-color: #eee;
   color: #000000;
   font-size: 16;
 }
 
-.message-me-text-label {
+.message-text-label-container {
+  padding: 15;
+  border-radius: 10;
+  background-color: #eee;
+}
+
+.message-me-text-label-container {
   background-color: #96dec9;
 }
 

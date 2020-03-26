@@ -7,15 +7,15 @@ const AutoFocus = {
 
       el._nativeView.focus();
 
-      const dialogFragment = app.android
-        .foregroundActivity
-        .getFragmentManager()
-        .findFragmentByTag('dialog');
-      if (dialogFragment) {
-        utils.ad.dismissSoftInput(dialogFragment.getDialog().getCurrentFocus());
-      } else {
-        utils.ad.dismissSoftInput();
-      }
+      // const dialogFragment = app.android
+      //   .foregroundActivity
+      //   .getFragmentManager()
+      //   .findFragmentByTag('dialog');
+      // if (dialogFragment) {
+      //   utils.ad.dismissSoftInput(dialogFragment.getDialog().getCurrentFocus());
+      // } else {
+      //   utils.ad.dismissSoftInput();
+      // }
 
     }, 300);
   },
