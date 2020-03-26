@@ -2,7 +2,7 @@
 
   <AbsoluteLayout>
 
-    <GridLayout ref="appContainer" rows="70, *, auto" width="100%" height="100%">
+    <GridLayout ref="appContainer" rows="70, 40, *, auto" width="100%" height="100%">
 
       <GridLayout class="chat-page-header-container" row="0" columns="70, *, 70">
         <Rippler rippleColor="#777777" rippleBorderRadius="50" margin="5" @tap="onBackTap" col="0">
@@ -16,7 +16,12 @@
         </Rippler>
       </GridLayout>
 
-      <ListView ref="chatListView" row="1" for="message in messages" @itemTap="onItemTap" separatorColor="#ffffff" verticalAlignment="bottom">
+      <StackLayout row="1" @tap="onNewEventTap" class="event-label-container">
+        <Label class="event-label" text="Ni dogodkov. Ustvari novega?"></Label>
+      </StackLayout>
+
+      <ListView ref="chatListView" row="2" for="message in messages" @itemTap="onItemTap" separatorColor="#ffffff"
+                verticalAlignment="bottom">
         <v-template name="text" if="message.type === 'text'">
           <WrapLayout class="message-container" orientation="vertical" paddingRight="50">
             <Label class="message-user-name-label" text="Some other person"/>
@@ -27,7 +32,8 @@
         <v-template name="my_text" if="message.type === 'my_text'">
           <!-- Shows the list item label in the default color and style. -->
           <StackLayout>
-            <WrapLayout class="message-container message-me-container" orientation="vertical" horizontalAlignment="right" paddingLeft="50">
+            <WrapLayout class="message-container message-me-container" orientation="vertical"
+                        horizontalAlignment="right" paddingLeft="50">
               <Label class="message-user-name-label" text="Me" horizontalAlignment="right"/>
               <Label class="message-text-label message-me-text-label" :text="message.content" textWrap="true"/>
             </WrapLayout>
@@ -36,11 +42,13 @@
 
       </ListView>
 
-      <GridLayout class="chat-page-input-container" columns="*, 50" row="2">
+      <GridLayout row="3" class="chat-page-input-container" columns="*, 50">
         <!-- v-keyboard-send-->
         <!-- v-auto-focus -->
-        <TextView ref="messageTextView" v-model="messageText" hint="Napiši sporočilo..." class="chat-page-text-view" col="0"></TextView>
-        <Image class="chat-page-send-icon" @tap="onSendTap" col="1" verticalAlignment="top" src="~/assets/images/send_message_icon.png"
+        <TextView ref="messageTextView" v-model="messageText" hint="Napiši sporočilo..." class="chat-page-text-view"
+                  col="0"></TextView>
+        <Image class="chat-page-send-icon" @tap="onSendTap" col="1" verticalAlignment="top"
+               src="~/assets/images/send_message_icon.png"
                stretch="aspectFit"/>
       </GridLayout>
 
@@ -49,9 +57,9 @@
     <GridLayout v-if="showMenu" translateY="-10" v-animate-in @tap="onContainerTap" rows="auto, *" columns="*, auto"
                 width="100%" height="100%" class="chat-menu-outer-container">
       <StackLayout translateY="50" row="0" class="chat-menu-container" v-shadow="6" col="1">
-<!--        <Label @tap="onEventsTap" class="chat-menu-button" text="Dogodki"></Label>-->
+        <!--        <Label @tap="onEventsTap" class="chat-menu-button" text="Dogodki"></Label>-->
         <Label class="chat-menu-button" text="Zapusti"></Label>
-<!--        <Label class="chat-menu-button" text="Utišaj"></Label>-->
+        <!--        <Label class="chat-menu-button" text="Utišaj"></Label>-->
         <Label class="chat-menu-button chat-menu-button-last" text="Nastavitve"></Label>
       </StackLayout>
     </GridLayout>

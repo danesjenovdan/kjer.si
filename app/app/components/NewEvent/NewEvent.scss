@@ -16,19 +16,19 @@
   font-size: 20;
 }
 
-.chat-page-send-icon {
+.events-page-send-icon {
   width: 50;
   height: 50;
   background-color: #f7f7f7;
   padding: 12 12 8 8;
 }
 
-.chat-page-input-container {
+.events-page-input-container {
   background-color: #f7f7f7;
   padding: 5;
 }
 
-.chat-page-text-view {
+.events-page-text-view {
   border-radius: 30;
   background-color: #fff;
   border-width: 1;
@@ -37,22 +37,22 @@
   padding: 12;
 }
 
-.chat-page-header-container {
+.events-page-header-container {
   border-bottom-width: 2;
   border-bottom-color: #eee;
 }
 
-.chat-menu-container {
+.events-menu-container {
   background-color: #ffffff;
   border-radius: 15;
   margin: 25;
 }
 
-.chat-menu-outer-container {
+.events-menu-outer-container {
   margin: 10;
 }
 
-.chat-menu-button {
+.events-menu-button {
   padding: 17 50 17 25;
   border-bottom-width: 1;
   border-bottom-color: #eee;
@@ -61,47 +61,29 @@
   color: #000;
 }
 
-.chat-menu-button-last {
+.events-menu-button-last {
   border-bottom-width: 0;
 }
 
-.message-container {
-  padding: 0 15 10 15;
-}
-
-.message-me-container {
-
-}
-
-.message-user-name-label {
-  font-family: MuseoSansRoundedBold;
-  font-size: 12;
-  margin: 3 0;
-  color: #000000;
-}
-
-.message-text-label {
-  font-family: MuseoSansRounded;
-  padding: 15;
-  border-radius: 10;
-  background-color: #eee;
-  color: #000000;
-  font-size: 16;
-}
-
-.message-me-text-label {
-  background-color: #96dec9;
-}
-
-.event-label-container {
-  padding: 5 0;
-  background-color: $kjersi-green;
-}
-
-.event-label {
+.event-title-textfield {
+  padding: 20 10;
   text-align: center;
-  color: #ffffff;
-  font-weight: 600;
-  font-family: MuseoSansRoundedBold;
-  margin-top: 6;
+  border-bottom-color: #eee;
+  border-bottom-width: 1;
+  margin: 20 10;
+  font-size: 20;
+  font-family: MuseoSansRounded;
+}
+
+.event-description-textview {
+  padding: 20 10;
+  border-bottom-color: #eee;
+  border-bottom-width: 1;
+  margin: 20 10;
+  font-family: MuseoSansRounded;
+  min-height: 50;
+}
+
+.event-page-footer {
+  padding: 10 0;
 }

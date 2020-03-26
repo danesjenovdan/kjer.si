@@ -15,6 +15,7 @@ import * as UserService from './services/user.service';
 import * as ApiService from './services/api.service';
 import * as application from 'tns-core-modules/application';
 import {localize} from "nativescript-localize";
+import NewEvent from "~/components/NewEvent/NewEvent";
 // Vue.config.silent = false;
 
 Vue.registerElement('MapView', () => MapView);
@@ -49,13 +50,15 @@ new Vue({
   template: `
         <Frame>
 <!--            <Discover />-->
-            <Splash />
+<!--            <Splash />-->
 <!--            <Chat/>-->
+            <NewEvent/>
         </Frame>`,
 
   components: {
     Splash,
     Discover,
-    Chat
+    Chat,
+    NewEvent
   }
 }).$start();
