@@ -4,7 +4,7 @@ import * as axios from 'axios';
 export default new class {
 
   _baseSocketUrl = 'http://10.0.0.11:3088';
-  _baseUrl = 'http://10.0.0.11:3088/';
+  _baseUrl = 'https://api.kjer.si/api';
   socket = null;
 
   initSocket() {
