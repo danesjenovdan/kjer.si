@@ -38,6 +38,10 @@ defmodule KjerSiWeb.ChatChannel do
       KjerSi.Messages.Message.changeset(%KjerSi.Messages.Message{}, payload)
       |> KjerSi.Repo.insert()
 
+    message = KjerSi.Repo.preload(message, :user)
+
+    Logger.info("ROOM ID: #{room_id}")
+
     msg = %{
       "title" => "your title",
       "body" => "your message"
@@ -49,8 +53,6 @@ defmodule KjerSiWeb.ChatChannel do
       msg
     )
     Pigeon.FCM.push(n)
-
-    message = KjerSi.Repo.preload(message, :user)
 
     # Broadcast back to everyone in the channel
     broadcast(socket, "shout", render_message(message))

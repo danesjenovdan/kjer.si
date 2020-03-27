@@ -31,6 +31,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :pigeon, :fcm,
+       fcm_default: %{
+         key: "AAAAev8xa6o:APA91bHd1q_UTtQf9n5uHCrpawmd6-3V6qaejlemmX4U7pOUqHHeScMUgLaCXE7pftZ1drWZBm01F8lU_jJQqdaSPB5JWXz7ft6_jbbjpjDF85x63QcBwKRLx5FysXh4zr3yMeLtKuiM"
+       }
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

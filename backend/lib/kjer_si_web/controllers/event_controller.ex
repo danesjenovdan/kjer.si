@@ -25,7 +25,6 @@ defmodule KjerSiWeb.EventController do
     end
   end
 
-<<<<<<< HEAD
 
   def update(conn, %{"uid" => uid, "event" => event_params}) do
     event = Events.get_event_by_id(uid)
@@ -42,9 +41,3 @@ defmodule KjerSiWeb.EventController do
   end
 
 end
-<<<<<<< HEAD
-=======
-end
->>>>>>> 3d458a62738855956ff32c424c1eaf0462e31d1b
-=======
->>>>>>> 3234e48bbf98f923ffc0573172e1a941a35a1e17

@@ -4,20 +4,10 @@ defmodule KjerSi.Events do
   """
 
   import Ecto.Query, warn: false
-<<<<<<< HEAD
-  alias KjerSi.Repo
-
-<<<<<<< HEAD
-  import Logger
-=======
->>>>>>> 3234e48bbf98f923ffc0573172e1a941a35a1e17
 
   alias KjerSi.Repo
   alias KjerSi.Events.Event
   alias KjerSi.Events.UserEvent
-=======
-  alias KjerSi.Events.Event
->>>>>>> 3d458a62738855956ff32c424c1eaf0462e31d1b
 
   @doc """
   Returns the list of events.
@@ -119,11 +109,7 @@ defmodule KjerSi.Events do
   """
   def update_event(%Event{} = event, attrs) do
     event
-<<<<<<< HEAD
     |> Event.changesetUpdate(attrs)
-=======
-    |> Event.changeset(attrs)
->>>>>>> 3d458a62738855956ff32c424c1eaf0462e31d1b
     |> Repo.update()
   end
 
@@ -156,7 +142,6 @@ defmodule KjerSi.Events do
     Event.changeset(event, %{})
   end
 
-<<<<<<< HEAD
   @doc """
   Returns the list of user events.
 
@@ -218,7 +203,5 @@ defmodule KjerSi.Events do
   def get_events_of_user(user) do
     Repo.all(from ur in UserEvent, where: ur.user_id == ^user.id, select: ur)
   end
-=======
->>>>>>> 3d458a62738855956ff32c424c1eaf0462e31d1b
 
 end
