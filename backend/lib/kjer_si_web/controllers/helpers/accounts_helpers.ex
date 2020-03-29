@@ -25,7 +25,7 @@ defmodule KjerSi.AccountsHelpers do
     with {:ok, user_id} <- get_user_id(token) do
       user = Accounts.get_user_with_preload(user_id, preload)
 
-      if user do
+      if user && user.is_active do
         {:ok, user}
       else
         {:error, :invalid_user}
