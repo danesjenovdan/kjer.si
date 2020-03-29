@@ -6,15 +6,19 @@ export default defineComponent({
   components: { UsersList, RoomsList },
   props: ['token'],
   template: /*html*/`
-    <header>
-      <h1>Kjer.si Admin</h1>
+    <header class="container">
+      <h1 class="title">Kjer.si Admin</h1>
     </header>
-    <main>
-      <h2>Registered users</h2>
-      <users-list :token="token"></users-list>
+    <main class="container">
+      <div class="box">
+        <h2 class="subtitle">Registered users</h2>
+        <users-list :token="token"></users-list>
+      </div>
 
-      <h2>Rooms</h2>
-      <rooms-list :token="token"></rooms-list>
+      <div class="box">
+        <h2 class="subtitle">Rooms</h2>
+        <rooms-list :token="token"></rooms-list>
+      </div>
     </main>
   `
 })

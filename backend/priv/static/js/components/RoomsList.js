@@ -23,16 +23,17 @@ export default defineComponent({
   },
 
   template: /*html*/`
-    <table>
+    <table class="table">
       <thead>
         <tr>
-          <td>name</td>
-          <td>category</td>
-          <td>lat</td>
-          <td>lng</td>
-          <td>radius</td>
-          <td># events</td>
-          <td># users</td>
+          <td>Name</td>
+          <td>Category</td>
+          <td>Lat</td>
+          <td>Lng</td>
+          <td>Radius</td>
+          <td># Events</td>
+          <td># Users</td>
+          <td>Delete</td>
         </tr>
       </thead>
       <tbody>
@@ -46,9 +47,9 @@ export default defineComponent({
           <td>{{ room.users.length }}</td>
           <td>
             <button
+              v-if="room.events.length === 0"
+              class="delete"
               @click.stop="deleteRoomHandler(room)"
-              :disabled="room.events.length > 0"
-              :title="room.events.length > 0 ? 'This room has events and thus can not be deleted at this time.' : ''"
             >Delete</button>
           </td>
         </tr>

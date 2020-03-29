@@ -21,12 +21,13 @@ export default defineComponent({
   },
 
   template: /*html*/`
-    <table>
+    <table class="table">
       <thead>
         <tr>
           <td>UID</td>
           <td>Nickname</td>
           <td>Is Active?</td>
+          <td>Deactivate</td>
         </tr>
       </thead>
       <tbody>
