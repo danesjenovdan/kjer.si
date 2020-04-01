@@ -157,6 +157,32 @@ defmodule KjerSi.Accounts do
   end
 
   @doc """
+  Subscribes user to room only if no such subscription exists.
+
+  ## Examples
+
+      iex> find_or_create_subscription(%{field: value})
+      {:ok, %Subscription{}}
+
+      iex> find_or_create_subscription(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  require Logger
+  def find_or_create_subscription(attrs \\ %{}) do
+    query = from s in Subscription,
+            where: s.room_id == ^attrs["room_id"],
+            where: s.user_id == ^attrs["user_id"]
+    if !Repo.one(query)  do
+      %Subscription{}
+      |> Subscription.changeset(attrs)
+      |> Repo.insert()
+    end
+    {:ok, Repo.one(query)}
+    
+  end
+
+  @doc """
   Gets a single subscription.
 
   Raises `Ecto.NoResultsError` if the Subscription does not exist.
