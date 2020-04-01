@@ -190,12 +190,12 @@ defmodule KjerSi.Events do
   end
 
   @doc """
-  Gets a single user_room.
-  Raises `Ecto.NoResultsError` if the UserRoom does not exist.
+  Gets a single event.
+  Raises `Ecto.NoResultsError` if the UserEvent does not exist.
   ## Examples
-      iex> get_user_room!(123)
+      iex> get_user_event!(123)
       %User{}
-      iex> get_user_room!(456)
+      iex> get_user_event!(456)
       ** (Ecto.NoResultsError)
   """
   def get_user_event!(uuid), do: Repo.get!(UserEvent, uuid)

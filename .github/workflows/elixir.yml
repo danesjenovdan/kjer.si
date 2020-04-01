@@ -8,7 +8,9 @@ jobs:
 
     services:
       db:
-        image: mdillon/postgis
+        image: postgis/postgis
+        env:
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
         options: >-

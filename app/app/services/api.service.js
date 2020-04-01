@@ -4,7 +4,7 @@ import * as axios from 'axios';
 export default new class {
 
   _baseSocketUrl = 'http://10.0.0.11:3088';
-  _baseUrl = 'http://10.0.0.11:3088/';
+  _baseUrl = 'https://api.kjer.si/api';
   socket = null;
 
   initSocket() {
@@ -15,7 +15,7 @@ export default new class {
     if (!UserService.default.user || !UserService.default.user.token) {
       throw new Error('Configure axios error: no user or token available');
     }
-    axios.defaults.headers.common['Authorization'] = `${UserService.default.user.token}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${UserService.default.user.token}`;
   }
 
   get(url, auth = true) {
@@ -43,7 +43,7 @@ export default new class {
 
   async getCategories() {
     try {
-      const response = await this.get('/v1/rooms/categories');
+      const response = await this.get('/categories');
       return response.data.data;
     } catch (e) {
       console.log('Get categories error: ', e);
@@ -67,7 +67,7 @@ export default new class {
         firebaseToken: UserService.default.firebaseToken
       };
       console.log('user: ', user);
-      const response = await this.post('/v1/users/register', user);
+      const response = await this.post('/users', user);
       return response.data.data;
     } catch (e) {
       throw Error('Error when creating user');
@@ -87,14 +87,12 @@ export default new class {
       category_id: categoryId
     };
 
-    const response = await this.post('/v1/rooms', room, false);
+    const response = await this.post('/rooms', room, false);
     return response.data.data;
   }
 
   async getRoomsInRadius(lat, lng) {
-    const response = await this.post('/v1/map/rooms', {
-      lat, lng
-    }, false);
+    const response = await this.get(`/rooms?lat=${lat}&lng=${lng}`, false);
     return response.data.data;
   }
 

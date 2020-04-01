@@ -1,16 +1,12 @@
 defmodule KjerSiWeb.RoomView do
   use KjerSiWeb, :view
 
-  def render("new.json", %{room: room}) do
-    %{
-      id: room.id,
-      name: room.name,
-      radius: room.radius,
-      category_id: room.category_id,
-      lat: room.lat,
-      lng: room.lng,
-      users: []
-    }
+  def render("index.json", %{rooms: rooms}) do
+    %{data: render_many(rooms, KjerSiWeb.RoomView, "room.json")}
+  end
+
+  def render("show.json", %{room: room}) do
+    %{data: render_one(room, KjerSiWeb.RoomView, "room.json")}
   end
 
   def render("room.json", %{room: room}) do
@@ -18,9 +14,10 @@ defmodule KjerSiWeb.RoomView do
       id: room.id,
       name: room.name,
       radius: room.radius,
-      category_id: room.category_id,
+      categoryId: room.category_id,
       lat: room.lat,
       lng: room.lng,
+      description: room.description,
       users: render_many(room.users, KjerSiWeb.UserView, "user_nickname.json")
     }
   end

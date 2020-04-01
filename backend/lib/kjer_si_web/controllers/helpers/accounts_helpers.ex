@@ -33,12 +33,13 @@ defmodule KjerSi.AccountsHelpers do
     end
   end
 
-  defp get_user_from_conn(conn, preload) do
+  def get_user_from_conn(conn, preload \\ []) do
     with {:ok, token} <- get_token_from_conn(conn) do
       get_user(token, preload)
     end
   end
 
+  # TODO: Remove this and replace with :auth plug everywhere
   def get_auth_user(conn, preload \\ []) do
     case get_user_from_conn(conn, preload) do
       {:ok, user} -> {:ok, user}

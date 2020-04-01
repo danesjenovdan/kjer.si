@@ -18,7 +18,9 @@ defmodule KjerSi.Accounts do
 
   """
   def list_users do
-    Repo.all(User)
+    User
+    |> where([u], u.is_admin == false)
+    |> Repo.all
   end
 
   @doc """
@@ -121,32 +123,19 @@ defmodule KjerSi.Accounts do
     User.changeset(user, %{})
   end
 
-  alias KjerSi.Accounts.UserRoom
+  alias KjerSi.Accounts.Subscription
 
   @doc """
-  Returns the list of user rooms.
+  Returns a list of subscriptions for given user id
 
   ## Examples
 
-      iex> list_user_rooms()
-      [%UserRoom{}, ...]
+      iex> list_subscriptions(user_id)
+      [%Subscription{}, ...]
 
   """
-  def list_user_rooms do
-    Repo.all(UserRoom)
-  end
-
-  @doc """
-  Returns the list of user rooms.
-
-  ## Examples
-
-      iex> list_user_rooms()
-      [%UserRoom{}, ...]
-
-  """
-  def list_user_rooms_by_user(user) do
-    Repo.all(from ur in UserRoom, where: ur.user_id == ^user.id, select: ur)
+  def list_subscriptions(user_id) do
+    Repo.all(from Subscription, where: [user_id: ^user_id])
   end
 
   @doc """
@@ -154,48 +143,67 @@ defmodule KjerSi.Accounts do
 
   ## Examples
 
-      iex> create_user_room(%{field: value})
-      {:ok, %UserRoom{}}
+      iex> create_subscription(%{field: value})
+      {:ok, %Subscription{}}
 
-      iex> create_user_room(%{field: bad_value})
+      iex> create_subscription(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user_room(attrs \\ %{}) do
-    %UserRoom{}
-    |> UserRoom.changeset(attrs)
+  def create_subscription(attrs \\ %{}) do
+    %Subscription{}
+    |> Subscription.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Gets a single user_room.
+  Gets a single subscription.
 
-  Raises `Ecto.NoResultsError` if the UserRoom does not exist.
+  Raises `Ecto.NoResultsError` if the Subscription does not exist.
 
   ## Examples
 
-      iex> get_user_room!(123)
+      iex> get_subscription!(123)
       %User{}
 
-      iex> get_user_room!(456)
+      iex> get_subscription!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_user_room!(id), do: Repo.get!(UserRoom, id)
+  def get_subscription!(id), do: Repo.get!(Subscription, id)
+
+  @doc """
+  Gets a single subscription.
+
+  ## Examples
+
+      iex> get_subscription(123)
+      {:ok, %Subscription{}}
+
+      iex> get_subscription(456)
+      {:error, :not_found}
+
+  """
+  def get_subscription(id) do
+    case Repo.get(Subscription, id) do
+      nil -> {:error, :not_found}
+      subscription -> {:ok, subscription}
+    end
+  end
 
   @doc """
   Unsubscribes user from room.
 
   ## Examples
 
-      iex> delete_user_room(user_room)
-      {:ok, %UserRoom{}}
+      iex> delete_subscription(subscription)
+      {:ok, %Subscription{}}
 
-      iex> delete_user_room(user_room)
+      iex> delete_subscription(subscription)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_user_room(%UserRoom{} = user_room) do
-    Repo.delete(user_room)
+  def delete_subscription(%Subscription{} = subscription) do
+    Repo.delete(subscription)
   end
 end

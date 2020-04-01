@@ -71,7 +71,7 @@ export default new class {
         user._id,
         platform.device.uuid,
         user.nickname,
-        user.accessToken
+        user.token
       );
       ApiService.default.configureAxios();
       this.initLocalUserData();

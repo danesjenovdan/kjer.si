@@ -4,6 +4,12 @@ defmodule KjerSiWeb.Endpoint do
   # Uncomment this and add a comma above to return JSON errors
   # render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(json), layout: false]
 
+  plug Plug.Static,
+    at: "/",
+    from: :kjer_si,
+    gzip: false,
+    only: ~w(admin css fonts images js favicon.ico robots.txt)
+
   socket "/socket", KjerSiWeb.UserSocket,
     websocket: true,
     longpoll: false

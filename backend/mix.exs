@@ -39,15 +39,13 @@ defmodule KjerSi.MixProject do
       {:ecto_sql, "~> 3.3"},
       {:postgrex, "~> 0.15"},
       {:gettext, "~> 0.17"},
-      {:jason, "~> 1.1"},
+      {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.1"},
       {:geo, "~> 3.3"},
       {:geo_postgis, "~> 3.3"},
-      {:pigeon, "~> 1.5.0"},
-      {:kadabra, "~> 0.4.4"}
+      {:params, "~> 2.1"}
     ]
   end
-
 
   # Aliases are shortcuts or tasks specific to the current project.
   # For example, to create, migrate and run the seeds file at once:

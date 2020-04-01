@@ -116,8 +116,8 @@ defmodule KjerSi.Rooms do
   """
   def list_rooms do
     Room
-    |> Repo.all
-    |> Repo.preload(:users)
+    |> Repo.all()
+    |> Repo.preload([:users, :events, :category])
   end
 
   @doc """
@@ -139,6 +139,29 @@ defmodule KjerSi.Rooms do
   end
 
   @doc """
+  Gets a single room.
+
+  ## Examples
+
+      iex> get_room(123)
+      {:ok, %Room{}}
+
+      iex> get_room(456)
+      {:error, :not_found}
+
+  """
+  def get_room(id, preload \\ []) do
+    case Repo.get(Room, id) do
+      nil ->
+        {:error, :not_found}
+
+      room ->
+        preloaded_room = Repo.preload(room, preload)
+        {:ok, preloaded_room}
+    end
+  end
+
+  @doc """
   Creates a room.
 
   ## Examples
@@ -151,9 +174,14 @@ defmodule KjerSi.Rooms do
 
   """
   def create_room(attrs \\ %{}) do
-    %Room{}
-    |> Room.changeset(attrs)
-    |> Repo.insert()
+    case %Room{} |> Room.changeset(attrs) |> Repo.insert() do
+      {:ok, room} ->
+        preloaded_room = Repo.preload(room, [:users])
+        {:ok, preloaded_room}
+
+      {:error, error} ->
+        {:error, error}
+    end
   end
 
   @doc """
@@ -214,13 +242,14 @@ defmodule KjerSi.Rooms do
     [%Room{}, ...]
   """
   def get_rooms_around_point(point) do
-    query = from room in Room,
-            where: st_dwithin_in_meters(room.coordinates, ^point, room.radius),
-            order_by: [asc: st_distance_in_meters(room.coordinates, ^point)],
-            limit: 5
+    query =
+      from room in Room,
+        where: st_dwithin_in_meters(room.coordinates, ^point, room.radius),
+        order_by: [asc: st_distance_in_meters(room.coordinates, ^point)],
+        limit: 5
 
     query
-    |> Repo.all
+    |> Repo.all()
     |> Repo.preload(:users)
   end
 end
