@@ -9,7 +9,16 @@ async function main () {
     const token = await getAdminUserToken(uid.toString())
     createApp(App, { token }).mount('#app')
   } catch (e) {
-    document.writeln('Ti tu nisi.')
+    const app = document.querySelector('#app')
+    const button = document.createElement('button')
+
+    app.textContent = 'Ti tu nisi.'
+    button.textContent = 'Retry?'
+    button.addEventListener('click', () => {
+      window.localStorage.clear()
+      window.location.reload()
+    })
+    app.appendChild(button)
   }
 }
 
