@@ -3,8 +3,10 @@ import * as axios from 'axios';
 
 export default new class {
 
-  _baseSocketUrl = 'http://10.0.0.11:3088';
-  _baseUrl = 'https://api.kjer.si/api';
+  // _baseSocketUrl = 'https://api.kjer.si/socket';
+  // _baseUrl = 'https://api.kjer.si/api';
+  _baseSocketUrl = 'http://192.168.1.3:4000/socket'
+  _baseUrl = 'http://192.168.1.3:4000/api';
   socket = null;
 
   initSocket() {
@@ -64,7 +66,7 @@ export default new class {
     try {
       const user = {
         uid,
-        firebaseToken: UserService.default.firebaseToken
+        // firebaseToken: UserService.default.firebaseToken TODO
       };
       console.log('user: ', user);
       const response = await this.post('/users', user);
@@ -110,7 +112,11 @@ export default new class {
    * @returns {Promise<*>}
    */
   async joinRoom(roomId) {
-    const response = await this.post(`/v1/rooms/${roomId}/join`, {}, true);
+    console.log(roomId);
+    const response = await this.post('/subscriptions', {
+      room_id: roomId,
+    }, true);
+
     const responseData = response.data.data;
     return responseData;
   }

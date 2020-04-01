@@ -349,11 +349,11 @@
 
       async onCardTap() {
 
-        firebase.subscribeToTopic(this.selectedRoom._id).then(() => console.log("Subscribed to topic"));
+        // firebase.subscribeToTopic(this.selectedRoom._id).then(() => console.log("Subscribed to topic"));
 
         try {
-          console.log('this.selectedRoom._id: ', this.selectedRoom._id);
-          const room = await ApiService.default.joinRoom(this.selectedRoom._id);
+          console.log('this.selectedRoom.id: ', this.selectedRoom.id);
+          const room = await ApiService.default.joinRoom(this.selectedRoom.id);
           if (!this.selectedRoom.amMember) {
             this.selectedRoom.amMember = true;
             this.selectedRoom.memberCount++;
@@ -370,7 +370,7 @@
             // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
           },
           props: {
-            roomId: this.selectedRoom._id,
+            roomId: this.selectedRoom.id,
             roomName: this.selectedRoom.name,
             room: this.selectedRoom
           }
