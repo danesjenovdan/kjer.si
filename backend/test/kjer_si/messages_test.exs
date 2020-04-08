@@ -46,15 +46,16 @@ defmodule KjerSi.MessagesTest do
       assert Messages.list_messages(room_id, past_date, limit) == []
     end
 
-    test "list_messages/3 result count can be limited with `limit`", %{
-      user_id: user_id,
-      room_id: room_id
-    } do
+    test "list_messages/3 result count can be limited with `limit` to return latest n messages",
+         %{
+           user_id: user_id,
+           room_id: room_id
+         } do
       future_date = "2100-01-01T00:00:00"
       limit = 1
 
-      message = message_fixture(user_id, room_id)
       message_fixture(user_id, room_id)
+      message = message_fixture(user_id, room_id)
 
       assert Messages.list_messages(room_id, future_date, limit) == [message]
     end
