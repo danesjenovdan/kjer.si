@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Leave room",
+			"name": "Leave room by subscription id",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -54,7 +54,7 @@
 			},
 			"response": [
 				{
-					"name": "Leave room",
+					"name": "Leave room by subscription id",
 					"originalRequest": {
 						"method": "DELETE",
 						"header": [
@@ -80,13 +80,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base}}/subscriptions/adf6d978-70f5-4cf4-a556-e0d5d00c7694",
+							"raw": "{{base}}/subscriptions/7f59a9cc-cfca-4399-a8c2-081be310314d",
 							"host": [
 								"{{base}}"
 							],
 							"path": [
 								"subscriptions",
-								"adf6d978-70f5-4cf4-a556-e0d5d00c7694"
+								"7f59a9cc-cfca-4399-a8c2-081be310314d"
 							]
 						}
 					},
@@ -100,7 +100,7 @@
 						},
 						{
 							"key": "date",
-							"value": "Tue, 24 Mar 2020 18:07:05 GMT"
+							"value": "Wed, 08 Apr 2020 23:31:33 GMT"
 						},
 						{
 							"key": "server",
@@ -108,7 +108,119 @@
 						},
 						{
 							"key": "x-request-id",
-							"value": "Ff9Ps43o39PZXOsAAAvF"
+							"value": "FgPyUzaN3cvqp4cAAAOH"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Leave room by room_id ",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "[{\"description\":\"\",\"enabled\":true,\"key\":\"Authorization\",\"type\":\"text\",\"value\":\"{{TOKEN}}\"}]",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/subscriptions/42965d0a-a280-4f15-98ee-984b36a378ce",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"subscriptions",
+						"42965d0a-a280-4f15-98ee-984b36a378ce"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Leave room by room_id ",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "[{\"description\":\"\",\"enabled\":true,\"key\":\"Authorization\",\"type\":\"text\",\"value\":\"{{TOKEN}}\"}]",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/rooms/e7d1b758-9b32-4a90-a800-d8b978d04e82/subscriptions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"rooms",
+								"e7d1b758-9b32-4a90-a800-d8b978d04e82",
+								"subscriptions"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "date",
+							"value": "Wed, 08 Apr 2020 23:30:42 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "FgPyRvbzST4XhAoAAAKH"
 						}
 					],
 					"cookie": [],
