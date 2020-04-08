@@ -1,0 +1,1137 @@
+{
+	"info": {
+		"_postman_id": "5eb2eafc-2d65-4c30-8ba4-29e6e7ec4297",
+		"name": "Kjer.si elixir",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Leave room",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "[{\"description\":\"\",\"enabled\":true,\"key\":\"Authorization\",\"type\":\"text\",\"value\":\"{{TOKEN}}\"}]",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/subscriptions/42965d0a-a280-4f15-98ee-984b36a378ce",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"subscriptions",
+						"42965d0a-a280-4f15-98ee-984b36a378ce"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Leave room",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "[{\"description\":\"\",\"enabled\":true,\"key\":\"Authorization\",\"type\":\"text\",\"value\":\"{{TOKEN}}\"}]",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/subscriptions/adf6d978-70f5-4cf4-a556-e0d5d00c7694",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"subscriptions",
+								"adf6d978-70f5-4cf4-a556-e0d5d00c7694"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "date",
+							"value": "Tue, 24 Mar 2020 18:07:05 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff9Ps43o39PZXOsAAAvF"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Join room",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"room_id\": \"f3a1f203-659c-4cf1-b8de-39c979b9abab\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/subscriptions",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Join room",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"roomId\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/subscriptions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "150"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Tue, 24 Mar 2020 18:57:16 GMT"
+						},
+						{
+							"key": "location",
+							"value": "/api/subscriptions/ad7ac7d6-da3d-4cff-8c96-facf957560c2"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff9ScLjiwMXGT0IAABME"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"id\": \"ad7ac7d6-da3d-4cff-8c96-facf957560c2\",\n        \"roomId\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n        \"userId\": \"3ed05b3c-60a4-41d2-97b5-2064ebf3be3d\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Create room",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Moja soba\",\n\t\"lat\": 46.038689, \n\t\"lng\": 14.500662,\n\t\"radius\": 500,\n\t\"category_id\": \"b06f9e78-4a26-4772-9ca5-df4b3ab4b83f\",\n\t\"description\": \"Kratek opis sobe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/rooms",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create room",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Moja soba\",\n\t\"lat\": 46.038689, \n\t\"lng\": 14.500662,\n\t\"radius\": 500,\n\t\"category_id\": \"b06f9e78-4a26-4772-9ca5-df4b3ab4b83f\",\n\t\"description\": \"Kratek opis sobe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/rooms",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "214"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Tue, 24 Mar 2020 23:11:43 GMT"
+						},
+						{
+							"key": "location",
+							"value": "/api/rooms/f3a1f203-659c-4cf1-b8de-39c979b9abab"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff9gUv_NVcOxPW8AAADC"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"categoryId\": \"b06f9e78-4a26-4772-9ca5-df4b3ab4b83f\",\n        \"description\": \"Kratek opis sobe\",\n        \"id\": \"f3a1f203-659c-4cf1-b8de-39c979b9abab\",\n        \"lat\": 46.038689,\n        \"lng\": 14.500662,\n        \"name\": \"Moja soba\",\n        \"radius\": 500,\n        \"users\": []\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get categories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/categories",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get categories",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base}}/categories",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "198"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Tue, 24 Mar 2020 21:00:00 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff9ZIvzE8XcKLiIAAAAC"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"id\": \"5c60fa1e-3d98-45d0-890c-7f63cbcd5d7b\",\n            \"name\": \"SOCIAL\"\n        },\n        {\n            \"id\": \"c4b347a8-3922-4daa-8df6-e0cc51927dc5\",\n            \"name\": \"RECREATION\"\n        },\n        {\n            \"id\": \"d58498f0-62a2-49e2-85a2-439117f4e9c2\",\n            \"name\": \"HELP\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get room details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/rooms/98f60d5d-18bc-4a92-956e-775d63feb936",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"rooms",
+						"98f60d5d-18bc-4a92-956e-775d63feb936"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get room details",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base}}/rooms/98f60d5d-18bc-4a92-956e-775d63feb936",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"rooms",
+								"98f60d5d-18bc-4a92-956e-775d63feb936"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "284"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Tue, 24 Mar 2020 23:20:22 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff9gzA4oxoecFnwAAAAM"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"categoryId\": \"40c0e665-68b4-4782-91e4-4ceae905076b\",\n        \"description\": \"Tukaj se zmenimo za skupne sprehode z našimi kosmatinci\",\n        \"id\": \"98f60d5d-18bc-4a92-956e-775d63feb936\",\n        \"lat\": 13,\n        \"lng\": 15,\n        \"name\": \"Ljubitelji psov\",\n        \"radius\": 2500,\n        \"users\": [\n            \"Polde the Admin\",\n            \"Micka\",\n            \"Štef\"\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get own subscriptions",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/subscriptions",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get own subscriptions",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/subscriptions",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "298"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 22 Mar 2020 18:37:40 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff60NZae-4sXhAoAAASI"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"id\": \"4921cf2e-b633-4b84-8113-ec83a50ec5b5\",\n            \"room_id\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n            \"user_id\": \"53973d0c-372b-470f-af07-4d8b5851ebe0\"\n        },\n        {\n            \"id\": \"0f4afbc6-d0d7-4f95-9983-0a52018aa632\",\n            \"room_id\": \"dd63703d-ed63-4cae-a8c3-d4c7f1f9c453\",\n            \"user_id\": \"53973d0c-372b-470f-af07-4d8b5851ebe0\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Find room in radius",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/rooms?lat=13.0&lng=15.0",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"rooms"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "13.0"
+						},
+						{
+							"key": "lng",
+							"value": "15.0"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Find room in radius",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/rooms?lat=13.0&lng=15.0",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "13.0"
+								},
+								{
+									"key": "lng",
+									"value": "15.0"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "418"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Tue, 24 Mar 2020 18:52:02 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff9SJ3ET4X9xmYoAAAOK"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"categoryId\": \"6626a79c-b780-4b4b-adc8-9cf918a9187d\",\n            \"id\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n            \"lat\": 13,\n            \"lng\": 15,\n            \"name\": \"Ljubitelji psov\",\n            \"radius\": 2500,\n            \"users\": [\n                \"Polde the Admin\",\n                \"Micka\",\n                \"Štef\"\n            ]\n        },\n        {\n            \"categoryId\": \"cc63372f-343d-4df4-9a79-4758d2630ead\",\n            \"id\": \"dd63703d-ed63-4cae-a8c3-d4c7f1f9c453\",\n            \"lat\": 13,\n            \"lng\": 15,\n            \"name\": \"Pevski zbor\",\n            \"radius\": 2500,\n            \"users\": [\n                \"Polde the Admin\",\n                \"PobudnikZlatovčice\"\n            ]\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get room messages",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "{{TOKEN}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/rooms/7d06cf8c-a623-4bb3-9617-6638385ccd5f/messages?before=2020-03-23T10:58:36&limit=100",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"rooms",
+						"7d06cf8c-a623-4bb3-9617-6638385ccd5f",
+						"messages"
+					],
+					"query": [
+						{
+							"key": "before",
+							"value": "2020-03-23T10:58:36"
+						},
+						{
+							"key": "limit",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get room messages",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{TOKEN}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/rooms/7d06cf8c-a623-4bb3-9617-6638385ccd5f/messages?before=2020-03-23T10:58:36&limit=100",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"rooms",
+								"7d06cf8c-a623-4bb3-9617-6638385ccd5f",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "before",
+									"value": "2020-03-23T10:58:36"
+								},
+								{
+									"key": "limit",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "704"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Tue, 24 Mar 2020 18:51:19 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff9SHXUwOh7F1NkAAAvB"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"content\": \"kako ste?\",\n            \"created\": \"2020-03-22T16:30:33\",\n            \"id\": \"86b8fd27-85fd-433f-b90c-49cd4b93ad8f\",\n            \"roomId\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n            \"userId\": \"3ed05b3c-60a4-41d2-97b5-2064ebf3be3d\",\n            \"userNickname\": \"Polde the Admin\"\n        },\n        {\n            \"content\": \"gre kdo na sprehod?\",\n            \"created\": \"2020-03-22T16:30:33\",\n            \"id\": \"acce49b5-2a7b-47c7-b19e-6f25ac611995\",\n            \"roomId\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n            \"userId\": \"3ed05b3c-60a4-41d2-97b5-2064ebf3be3d\",\n            \"userNickname\": \"Polde the Admin\"\n        },\n        {\n            \"content\": \"ja, čez 5 minut\",\n            \"created\": \"2020-03-22T16:30:33\",\n            \"id\": \"a386767c-bca5-44c4-af50-5a97013f8f20\",\n            \"roomId\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n            \"userId\": \"4c04ff38-ef55-441f-bf1d-265e210f1c7a\",\n            \"userNickname\": \"Micka\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get self",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/users/self",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"users",
+						"self"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get self",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/users/self",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"users",
+								"self"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "177"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Fri, 20 Mar 2020 09:12:47 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff34OT45q9Rp_Z8AAAwB"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"createdAt\": \"2020-03-20T09:10:51\",\n        \"id\": \"5e093f20-5af8-4ff7-adce-4ca1965d4736\",\n        \"isActive\": true,\n        \"isAdmin\": false,\n        \"nickname\": \"OdkrivanjeORGANIZACIJE\",\n        \"uid\": \"821211131888\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Register/Login user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cde95d98-fe4e-4c64-b950-5c772619ad05",
+						"exec": [
+							"pm.environment.set(\"TOKEN\", JSON.parse(responseBody).data.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"uid\":\"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/users",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Register/Login user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"uid\":\"821211131888\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base}}/users",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "cache-control",
+							"value": "max-age=0, private, must-revalidate"
+						},
+						{
+							"key": "content-length",
+							"value": "336"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "date",
+							"value": "Fri, 20 Mar 2020 09:11:15 GMT"
+						},
+						{
+							"key": "server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "x-request-id",
+							"value": "Ff34I5kXC5q8BfwAAAuB"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"createdAt\": \"2020-03-20T09:10:51\",\n        \"id\": \"5e093f20-5af8-4ff7-adce-4ca1965d4736\",\n        \"isActive\": true,\n        \"isAdmin\": false,\n        \"nickname\": \"OdkrivanjeORGANIZACIJE\",\n        \"token\": \"SFMyNTY.g3QAAAACZAAEZGF0YW0AAAAkNWUwOTNmMjAtNWFmOC00ZmY3LWFkY2UtNGNhMTk2NWQ0NzM2ZAAGc2lnbmVkbgYA4f0193AB.5KPlaXzOC9GX4ZP79eBxIXIGaO2Mv2amJEDkTUUkrOI\",\n        \"uid\": \"821211131888\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2ce8ecfe-a652-4ac5-84c1-afab4eb1d00e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6966d0ec-ff95-46f2-98ae-3f9b5962c864",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "f619560c-1383-4df4-aa23-a452a4f28704",
+			"key": "base",
+			"value": "http://localhost:3088",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
