@@ -11,7 +11,7 @@ defmodule KjerSiWeb.SubscriptionControllerTest do
 
     subscription = Repo.insert!(%Subscription{user: user, room: room})
 
-    {:ok, conn: conn, user: user, subscription: subscription}
+    {:ok, conn: conn, user: user, subscription: subscription, room: room}
   end
 
   describe "index" do
@@ -72,6 +72,26 @@ defmodule KjerSiWeb.SubscriptionControllerTest do
 
       rooms_after = KjerSi.Rooms.list_rooms()
       assert length(rooms_after) == 0
+    end
+  end
+
+  describe "delete_by_room_id" do
+    test "finds subscription id and redirects to normal delete", %{
+      conn: conn,
+      subscription: subscription,
+      room: room
+    } do
+      conn = delete(conn, Routes.room_subscription_path(conn, :delete_by_room_id, room.id))
+      assert redirected_to(conn, 307) == "/api/subscriptions/#{subscription.id}"
+    end
+
+    test "fails if no subscription matches current user id and passed room_id", %{conn: conn} do
+      fake_id = "ba294533-82b6-4cbb-abc1-167cd7bf4bb1"
+
+      %{"errors" => %{"detail" => "Not Found"}} =
+        conn
+        |> delete(Routes.room_subscription_path(conn, :delete_by_room_id, fake_id))
+        |> json_response(404)
     end
   end
 end

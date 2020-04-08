@@ -1,5 +1,6 @@
 defmodule KjerSiWeb.SubscriptionController do
   use KjerSiWeb, :controller
+  use Params
 
   alias KjerSi.Accounts
   alias KjerSi.Accounts.Subscription
@@ -34,19 +35,28 @@ defmodule KjerSiWeb.SubscriptionController do
   end
 
   def delete(conn, %{"id" => id}) do
-    with {:ok, subscription} <- Accounts.get_subscription(id) do
+    with {:ok, %Subscription{} = subscription} <- Accounts.delete_subscription(id) do
       room_id = subscription.room_id
 
-      with {:ok, %Subscription{}} <- Accounts.delete_subscription(subscription) do
-        # check if room is empty and delete room
-        with {:ok, room} = Rooms.get_room(room_id, [:users]) do
-          if length(room.users) == 0 do
-            Rooms.delete_room(room)
-          end
+      # check if room is empty and delete room
+      with {:ok, room} = Rooms.get_room(room_id, [:users]) do
+        if length(room.users) == 0 do
+          Rooms.delete_room(room)
         end
-
-        send_resp(conn, :no_content, "")
       end
+
+      send_resp(conn, :no_content, "")
+    end
+  end
+
+  def delete_by_room_id(conn, params) do
+    user_id = conn.assigns[:current_user].id
+    room_id = params["room_id"]
+
+    with {:ok, %Subscription{} = subscription} <- Accounts.get_subscription(user_id, room_id) do
+      conn
+      |> put_status(307)
+      |> redirect(to: Routes.subscription_path(conn, :delete, subscription.id))
     end
   end
 end

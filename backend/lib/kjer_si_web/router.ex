@@ -27,6 +27,7 @@ defmodule KjerSiWeb.Router do
 
       resources "/rooms", RoomController, only: [:index, :create, :show] do
         get "/messages", MessageController, :index
+        delete "/subscriptions", SubscriptionController, :delete_by_room_id
       end
     end
 
