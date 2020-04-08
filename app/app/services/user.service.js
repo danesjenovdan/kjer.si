@@ -13,8 +13,12 @@ export default new class {
     return userData;
   }
 
-  saveLocalUserData(_id, deviceUid, nickname, token) {
-    const userData = {_id, uid: deviceUid, nickname, token};
+  saveLocalUserData(id, deviceUid, nickname, token) {
+    if (!token) {
+      console.log('Missing token when saving. Stopping.');
+      return;
+    }
+    const userData = {id, uid: deviceUid, nickname, token};
     localStorage.setItem('user', JSON.stringify(userData));
     this.user = userData;
     return userData;
@@ -68,7 +72,7 @@ export default new class {
       const user = await ApiService.default.createUser(platform.device.uuid);
 
       this.saveLocalUserData(
-        user._id,
+        user.id,
         platform.device.uuid,
         user.nickname,
         user.token
@@ -78,7 +82,7 @@ export default new class {
       ApiService.default.initSocket();
     } else {
       this.saveLocalUserData(
-        fetchedUser._id,
+        fetchedUser.id,
         platform.device.uuid,
         fetchedUser.nickname,
         fetchedUser.token,

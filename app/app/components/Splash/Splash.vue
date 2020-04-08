@@ -67,7 +67,7 @@
 
       this.requestLocation();
 
-      SocketService.default.init();
+      // SocketService.default.init();
 
     },
 
@@ -105,6 +105,7 @@
           });
           this.isCreatingUser = false;
         } catch (e) {
+          console.log('Enter error: ', e);
           alert('Error: ' + e);
           this.isCreatingUser = false;
         }

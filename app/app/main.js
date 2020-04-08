@@ -22,6 +22,8 @@ import DateTimePicker from "nativescript-datetimepicker/vue";
 import store from './store'
 import VueDevtools from 'nativescript-vue-devtools'
 
+require("nativescript-websockets");
+
 Vue.registerElement('MapView', () => MapView);
 Vue.registerElement('lottie-view', () => require('nativescript-lottie').LottieView);
 Vue.registerElement('Rippler', () => require('nativescript-ripple').Ripple);

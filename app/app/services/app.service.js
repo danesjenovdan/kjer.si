@@ -1,10 +1,17 @@
 import * as http from "http";
 import {getUUID} from "nativescript-uuid";
+import * as ApiService from "./api.service";
 
 export default new class {
 
+  categories = [];
+
   get uid() {
     return getUUID();
+  }
+
+  async getCategories(){
+    this.categories = await ApiService.default.getCategories();
   }
 
   screen = {

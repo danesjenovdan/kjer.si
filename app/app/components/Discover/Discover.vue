@@ -14,9 +14,10 @@
   import * as UserService from '../../services/user.service';
   import {localize} from 'nativescript-localize';
   import * as app from 'tns-core-modules/application';
-  import {AndroidActivityBackPressedEventData, AndroidApplication} from 'tns-core-modules/application';
+  import {AndroidApplication} from 'tns-core-modules/application';
   import * as firebase from 'nativescript-plugin-firebase';
   import * as dialogs from "tns-core-modules/ui/dialogs";
+  import {isAndroid} from "@nativescript/core";
 
   // Components
   import MapFabs from './MapFabs/MapFabs.vue';
@@ -29,7 +30,8 @@
   import * as MapService from '../../services/map.service';
   import * as LocationService from '../../services/location.service';
   import * as UiService from '../../services/ui.service';
-  import {isAndroid} from "@nativescript/core";
+  import * as AppService from '../../services/app.service';
+
 
   export default {
     components: {
@@ -79,9 +81,9 @@
     },
     async mounted() {
 
-      this._backTap = this.onBackTap.bind(this);
+      this.init();
 
-      console.log('Local user: ', UserService.default.user);
+      this._backTap = this.onBackTap.bind(this);
 
       this.currentPageState = this.PAGE_STATES.MAP;
       this.$refs.pageRef.nativeView.actionBarHidden = true;
@@ -106,6 +108,10 @@
     },
     methods: {
 
+      async init() {
+        await AppService.default.getCategories();
+      },
+
       setupAndroidBackButton() {
         if (isAndroid) {
           app.android.on(AndroidApplication.activityBackPressedEvent, this._backTap);
@@ -127,7 +133,6 @@
 
         try {
           const rooms = await ApiService.default.getRoomsInRadius(lat, lng);
-
           if (this.roomMarkers && this.roomMarkers.length) {
             this.mapView.removeMarker(...this.roomMarkers);
           }
@@ -161,7 +166,7 @@
           this.deselectSelectedMarker();
 
           this.selectedRoom = room;
-          this.selectedMarker = this.roomMarkers.filter((roomMarker) => roomMarker.userData._id === room._id)[0];
+          this.selectedMarker = this.roomMarkers.filter((roomMarker) => roomMarker.userData.id === room.id)[0];
           this.selectedMarker.icon = 'room_pin_selected';
         }
       },
@@ -349,17 +354,15 @@
 
       async onCardTap() {
 
-        firebase.subscribeToTopic(this.selectedRoom._id).then(() => console.log("Subscribed to topic"));
+        firebase.subscribeToTopic(this.selectedRoom.id).then(() => console.log("Subscribed to topic"));
 
         try {
-          console.log('this.selectedRoom._id: ', this.selectedRoom._id);
-          const room = await ApiService.default.joinRoom(this.selectedRoom._id);
-          if (!this.selectedRoom.amMember) {
-            this.selectedRoom.amMember = true;
-            this.selectedRoom.memberCount++;
+          const room = await ApiService.default.joinRoom(this.selectedRoom.id);
+          if (!this.selectedRoom.users.filter(u => u.nickname === UserService.default.user.nickname).length) {
+            this.selectedRoom.users.push(UserService.default.user.nickname);
           }
         } catch (e) {
-          console.log('Join room error: ', e.response.data);
+          console.log('Join room error');
         }
 
         this.$navigateTo(Chat, {
@@ -370,7 +373,7 @@
             // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
           },
           props: {
-            roomId: this.selectedRoom._id,
+            roomId: this.selectedRoom.id,
             roomName: this.selectedRoom.name,
             room: this.selectedRoom
           }
@@ -428,7 +431,7 @@
 
         this.newRoom.categoryId = category.id;
         this.newRoom.description = description;
-        this.newRoom.name = localize(category.id);
+        this.newRoom.name = localize(category.name);
 
         let indicator;
 

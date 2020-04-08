@@ -1,20 +1,35 @@
 import * as UserService from './user.service';
 import * as axios from 'axios';
+import * as Phx from "../assets/js/phoenix";
 
 export default new class {
 
-  _baseSocketUrl = 'http://10.0.0.11:3088';
-  _baseUrl = 'https://api.kjer.si/api';
+  _baseSocketUrl = 'ws://10.0.0.11:4000/socket';
+  _baseUrl = 'http://10.0.0.11:4000/api';
   socket = null;
 
   initSocket() {
-    // placeholder
+
+    console.log('INIT SOCKET');
+    console.log('Socket token: ', UserService.default.user.token);
+
+    // to create a socket connection
+    this.socket = new Phx.Socket(this._baseSocketUrl, {params: {token: `${UserService.default.user.token}`}});
+    this.socket.connect();
+    this.socket.onOpen((state) => {
+      console.log('Socket: ', this.socket.isConnected());
+    });
+
+    this.socket.onError((error) => {
+      console.log('Socket error: ', String(error.error));
+    });
   }
 
   configureAxios() {
     if (!UserService.default.user || !UserService.default.user.token) {
-      throw new Error('Configure axios error: no user or token available');
+      console.log('Configure axios error: no user or token available');
     }
+    console.log('Token: ', `Bearer ${UserService.default.user.token}`);
     axios.defaults.headers.common['Authorization'] = `Bearer ${UserService.default.user.token}`;
   }
 
@@ -28,7 +43,6 @@ export default new class {
   put(url, body, auth = true) {
     const config = {
       baseURL: this._baseUrl,
-      headers: {}
     };
     return axios.default.post(url, body, config);
   }
@@ -36,9 +50,15 @@ export default new class {
   post(url, body) {
     const config = {
       baseURL: this._baseUrl,
-      headers: {}
     };
     return axios.default.post(url, body, config);
+  }
+
+  delete(url) {
+    const config = {
+      baseURL: this._baseUrl,
+    };
+    return axios.default.delete(url, config);
   }
 
   async getCategories() {
@@ -46,7 +66,7 @@ export default new class {
       const response = await this.get('/categories');
       return response.data.data;
     } catch (e) {
-      console.log('Get categories error: ', e);
+      console.log('Get categories error : ', e);
     }
   }
 
@@ -66,7 +86,6 @@ export default new class {
         uid,
         firebaseToken: UserService.default.firebaseToken
       };
-      console.log('user: ', user);
       const response = await this.post('/users', user);
       return response.data.data;
     } catch (e) {
@@ -87,20 +106,17 @@ export default new class {
       category_id: categoryId
     };
 
-    const response = await this.post('/rooms', room, false);
+    const response = await this.post('/rooms', room);
     return response.data.data;
   }
 
   async getRoomsInRadius(lat, lng) {
-    const response = await this.get(`/rooms?lat=${lat}&lng=${lng}`, false);
+    const response = await this.get(`/rooms?lat=${lat}&lng=${lng}`);
     return response.data.data;
   }
 
   async fetchSelf(uuid) {
-    const config = {
-      baseURL: this._baseUrl
-    };
-    const response = await axios.default.post('/v1/users/self', {uid: uuid}, config);
+    const response = await this.get('/users/self');
     return response.data;
   }
 
@@ -110,20 +126,24 @@ export default new class {
    * @returns {Promise<*>}
    */
   async joinRoom(roomId) {
-    const response = await this.post(`/v1/rooms/${roomId}/join`, {}, true);
+
+    const response = await this.post('/subscriptions', {room_id: roomId});
     const responseData = response.data.data;
+
     return responseData;
   }
 
   async leaveRoom(roomId) {
-    const response = await this.post(`/v1/rooms/${roomId}/leave`, {}, true);
+    const url = `/subscriptions/${roomId}`;
+    console.log('Url: ', url);
+    const response = await this.delete(url);
     const responseData = response.data.data;
     return responseData;
   }
 
   async getRoomMessages(roomId, beforeDate) {
-    console.log('beforeDate: ', beforeDate);
-    const response = await this.post(`/v1/rooms/${roomId}/messages`, {beforeDate}, true);
+    const url = `/rooms/${roomId}/messages?before=${beforeDate}&limit=10`;
+    const response = await this.get(url, {beforeDate});
     const responseData = response.data.data;
     return responseData;
   }

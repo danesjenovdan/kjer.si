@@ -33,6 +33,7 @@
     },
     async mounted() {
       this.categories = await ApiService.default.getCategories();
+      console.log('Categories: ', this.categories);
       this.categoriesLoaded = true;
       const height = this.$refs.container.nativeView.getMeasuredHeight();
     },

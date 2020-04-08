@@ -1,0 +1,22 @@
+// Start custom common variables
+@import '../../../app-variables';
+// End custom common variables
+
+.page-title {
+  text-align: center;
+  font-family: MuseoSansRoundedBold;
+  font-size: 24;
+  padding: 20 30;
+}
+
+.report-textview {
+  font-size: 18;
+  font-family: MuseoSansRounded;
+  padding: 20 10;
+  border-radius: 10;
+  border-width: 1;
+  border-color: #eee;
+  background-color: #fafafa;
+  margin: 10;
+  min-height: 100;
+}

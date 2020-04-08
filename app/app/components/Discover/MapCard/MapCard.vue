@@ -20,6 +20,15 @@
         room: this.room
       };
     },
+    computed: {
+      categoryNameString() {
+        if (this.room) {
+          return AppService.default.categories.filter(c => c.id === this.room.categoryId)[0].name;
+        } else {
+          return '';
+        }
+      }
+    },
     mounted() {
 
 

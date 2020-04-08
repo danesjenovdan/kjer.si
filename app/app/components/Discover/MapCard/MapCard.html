@@ -4,7 +4,7 @@
       <StackLayout class="map-card-title-container" orientation="horizontal">
         <Image class="map-card-icon-image" src="~/assets/images/chat_icon_gray.png" width="20" height="20"
                stretch="aspectFit"></Image>
-        <Label class="map-card-title" :text="room.name"></Label>
+        <Label class="map-card-title" :text="categoryNameString | L"></Label>
       </StackLayout>
       <StackLayout height="48" v-if="room.description" class="map-card-description-container" verticalAlignment="center">
         <Label verticalAlignment="center" textWrap="true" class="map-card-description"
@@ -22,7 +22,7 @@
         <GridLayout class="map-card-members-container" col="0" columns="auto, auto" rows="auto, auto">
           <Image class="map-card-members-icon" verticalAlignment="bottom" width="40" height="40" col="0" rowSpan="2"
                  src="~/assets/images/members_icon.png"></Image>
-          <Label class="map-card-members-number" col="1" row="0" :text="room.memberCount"></Label>
+          <Label class="map-card-members-number" col="1" row="0" :text="room.users.length"></Label>
           <Label class="map-card-members-label" col="1" row="1" text="članov"></Label>
         </GridLayout>
         <!--        <GridLayout class="map-card-members-container" col="1" columns="auto, auto" rows="auto, auto">-->

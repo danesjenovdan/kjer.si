@@ -1,0 +1,19 @@
+<Page ref="pageRef" class="page" background="transparent" xmlns:v-bind>
+  <GridLayout rows="*, auto">
+    <ScrollView row="0" verticalAlignment="center">
+      <StackLayout>
+        <Label class="page-title" textWrap="true" :text="'Prijavi neprimerno vsebino' | L"></Label>
+
+        <TextView verticalAlignment="center" @textChange="onReportTextChange" v-auto-focus
+                   hint="Opiši razlog za prijavo..." class="report-textview"
+                   v-model="reportText"></TextView>
+      </StackLayout>
+    </ScrollView>
+    <StackLayout row="1">
+      <Label v-bind:class="{ 'button-danger': tooLong }" @tap="confirmTap" class="kjer-si-big-button" :text="'Oddaj'|L"
+             margin="10 10"></Label>
+      <Label @tap="cancelTap" class="kjer-si-big-white-button" :text="'Prekliči'|L"
+             margin="0 10 10 10"></Label>
+    </StackLayout>
+  </GridLayout>
+</Page>

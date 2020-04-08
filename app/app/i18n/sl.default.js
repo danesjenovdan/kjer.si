@@ -5,7 +5,7 @@ module.exports = {
   'Create event': 'Ustvari dogodek',
   'A caouple of words about the event...': 'Nekaj besed o dogodku...',
   'Limited event': 'Udeležba omejena',
-  'ANIMALS': 'Živali',
+  'SOCIAL': 'Družba',
   'RECREATION': 'Rekreacija',
-  'NEIGHBOUR_ASSISTANCE': 'Sosedska pomoč'
+  'HELP': 'Sosedska pomoč'
 };
