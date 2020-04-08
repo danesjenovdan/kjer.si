@@ -821,19 +821,19 @@
 							}
 						},
 						"url": {
-							"raw": "{{base}}/rooms/7d06cf8c-a623-4bb3-9617-6638385ccd5f/messages?before=2020-03-23T10:58:36&limit=100",
+							"raw": "{{base}}/rooms/19327674-2b83-4336-b7b5-4264c6eda082/messages?before=2020-04-23T10:58:36&limit=100",
 							"host": [
 								"{{base}}"
 							],
 							"path": [
 								"rooms",
-								"7d06cf8c-a623-4bb3-9617-6638385ccd5f",
+								"19327674-2b83-4336-b7b5-4264c6eda082",
 								"messages"
 							],
 							"query": [
 								{
 									"key": "before",
-									"value": "2020-03-23T10:58:36"
+									"value": "2020-04-23T10:58:36"
 								},
 								{
 									"key": "limit",
@@ -852,7 +852,7 @@
 						},
 						{
 							"key": "content-length",
-							"value": "704"
+							"value": "728"
 						},
 						{
 							"key": "content-type",
@@ -860,7 +860,7 @@
 						},
 						{
 							"key": "date",
-							"value": "Tue, 24 Mar 2020 18:51:19 GMT"
+							"value": "Wed, 08 Apr 2020 16:52:59 GMT"
 						},
 						{
 							"key": "server",
@@ -868,11 +868,11 @@
 						},
 						{
 							"key": "x-request-id",
-							"value": "Ff9SHXUwOh7F1NkAAAvB"
+							"value": "FgPmXLJmDVkk9y0AAAGB"
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"data\": [\n        {\n            \"content\": \"kako ste?\",\n            \"created\": \"2020-03-22T16:30:33\",\n            \"id\": \"86b8fd27-85fd-433f-b90c-49cd4b93ad8f\",\n            \"roomId\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n            \"userId\": \"3ed05b3c-60a4-41d2-97b5-2064ebf3be3d\",\n            \"userNickname\": \"Polde the Admin\"\n        },\n        {\n            \"content\": \"gre kdo na sprehod?\",\n            \"created\": \"2020-03-22T16:30:33\",\n            \"id\": \"acce49b5-2a7b-47c7-b19e-6f25ac611995\",\n            \"roomId\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n            \"userId\": \"3ed05b3c-60a4-41d2-97b5-2064ebf3be3d\",\n            \"userNickname\": \"Polde the Admin\"\n        },\n        {\n            \"content\": \"ja, čez 5 minut\",\n            \"created\": \"2020-03-22T16:30:33\",\n            \"id\": \"a386767c-bca5-44c4-af50-5a97013f8f20\",\n            \"roomId\": \"7d06cf8c-a623-4bb3-9617-6638385ccd5f\",\n            \"userId\": \"4c04ff38-ef55-441f-bf1d-265e210f1c7a\",\n            \"userNickname\": \"Micka\"\n        }\n    ]\n}"
+					"body": "{\n    \"data\": [\n        {\n            \"content\": \"kako ste?\",\n            \"created\": \"2020-04-08T16:31:28.427297Z\",\n            \"id\": \"6ac11c29-a94d-4296-b7f3-7a2f502e8921\",\n            \"roomId\": \"19327674-2b83-4336-b7b5-4264c6eda082\",\n            \"userId\": \"1a203f4b-726f-4466-a30e-5137abd90f43\",\n            \"userNickname\": \"Polde the Admin\"\n        },\n        {\n            \"content\": \"gre kdo na sprehod?\",\n            \"created\": \"2020-04-08T16:31:28.430079Z\",\n            \"id\": \"9d94b3a9-d6fd-44a3-a795-faf04910b9ff\",\n            \"roomId\": \"19327674-2b83-4336-b7b5-4264c6eda082\",\n            \"userId\": \"1a203f4b-726f-4466-a30e-5137abd90f43\",\n            \"userNickname\": \"Polde the Admin\"\n        },\n        {\n            \"content\": \"ja, čez 5 minut\",\n            \"created\": \"2020-04-08T16:31:28.432489Z\",\n            \"id\": \"a3c149bf-b8dc-4094-aff3-22561b8cfd7a\",\n            \"roomId\": \"19327674-2b83-4336-b7b5-4264c6eda082\",\n            \"userId\": \"46f97c56-fb53-4282-889e-c27f58c7ea37\",\n            \"userNickname\": \"Micka\"\n        }\n    ]\n}"
 				}
 			]
 		},
@@ -1127,7 +1127,7 @@
 	],
 	"variable": [
 		{
-			"id": "f619560c-1383-4df4-aa23-a452a4f28704",
+			"id": "4e5af20f-d126-4dd0-8c9b-8789acb1f445",
 			"key": "base",
 			"value": "http://localhost:3088",
 			"type": "string"
