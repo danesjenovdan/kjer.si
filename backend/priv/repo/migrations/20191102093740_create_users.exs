@@ -11,7 +11,7 @@ defmodule KjerSi.Repo.Migrations.CreateUsers do
       add :is_active, :boolean
       add :is_admin, :boolean
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     create unique_index(:users, [:nickname])

@@ -7,7 +7,7 @@ defmodule KjerSi.Repo.Migrations.CreateUserEvents do
       add :user_id, references(:users, on_delete: :delete_all, type: :binary_id)
       add :event_id, references(:events, on_delete: :delete_all, type: :binary_id)
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     create index(:users_events, [:user_id])

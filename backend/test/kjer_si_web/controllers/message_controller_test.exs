@@ -26,6 +26,18 @@ defmodule KjerSiWeb.MessageControllerTest do
         |> json_response(200)
     end
 
+    test "renders datetime with timezone specified", %{conn: conn, room: room} do
+      future_date = "2100-01-01T00:00:00"
+
+      %{"data" => [%{"created" => created_date}, %{}]} =
+        conn
+        |> get(Routes.room_message_path(conn, :index, room.id, before: future_date, limit: 10))
+        |> json_response(200)
+
+      iso_date_with_timezone = "2020-04-08T16:36:18.566937Z"
+      assert String.length(created_date) == String.length(iso_date_with_timezone)
+    end
+
     test "requires before param to be present", %{conn: conn, room: room} do
       %{"errors" => %{"fields" => %{"before" => ["can't be blank"]}}} =
         conn

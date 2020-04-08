@@ -18,7 +18,7 @@ defmodule KjerSi.Rooms.Room do
       join_through: KjerSi.Accounts.Subscription,
       unique: true
 
-    timestamps()
+    timestamps(type: :utc_datetime_usec)
   end
 
   @doc false

@@ -6,7 +6,7 @@ defmodule KjerSi.Repo.Migrations.CreateCategories do
       add :id, :binary_id, primary_key: true
       add :name, :string, null: false
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     create unique_index(:categories, [:name])

@@ -12,7 +12,7 @@ defmodule KjerSi.Repo.Migrations.CreateEvents do
       add :user_id, references(:users, on_delete: :nothing, type: :binary_id)
       add :room_id, references(:rooms, on_delete: :nothing, type: :binary_id)
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     create index(:events, [:user_id])

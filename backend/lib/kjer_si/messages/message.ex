@@ -10,7 +10,7 @@ defmodule KjerSi.Messages.Message do
     belongs_to :room, KjerSi.Rooms.Room
     belongs_to :user, KjerSi.Accounts.User
 
-    timestamps()
+    timestamps(type: :utc_datetime_usec)
   end
 
   @doc false

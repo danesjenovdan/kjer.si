@@ -15,7 +15,7 @@ defmodule KjerSi.Events.Event do
 
     many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Events.UserEvent, unique: true
 
-    timestamps()
+    timestamps(type: :utc_datetime_usec)
   end
 
   @doc false
