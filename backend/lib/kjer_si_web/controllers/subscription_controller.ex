@@ -19,7 +19,7 @@ defmodule KjerSiWeb.SubscriptionController do
       "room_id" => room_id,
     }
 
-    with {:ok, %Subscription{} = subscription} <- Accounts.create_subscription(subscription_params) do
+    with {:ok, %Subscription{} = subscription} <- Accounts.find_or_create_subscription(subscription_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.subscription_path(conn, :show, subscription.id))
