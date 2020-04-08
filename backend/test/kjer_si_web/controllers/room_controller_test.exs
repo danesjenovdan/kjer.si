@@ -2,6 +2,7 @@ defmodule KjerSiWeb.RoomControllerTest do
   use KjerSiWeb.ConnCase
 
   alias KjerSi.Repo
+  alias KjerSi.Accounts
   alias KjerSi.Accounts.User
 
   setup %{conn: conn} do
@@ -10,7 +11,7 @@ defmodule KjerSiWeb.RoomControllerTest do
 
     conn = TestHelper.login_user(conn, user)
 
-    {:ok, conn: conn, room: room}
+    {:ok, conn: conn, room: room, user: user}
   end
 
   describe "index" do
@@ -82,6 +83,33 @@ defmodule KjerSiWeb.RoomControllerTest do
           }
         )
         |> json_response(201)
+    end
+
+    test "creating a room also subscribes the user to it", %{conn: conn, user: user} do
+      subscriptions_before = Accounts.list_subscriptions(user.id)
+      assert length(subscriptions_before) == 0
+
+      category = TestHelper.generate_category()
+
+      %{"data" => %{"name" => "New room", "radius" => 5}} =
+        conn
+        |> post(
+          Routes.room_path(conn, :create),
+          %{
+            name: "New room",
+            description: "room description",
+            lat: 10.1,
+            lng: 2.3,
+            radius: 5,
+            category_id: category.id
+          }
+        )
+        |> json_response(201)
+
+      subscriptions_after = Accounts.list_subscriptions(user.id)
+      assert length(subscriptions_after) == 1
+
+      assert List.first(subscriptions_after).user_id == user.id
     end
   end
 end
