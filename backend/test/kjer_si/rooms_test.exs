@@ -134,6 +134,16 @@ defmodule KjerSi.RoomsTest do
       assert_raise Ecto.NoResultsError, fn -> Rooms.get_room!(room.id) end
     end
 
+    test "delete_room/1 cascade-deletes related events" do
+      room = TestHelper.generate_room()
+      user = TestHelper.generate_user()
+      event = TestHelper.generate_event(user.id, room.id)
+
+      assert KjerSi.Events.list_events() == [event]
+      assert {:ok, %Room{}} = Rooms.delete_room(room)
+      assert KjerSi.Events.list_events() == []
+    end
+
     test "change_room/1 returns a room changeset" do
       room = TestHelper.generate_room()
       assert %Ecto.Changeset{} = Rooms.change_room(room)
