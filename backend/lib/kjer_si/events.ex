@@ -70,6 +70,7 @@ defmodule KjerSi.Events do
   """
   def is_admin(uuid) do
     event = Repo.get_by(Event, uuid: uuid)
+
     if event do
       event.is_admin
     else
@@ -203,5 +204,4 @@ defmodule KjerSi.Events do
   def get_events_of_user(user) do
     Repo.all(from ur in UserEvent, where: ur.user_id == ^user.id, select: ur)
   end
-
 end

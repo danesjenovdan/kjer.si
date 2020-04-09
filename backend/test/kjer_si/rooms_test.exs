@@ -65,13 +65,19 @@ defmodule KjerSi.RoomsTest do
   describe "rooms" do
     alias KjerSi.Rooms.Room
 
-    @valid_attrs %{lat: 120.5, lng: 120.5, name: "some name", description: "some description", radius: 42}
+    @valid_attrs %{
+      lat: 120.5,
+      lng: 120.5,
+      name: "some name",
+      description: "some description",
+      radius: 42
+    }
     @update_attrs %{lat: 456.7, lng: 456.7, name: "some updated name", radius: 43}
     @invalid_attrs %{lat: nil, lng: nil, name: nil, radius: nil}
 
     test "list_rooms/0 returns all rooms" do
       TestHelper.generate_room()
-      [%{ users: [], events: [], category: %KjerSi.Rooms.Category{} }] = Rooms.list_rooms()
+      [%{users: [], events: [], category: %KjerSi.Rooms.Category{}}] = Rooms.list_rooms()
     end
 
     test "get_room!/1 returns the room with given id" do
@@ -85,7 +91,7 @@ defmodule KjerSi.RoomsTest do
     end
 
     test "get_room/1 supports preload as second argument" do
-      room = %{ TestHelper.generate_room() | users: [] }
+      room = %{TestHelper.generate_room() | users: []}
       assert Rooms.get_room(room.id, [:users]) == {:ok, room}
     end
 

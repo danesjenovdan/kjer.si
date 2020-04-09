@@ -16,10 +16,11 @@ defmodule KjerSiWeb.SubscriptionController do
   def create(conn, %{"room_id" => room_id}) do
     subscription_params = %{
       "user_id" => conn.assigns[:current_user].id,
-      "room_id" => room_id,
+      "room_id" => room_id
     }
 
-    with {:ok, %Subscription{} = subscription} <- Accounts.create_subscription(subscription_params) do
+    with {:ok, %Subscription{} = subscription} <-
+           Accounts.create_subscription(subscription_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.subscription_path(conn, :show, subscription.id))
@@ -35,8 +36,8 @@ defmodule KjerSiWeb.SubscriptionController do
   def delete(conn, %{"id" => id}) do
     with {:ok, subscription} <- Accounts.get_subscription(id) do
       room_id = subscription.room_id
-      with {:ok, %Subscription{}} <- Accounts.delete_subscription(subscription) do
 
+      with {:ok, %Subscription{}} <- Accounts.delete_subscription(subscription) do
         # check if room is empty and delete room
         with {:ok, room} = Rooms.get_room(room_id, [:users]) do
           if length(room.users) == 0 do

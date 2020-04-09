@@ -12,7 +12,14 @@ defmodule KjerSiWeb.Admin.AdminRoomControllerTest do
     category = Repo.insert!(%Category{name: "Test category"})
 
     room =
-      Repo.insert!(%Room{name: "Test room", description: "Test description", category: category, lat: 10.0, lng: 2.0, radius: 10})
+      Repo.insert!(%Room{
+        name: "Test room",
+        description: "Test description",
+        category: category,
+        lat: 10.0,
+        lng: 2.0,
+        radius: 10
+      })
 
     {:ok, conn: conn, room: room, admin: admin, user: user, category: category}
   end

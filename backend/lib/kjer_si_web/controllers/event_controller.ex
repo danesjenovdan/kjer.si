@@ -25,11 +25,11 @@ defmodule KjerSiWeb.EventController do
     end
   end
 
-
   def update(conn, %{"uid" => uid, "event" => event_params}) do
     event = Events.get_event_by_id(uid)
+
     cond do
-      #event == nil ->
+      # event == nil ->
       #  AccountsHelpers.return_error(conn, :not_found)
       # AccountsHelpers.get_uid(conn) != user.id ->
       #   AccountsHelpers.return_error(conn, :forbidden)
@@ -39,5 +39,4 @@ defmodule KjerSiWeb.EventController do
         end
     end
   end
-
 end

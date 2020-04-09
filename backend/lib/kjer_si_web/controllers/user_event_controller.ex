@@ -24,8 +24,9 @@ defmodule KjerSiWeb.UserEventController do
 
   def delete(conn, %{"id" => id}) do
     user_event = Events.get_user_event!(id)
+
     with {:ok, %UserEvent{}} <- Events.delete_user_event(user_event) do
-    send_resp(conn, :no_content, "")
+      send_resp(conn, :no_content, "")
     end
   end
 end

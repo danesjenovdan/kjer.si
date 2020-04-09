@@ -65,10 +65,11 @@ defmodule KjerSi.AccountsTest do
       test_user = TestHelper.generate_user()
       test_room = TestHelper.generate_room()
 
-      {:ok, subscription} = Accounts.create_subscription(%{
-        user_id: test_user.id,
-        room_id: test_room.id,
-      })
+      {:ok, subscription} =
+        Accounts.create_subscription(%{
+          user_id: test_user.id,
+          room_id: test_room.id
+        })
 
       subscription
     end
@@ -93,17 +94,19 @@ defmodule KjerSi.AccountsTest do
       test_user = TestHelper.generate_user()
       test_room = TestHelper.generate_room()
 
-      assert {:ok, %Subscription{} = subscription} = Accounts.create_subscription(%{
-        user_id: test_user.id,
-        room_id: test_room.id,
-      })
+      assert {:ok, %Subscription{} = subscription} =
+               Accounts.create_subscription(%{
+                 user_id: test_user.id,
+                 room_id: test_room.id
+               })
     end
 
     test "create_subscription/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_subscription(%{
-        user_id: "clearly invalid",
-        room_id: -6,
-      })
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.create_subscription(%{
+                 user_id: "clearly invalid",
+                 room_id: -6
+               })
     end
 
     test "delete_subscription/1 deletes the subscription" do

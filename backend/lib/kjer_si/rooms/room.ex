@@ -13,7 +13,10 @@ defmodule KjerSi.Rooms.Room do
     field :radius, :integer
     field :description, :string
     has_many :events, KjerSi.Events.Event
-    many_to_many :users, KjerSi.Accounts.User, join_through: KjerSi.Accounts.Subscription, unique: true
+
+    many_to_many :users, KjerSi.Accounts.User,
+      join_through: KjerSi.Accounts.Subscription,
+      unique: true
 
     timestamps()
   end

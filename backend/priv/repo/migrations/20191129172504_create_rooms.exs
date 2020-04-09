@@ -14,7 +14,8 @@ defmodule KjerSi.Repo.Migrations.CreateRooms do
       timestamps()
     end
 
-    execute("SELECT AddGeometryColumn('rooms', 'coordinates', 4326, 'POINT', 2);") # used to be srid 3857 / 4326
+    # used to be srid 3857 / 4326
+    execute("SELECT AddGeometryColumn('rooms', 'coordinates', 4326, 'POINT', 2);")
     create index(:rooms, [:category_id])
     create index(:rooms, [:coordinates], using: :gist)
   end

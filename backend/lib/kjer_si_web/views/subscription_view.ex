@@ -11,8 +11,6 @@ defmodule KjerSiWeb.SubscriptionView do
   end
 
   def render("subscription.json", %{subscription: subscription}) do
-    %{id: subscription.id,
-      roomId: subscription.room_id,
-      userId: subscription.user_id}
+    %{id: subscription.id, roomId: subscription.room_id, userId: subscription.user_id}
   end
 end

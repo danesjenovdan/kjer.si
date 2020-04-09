@@ -13,8 +13,7 @@ config :kjer_si,
 
 # Add support for microseconds at the DB level
 # this avoids having to configure it on every migration file
-config :kjer_si, KjerSi.Repo,
-  migration_timestamps: [type: :utc_datetime_usec]
+config :kjer_si, KjerSi.Repo, migration_timestamps: [type: :utc_datetime_usec]
 
 # Configures the endpoint
 config :kjer_si, KjerSiWeb.Endpoint,
