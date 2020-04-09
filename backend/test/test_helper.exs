@@ -5,7 +5,8 @@ defmodule TestHelper do
   use KjerSiWeb.ConnCase
 
   def generate_category do
-    name = "category " <> Integer.to_string(Enum.random(0..1000000))
+    name = "category " <> Integer.to_string(Enum.random(0..1_000_000))
+
     KjerSi.Repo.insert!(%KjerSi.Rooms.Category{
       name: name
     })

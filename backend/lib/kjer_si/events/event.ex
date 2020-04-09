@@ -22,9 +22,16 @@ defmodule KjerSi.Events.Event do
   def changeset(event, attrs) do
     event
     |> cast(attrs, [:name, :datetime, :location, :description, :max_attending, :user_id, :room_id])
-    |> validate_required([:name, :datetime, :location, :description, :max_attending, :user_id, :room_id])
+    |> validate_required([
+      :name,
+      :datetime,
+      :location,
+      :description,
+      :max_attending,
+      :user_id,
+      :room_id
+    ])
   end
-
 
   @doc false
   def changesetUpdate(event, attrs) do
@@ -32,5 +39,4 @@ defmodule KjerSi.Events.Event do
     |> cast(attrs, [:name, :location, :description, :max_attending])
     |> validate_required([:name, :location, :description, :max_attending])
   end
-
 end

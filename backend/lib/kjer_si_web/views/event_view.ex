@@ -11,7 +11,8 @@ defmodule KjerSiWeb.EventView do
   end
 
   def render("event.json", %{event: event}) do
-    %{id: event.id,
+    %{
+      id: event.id,
       name: event.name,
       datetime: event.datetime,
       description: event.description,

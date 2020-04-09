@@ -17,6 +17,7 @@ defmodule KjerSiWeb.CategoryControllerTest do
   describe "index" do
     test "any user can list categories", %{conn: conn, category: category} do
       category_id = category.id
+
       %{"data" => [%{"name" => "Test category", "id" => ^category_id}]} =
         conn
         |> get(Routes.category_path(conn, :index))

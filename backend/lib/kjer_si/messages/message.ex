@@ -13,7 +13,6 @@ defmodule KjerSi.Messages.Message do
     timestamps()
   end
 
-
   @doc false
   def changeset(message, attrs) do
     message
@@ -22,10 +21,12 @@ defmodule KjerSi.Messages.Message do
   end
 
   def get_messages_for_room(room_id) do
-    query = from m in KjerSi.Messages.Message,
-      where: m.room_id == ^room_id,
-      order_by: [asc: m.inserted_at],
-      preload: [:user]
+    query =
+      from m in KjerSi.Messages.Message,
+        where: m.room_id == ^room_id,
+        order_by: [asc: m.inserted_at],
+        preload: [:user]
+
     KjerSi.Repo.all(query)
   end
 end

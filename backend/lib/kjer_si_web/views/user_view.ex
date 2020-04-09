@@ -23,7 +23,7 @@ defmodule KjerSiWeb.UserView do
         isActive: user.is_active,
         isAdmin: user.is_admin,
         createdAt: user.inserted_at,
-        token: token,
+        token: token
       }
     }
   end

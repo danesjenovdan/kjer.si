@@ -36,7 +36,7 @@ defmodule KjerSi.MixProject do
       {:phoenix, "~> 1.4"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.3"},
+      {:ecto_sql, "~> 3.4"},
       {:postgrex, "~> 0.15"},
       {:gettext, "~> 0.17"},
       {:jason, "~> 1.2"},

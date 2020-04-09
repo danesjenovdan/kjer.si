@@ -20,7 +20,7 @@ defmodule KjerSi.Accounts do
   def list_users do
     User
     |> where([u], u.is_admin == false)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """

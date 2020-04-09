@@ -10,7 +10,10 @@ defmodule KjerSi.Accounts.User do
     field :is_admin, :boolean, default: false
     field :is_active, :boolean, default: true
 
-    many_to_many :rooms, KjerSi.Rooms.Room, join_through: KjerSi.Accounts.Subscription, unique: true
+    many_to_many :rooms, KjerSi.Rooms.Room,
+      join_through: KjerSi.Accounts.Subscription,
+      unique: true
+
     many_to_many :events, KjerSi.Events.Event, join_through: KjerSi.Events.UserEvent, unique: true
 
     timestamps()

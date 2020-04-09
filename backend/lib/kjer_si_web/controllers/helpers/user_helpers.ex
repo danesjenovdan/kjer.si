@@ -12,6 +12,7 @@ defmodule KjerSi.UserHelpers do
 
   def generate_unique_name do
     nickname = generate_name()
+
     if Accounts.unique_nickname?(nickname) do
       nickname
     else

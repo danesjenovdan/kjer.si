@@ -15,7 +15,10 @@ defmodule KjerSiWeb.SubscriptionControllerTest do
   end
 
   describe "index" do
-    test "returns a list of subscriptions for logged in user", %{conn: conn, subscription: subscription} do
+    test "returns a list of subscriptions for logged in user", %{
+      conn: conn,
+      subscription: subscription
+    } do
       subscription_id = subscription.id
 
       %{"data" => [%{"id" => ^subscription_id}]} =
@@ -57,7 +60,10 @@ defmodule KjerSiWeb.SubscriptionControllerTest do
         |> response(204)
     end
 
-    test "last user unsubscribing also deletes the room", %{conn: conn, subscription: subscription} do
+    test "last user unsubscribing also deletes the room", %{
+      conn: conn,
+      subscription: subscription
+    } do
       rooms_before = KjerSi.Rooms.list_rooms()
       assert length(rooms_before) == 1
 

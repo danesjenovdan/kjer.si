@@ -16,7 +16,6 @@ defmodule KjerSiWeb.Router do
   scope "/api", KjerSiWeb do
     pipe_through :api
 
-
     # resources "/eventsubscriptions", UserEventController, only: [:index, :create, :delete] # commenting out, because it's not used yet
 
     scope "/" do

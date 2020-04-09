@@ -7,13 +7,10 @@ defmodule KjerSiWeb.UserEventView do
   end
 
   def render("user_event.json", %{user_event: user_event}) do
-    %{id: user_event.id,
-      event_id: user_event.event_id,
-      user_id: user_event.user_id}
+    %{id: user_event.id, event_id: user_event.event_id, user_id: user_event.user_id}
   end
 
   def render("user_event_of_user.json", %{user_event: user_event}) do
     %{events: render_many(user_event, UserEventView, "user_event.json")}
   end
-
 end
