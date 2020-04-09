@@ -4,6 +4,8 @@ defmodule KjerSiWeb.RoomController do
 
   alias KjerSi.Rooms
   alias KjerSi.Rooms.Room
+  alias KjerSi.Accounts
+  alias KjerSi.Accounts.Subscription
 
   action_fallback KjerSiWeb.FallbackController
 
@@ -32,10 +34,17 @@ defmodule KjerSiWeb.RoomController do
 
   def create(conn, room_params) do
     with {:ok, %Room{} = room} <- Rooms.create_room(room_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.room_path(conn, :show, room))
-      |> render("show.json", room: room)
+      subscription_params = %{
+        "user_id" => conn.assigns[:current_user].id,
+        "room_id" => room.id
+      }
+
+      with {:ok, %Subscription{}} <- Accounts.create_subscription(subscription_params) do
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", Routes.room_path(conn, :show, room))
+        |> render("show.json", room: room)
+      end
     end
   end
 end
