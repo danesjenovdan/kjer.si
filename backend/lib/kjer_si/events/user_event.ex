@@ -8,7 +8,7 @@ defmodule KjerSi.Events.UserEvent do
     belongs_to :user, KjerSi.Accounts.User
     belongs_to :event, KjerSi.Events.Event
 
-    timestamps()
+    timestamps(type: :utc_datetime_usec)
   end
 
   @doc false

@@ -20,8 +20,10 @@ defmodule KjerSi.Messages do
   def list_messages(room_id, before, limit) do
     Message
     |> where([m], m.inserted_at < ^before and m.room_id == ^room_id)
+    |> order_by([m], desc: m.inserted_at)
     |> limit([m], ^limit)
     |> Repo.all()
     |> Repo.preload([:user])
+    |> Enum.reverse()
   end
 end

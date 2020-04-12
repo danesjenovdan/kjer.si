@@ -8,7 +8,7 @@ defmodule KjerSi.Accounts.Subscription do
     belongs_to :user, KjerSi.Accounts.User
     belongs_to :room, KjerSi.Rooms.Room
 
-    timestamps()
+    timestamps(type: :utc_datetime_usec)
   end
 
   @doc false

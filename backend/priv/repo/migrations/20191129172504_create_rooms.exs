@@ -11,7 +11,7 @@ defmodule KjerSi.Repo.Migrations.CreateRooms do
       add :radius, :integer
       add :description, :text, null: false
 
-      timestamps()
+      timestamps(type: :utc_datetime_usec)
     end
 
     # used to be srid 3857 / 4326

@@ -26,6 +26,21 @@ defmodule KjerSiWeb.MessageControllerTest do
         |> json_response(200)
     end
 
+    test "renders datetime with microseconds and in UTC", %{conn: conn, room: room} do
+      future_date = "2100-01-01T00:00:00"
+
+      %{"data" => [%{"created" => created_date}, %{}]} =
+        conn
+        |> get(Routes.room_message_path(conn, :index, room.id, before: future_date, limit: 10))
+        |> json_response(200)
+
+      # This describes an ISO8601 date format with microseconds and UTC explicitly specified
+      # e.g. 2020-04-08T16:36:18.566937Z
+      expected_format = ~r/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}Z$/
+
+      assert String.match?(created_date, expected_format)
+    end
+
     test "requires before param to be present", %{conn: conn, room: room} do
       %{"errors" => %{"fields" => %{"before" => ["can't be blank"]}}} =
         conn
