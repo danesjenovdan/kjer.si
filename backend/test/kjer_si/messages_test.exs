@@ -47,6 +47,23 @@ defmodule KjerSi.MessagesTest do
       assert Messages.list_messages(room_id, past_date, limit) == []
     end
 
+    test "filtering with `before` returns correct results even when messages " <>
+           "are created in the same second as dates use microseconds",
+         %{
+           user_id: user_id,
+           room_id: room_id
+         } do
+      limit = 1000
+
+      message1 = message_fixture(user_id, room_id)
+      message2 = message_fixture(user_id, room_id)
+      message3 = message_fixture(user_id, room_id)
+
+      before_date = DateTime.to_iso8601(message3.inserted_at)
+
+      assert Messages.list_messages(room_id, before_date, limit) == [message1, message2]
+    end
+
     test "list_messages/3 result count can be limited with `limit`",
          %{
            user_id: user_id,
