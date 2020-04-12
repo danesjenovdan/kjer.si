@@ -80,14 +80,32 @@ defmodule KjerSi.AccountsTest do
       assert Accounts.list_subscriptions(user_id) == [subscription]
     end
 
-    test "get_subscrition/1 returns {:ok, subscription} if subscription with given id exists" do
+    test "get_subscription/1 returns {:ok, subscription} if subscription with given id exists" do
       subscription = subscription_fixture()
       assert Accounts.get_subscription(subscription.id) == {:ok, subscription}
     end
 
-    test "get_subscrition/1 returns {:error, :not_found} if subscription with given id does not exist" do
+    test "get_subscription/1 returns {:error, :not_found} if subscription with given id does not exist" do
       fake_id = "ba294533-82b6-4cbb-abc1-167cd7bf4bb1"
       assert Accounts.get_subscription(fake_id) == {:error, :not_found}
+    end
+
+    test "get_subscription/2 returns {:ok, subscription} if subscription exists for given user_id and room_id" do
+      user = TestHelper.generate_user()
+      room = TestHelper.generate_room()
+
+      {:ok, subscription} =
+        Accounts.create_subscription(%{
+          user_id: user.id,
+          room_id: room.id
+        })
+
+      assert Accounts.get_subscription(user.id, room.id) == {:ok, subscription}
+    end
+
+    test "get_subscription/2 returns {:error, :not_found} if subscription doesn't exist for given user_id and room_id" do
+      fake_id = "ba294533-82b6-4cbb-abc1-167cd7bf4bb1"
+      assert Accounts.get_subscription(fake_id, fake_id) == {:error, :not_found}
     end
 
     test "create_subscription/1 with valid data creates a subscription" do
@@ -111,7 +129,7 @@ defmodule KjerSi.AccountsTest do
 
     test "delete_subscription/1 deletes the subscription" do
       subscription = subscription_fixture()
-      assert {:ok, %Subscription{}} = Accounts.delete_subscription(subscription)
+      assert {:ok, %Subscription{}} = Accounts.delete_subscription(subscription.id)
       assert_raise Ecto.NoResultsError, fn -> Accounts.get_subscription!(subscription.id) end
     end
   end

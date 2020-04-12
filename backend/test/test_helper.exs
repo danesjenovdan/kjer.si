@@ -34,6 +34,20 @@ defmodule TestHelper do
     )
   end
 
+  def generate_event(user_id, room_id) do
+    {:ok, random_date, 0} = DateTime.from_iso8601("2019-11-30 12:12:12Z")
+
+    KjerSi.Repo.insert!(%KjerSi.Events.Event{
+      name: "Test event",
+      datetime: random_date,
+      location: "Test location",
+      description: "Just a description of the event",
+      max_attending: 2,
+      user_id: user_id,
+      room_id: room_id
+    })
+  end
+
   def login_user(conn, user) do
     token = Phoenix.Token.sign(KjerSiWeb.Endpoint, "user auth", user.id)
     put_req_header(conn, "authorization", "Bearer #{token}")

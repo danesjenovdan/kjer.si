@@ -9,8 +9,8 @@ defmodule KjerSi.Repo.Migrations.CreateEvents do
       add :location, :string
       add :description, :string
       add :max_attending, :integer
-      add :user_id, references(:users, on_delete: :nothing, type: :binary_id)
-      add :room_id, references(:rooms, on_delete: :nothing, type: :binary_id)
+      add :user_id, references(:users, on_delete: :delete_all, type: :binary_id)
+      add :room_id, references(:rooms, on_delete: :delete_all, type: :binary_id)
 
       timestamps(type: :utc_datetime_usec)
     end
