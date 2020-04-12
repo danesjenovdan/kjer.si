@@ -18,10 +18,11 @@ defmodule KjerSi.MessagesTest do
       |> KjerSi.Repo.preload([:user])
     end
 
-    test "list_messages/3 returns a list of messages for given room_id", %{
-      user_id: user_id,
-      room_id: room_id
-    } do
+    test "list_messages/3 returns a list of messages for given room_id sorted by creation date",
+         %{
+           user_id: user_id,
+           room_id: room_id
+         } do
       future_date = "2100-01-01T00:00:00"
       limit = 1000
       irrelevant_room = TestHelper.generate_room()
@@ -46,7 +47,7 @@ defmodule KjerSi.MessagesTest do
       assert Messages.list_messages(room_id, past_date, limit) == []
     end
 
-    test "list_messages/3 result count can be limited with `limit` to return latest n messages",
+    test "list_messages/3 result count can be limited with `limit`",
          %{
            user_id: user_id,
            room_id: room_id
@@ -58,6 +59,27 @@ defmodule KjerSi.MessagesTest do
       message = message_fixture(user_id, room_id)
 
       assert Messages.list_messages(room_id, future_date, limit) == [message]
+    end
+
+    test "list_messages/3 returns latest messages when using `limit`",
+         %{
+           user_id: user_id,
+           room_id: room_id
+         } do
+      future_date = "2100-01-01T00:00:00"
+      limit = 3
+
+      # Older messages that won't be returned
+      message_fixture(user_id, room_id)
+      message_fixture(user_id, room_id)
+      message_fixture(user_id, room_id)
+
+      # Newer messages that will be returned
+      message1 = message_fixture(user_id, room_id)
+      message2 = message_fixture(user_id, room_id)
+      message3 = message_fixture(user_id, room_id)
+
+      assert Messages.list_messages(room_id, future_date, limit) == [message1, message2, message3]
     end
   end
 end
