@@ -49,9 +49,8 @@ defmodule KjerSiWeb.SubscriptionController do
     end
   end
 
-  def delete_by_room_id(conn, params) do
+  def delete_by_room_id(conn, %{"room_id" => room_id}) do
     user_id = conn.assigns[:current_user].id
-    room_id = params["room_id"]
 
     with {:ok, %Subscription{} = subscription} <- Accounts.get_subscription(user_id, room_id) do
       conn
