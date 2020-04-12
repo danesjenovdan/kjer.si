@@ -35,17 +35,17 @@ defmodule TestHelper do
   end
 
   def generate_event(user_id, room_id) do
-    KjerSi.Repo.insert!(
-      KjerSi.Events.Event.changeset(%KjerSi.Events.Event{}, %{
-        name: "Test event",
-        datetime: "2019-11-30 12:12:12",
-        location: "Test location",
-        description: "Just a description of the event",
-        max_attending: "2",
-        user_id: user_id,
-        room_id: room_id
-      })
-    )
+    {:ok, random_date, 0} = DateTime.from_iso8601("2019-11-30 12:12:12Z")
+
+    KjerSi.Repo.insert!(%KjerSi.Events.Event{
+      name: "Test event",
+      datetime: random_date,
+      location: "Test location",
+      description: "Just a description of the event",
+      max_attending: 2,
+      user_id: user_id,
+      room_id: room_id
+    })
   end
 
   def login_user(conn, user) do
