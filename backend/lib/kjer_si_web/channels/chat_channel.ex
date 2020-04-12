@@ -52,11 +52,6 @@ defmodule KjerSiWeb.ChatChannel do
   end
 
   def handle_info(:after_join, socket) do
-    "room:" <> room_id = socket.topic
-
-    KjerSi.Messages.Message.get_messages_for_room(room_id)
-    |> Enum.each(fn msg -> push(socket, "shout", render_message(msg)) end)
-
     {:noreply, socket}
   end
 end
