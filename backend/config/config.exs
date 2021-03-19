@@ -17,7 +17,7 @@ config :kjer_si, KjerSi.Repo, migration_timestamps: [type: :utc_datetime_usec]
 
 # Configures the endpoint
 config :kjer_si, KjerSiWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: System.get_env("HOST")],
   secret_key_base: System.get_env("SECRET_KEY"),
   render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: KjerSi.PubSub, adapter: Phoenix.PubSub.PG2]
