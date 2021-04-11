@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  ns:
+    build: .
+    volumes:
+      - .:/src/
+    command: ns run android --no-hmr
+    privileged: true
