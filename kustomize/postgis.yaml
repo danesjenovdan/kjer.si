@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgis
+  labels:
+    app: kjer-si-postgis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kjer-si-postgis
+  template:
+    metadata:
+      labels:
+        app: kjer-si-postgis
+    spec:
+      containers:
+      - name: kjer-si-postgis
+        image: postgis/postgis
+        ports:
+        - containerPort: 5432
+        env:
+          - name: POSTGRES_DB
+            value: kjer_si
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgis
+spec:
+  selector:
+    app: kjer-si-postgis
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

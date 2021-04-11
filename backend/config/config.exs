@@ -20,7 +20,7 @@ config :kjer_si, KjerSiWeb.Endpoint,
   url: [host: System.get_env("HOST")],
   secret_key_base: System.get_env("SECRET_KEY"),
   render_errors: [view: KjerSiWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: KjerSi.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: KjerSi.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kjer-si
+  labels:
+    app: kjer-si
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kjer-si
+  template:
+    metadata:
+      labels:
+        app: kjer-si
+    spec:
+      containers:
+      - name: kjer-si
+        image: kjer-si # kustomize thing
+        ports:
+        - name: http
+          containerPort: 4000
+          protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 30
+          timeoutSeconds: 5
+        env:
+          -
+            name: PGUSER
+            value: postgres
+          -
+            name: PGPASSWORD
+            value: postgres
+          -
+            name: PGDATABASE
+            value: kjer_si
+          -
+            name: PGPORT
+            value: "5432"
+          -
+            name: PGHOST
+            value: 
+          -
+            name: SECRET_KEY
+            value: ThisShouldBeSomethingSecret
+          -
+            name: HOST
+            value: kjersi.lb.djnd.si
+          -
+            name: MIX_ENV
+            value: k8s

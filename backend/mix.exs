@@ -8,7 +8,7 @@ defmodule KjerSi.MixProject do
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
-      start_permanent: Mix.env() == :prod,
+      start_permanent: Mix.env() == :k8s,
       aliases: aliases(),
       deps: deps()
     ]
@@ -43,7 +43,8 @@ defmodule KjerSi.MixProject do
       {:plug_cowboy, "~> 2.4"},
       {:geo, "~> 3.3"},
       {:geo_postgis, "~> 3.3"},
-      {:params, "~> 2.2"}
+      {:params, "~> 2.2"},
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false},
     ]
   end
 

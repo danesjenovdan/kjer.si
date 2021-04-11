@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   phoenix:
-    image: elixir:latest
+    build: .
     environment:
       PGUSER: postgres
       PGPASSWORD: postgres
@@ -11,25 +11,27 @@ services:
       PGHOST: db
       SECRET_KEY: ThisShouldBeSomethingSecret
       HOST: localhost
+      MIX_ENV: dev
     ports:
       - "4000:4000"
     depends_on:
       - db
-    working_dir: /app
+    # working_dir: /app
     volumes:
       - .:/app/
-      - elixir-deps:/app/deps/
-      - elixir-build:/app/_build/
-    command: >
-      /bin/sh -c 'apt-get update && apt-get install -y inotify-tools'
-    entrypoint:
-      ./entrypoint.sh
+    #   - elixir-deps:/app/deps/
+    #   - elixir-build:/app/_build/
+    # command: >
+    #   /bin/sh -c 'apt-get update && apt-get install -y inotify-tools'
+    # entrypoint:
+    #   ./entrypoint.sh
 
   db:
     image: postgis/postgis
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: kjer_si
       PGDATA: /var/lib/postgresql/data/pgdata
     restart: always
     volumes:
@@ -37,5 +39,5 @@ services:
 
 volumes:
   pgdata:
-  elixir-deps:
-  elixir-build:
+  # elixir-deps:
+  # elixir-build:

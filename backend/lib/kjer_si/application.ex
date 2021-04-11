@@ -11,9 +11,10 @@ defmodule KjerSi.Application do
       # Start the Ecto repository
       KjerSi.Repo,
       # Start the endpoint when the application starts
-      KjerSiWeb.Endpoint
+      KjerSiWeb.Endpoint,
       # Starts a worker by calling: KjerSi.Worker.start_link(arg)
       # {KjerSi.Worker, arg},
+      {Phoenix.PubSub, [name: KjerSi.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

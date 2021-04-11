@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kjer-si
+spec:
+  selector:
+    app: kjer-si
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000

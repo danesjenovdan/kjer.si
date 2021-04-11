@@ -31,6 +31,8 @@ defmodule KjerSiWeb.Router do
       end
     end
 
+    get "/health", HealthController, :index
+
     post "/users", UserController, :create
 
     scope "/admin", Admin do
