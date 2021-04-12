@@ -3,8 +3,9 @@ kind: Ingress
 metadata:
   name: kjer-si
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: "letsencrypt-production"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 spec:
   tls:
   - hosts:

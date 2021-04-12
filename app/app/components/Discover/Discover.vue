@@ -9,8 +9,8 @@
 
 
   import {Marker, Position, Circle} from 'nativescript-google-maps-sdk';
-  import * as utils from 'tns-core-modules/utils/utils';
-  import {Color} from 'tns-core-modules/color';
+  import * as utils from '@nativescript/core/utils/utils';
+  import {Color} from '@nativescript/core/color';
   import * as ApiService from '../../services/api.service';
   import * as websockets from 'nativescript-websockets';
   import * as Phx from '../../assets/js/phoenix';
@@ -137,7 +137,7 @@
           });
 
         } catch (e) {
-          console.log('Get rooms error: ', e.response.data);
+          console.log('Get rooms error123: ', e.response.data);
         }
 
       },

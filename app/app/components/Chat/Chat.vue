@@ -11,15 +11,14 @@
   import Events from "../Events/Events";
   import * as AppService from '../../services/app.service';
   import * as UserService from '../../services/user.service';
-  import * as app from 'tns-core-modules/application';
-  import * as platform from 'tns-core-modules/platform';
+  import * as app from '@nativescript/core/application';
+  import * as platform from '@nativescript/core/platform';
   import * as Phx from "../../assets/js/phoenix";
   import * as ApiService from "../../services/api.service";
-  import {ObservableArray} from 'tns-core-modules/data/observable-array';
-  import * as UUID from 'nativescript-uuid';
-  import * as utils from "tns-core-modules/utils/utils";
-  import {isIOS, isAndroid} from "tns-core-modules/platform";
-  import * as frame from "tns-core-modules/ui/frame";
+  import {ObservableArray} from '@nativescript/core/data/observable-array';
+  import * as utils from "@nativescript/core/utils/utils";
+  import {isIOS, isAndroid} from "@nativescript/core/platform";
+  import * as frame from "@nativescript/core/ui/frame";
 
   export default {
     props: ['roomId', 'roomName'],

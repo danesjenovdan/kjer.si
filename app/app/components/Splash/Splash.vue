@@ -14,10 +14,9 @@
   import * as ApiService from '../../services/api.service';
   import * as UserService from '../../services/user.service';
   import * as LocationService from '../../services/location.service';
-  import * as utils from 'tns-core-modules/utils/utils';
-  import * as platform from 'tns-core-modules/platform';
-  import * as geolocation from "nativescript-geolocation";
-  import {Accuracy} from "tns-core-modules/ui/enums"; // used to describe at what accuracy the location should be get
+  import * as utils from '@nativescript/core/utils/utils';
+  import * as platform from '@nativescript/core/platform';
+  import * as geolocation from "@nativescript/geolocation";
 
   // Websockets import is required for Phx to work
   // there's a modification in the phoenix.js file that requires nativescript-websockets to set the global WebSocket variable
@@ -97,6 +96,7 @@
 
       async onEnterTap() {
 
+        console.log('entering tap');
         this.isCreatingUser = true;
         try {
           const user = await UserService.default.setupUser();
@@ -111,6 +111,8 @@
           this.isCreatingUser = false;
         } catch (e) {
           this.isCreatingUser = false;
+          console.log('something went wrong');
+          console.log(e);
         }
 
       }

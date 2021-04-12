@@ -1,6 +1,5 @@
-import * as Toast from 'nativescript-toast';
 import * as ApiService from './api.service';
-import * as platform from "tns-core-modules/platform";
+import * as platform from "@nativescript/core/platform";
 
 export default new class {
 
@@ -22,6 +21,7 @@ export default new class {
   async setupUser() {
 
     const user = this.initLocalUserData();
+    console.log(user);
 
     // if (user) {
     //   console.log('User already generated');
@@ -41,12 +41,14 @@ export default new class {
         ApiService.default.initSocket();
       } else {
         this.saveLocalUserData(
-          fetchedUser.id,
+          fetchedUser.data.id,
           platform.device.uuid,
-          fetchedUser.nickname,
-          fetchedUser.token,
+          fetchedUser.data.nickname,
+          fetchedUser.data.token,
         );
-        ApiService.default.configureAxios(fetchedUser.token);
+        console.log('ABOUT TO CONFIGURE AXIOS');
+        console.log(fetchedUser);
+        ApiService.default.configureAxios(fetchedUser.data.token);
         ApiService.default.initSocket();
       }
 

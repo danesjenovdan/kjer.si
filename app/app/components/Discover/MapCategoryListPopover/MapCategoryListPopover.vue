@@ -8,7 +8,7 @@
 <script>
 
   import * as AppService from '../../../services/app.service';
-  import * as utils from 'tns-core-modules/utils/utils';
+  import * as utils from '@nativescript/core/utils/utils';
   import * as ApiService from '../../../services/api.service';
   import * as UiService from '../../../services/ui.service';
 
@@ -23,6 +23,8 @@
     async mounted() {
 
       this.categories = await ApiService.default.getCategories();
+      console.log('SHOWING  CATEGORIES');
+      console.log(this.categories);
       this.categoriesLoaded = true;
 
       const height = this.$refs.container.nativeView.getMeasuredHeight();

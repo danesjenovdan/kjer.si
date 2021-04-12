@@ -8,7 +8,7 @@
 <script>
 
   import * as AppService from '../../../services/app.service';
-  import * as utils from 'tns-core-modules/utils/utils';
+  import * as utils from '@nativescript/core/utils/utils';
   import * as ApiService from '../../../services/api.service';
 
   export default {

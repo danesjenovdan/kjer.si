@@ -1,5 +1,5 @@
-import * as geolocation from "nativescript-geolocation";
-import {Accuracy} from "tns-core-modules/ui/enums"; // used to describe at what accuracy the location should be get
+import * as geolocation from "@nativescript/geolocation";
+import {CoreTypes} from "@nativescript/core/core-types"; // used to describe at what accuracy the location should be get
 
 export default new class {
 
@@ -18,7 +18,7 @@ export default new class {
 
     try {
       const location = await geolocation.getCurrentLocation({
-        desiredAccuracy: Accuracy.high,
+        desiredAccuracy: CoreTypes.Accuracy.high,
         maximumAge: 5000,
         timeout: 20000
       });

@@ -1,4 +1,4 @@
-import * as Toast from 'nativescript-toast';
+import { Toasty } from "@triniwiz/nativescript-toasty" 
 import {
   LoadingIndicator,
   Mode,
@@ -11,7 +11,8 @@ export default new class {
   layoutWidth = 0;
 
   showToast(text) {
-    Toast.makeText(text, 'long').show();
+    const toast = new Toasty({ text });
+    toast.show();
   }
 
   showLoadingIndicator(message, details = '') {

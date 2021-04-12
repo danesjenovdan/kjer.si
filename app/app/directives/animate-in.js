@@ -1,4 +1,4 @@
-import * as enums from "tns-core-modules/ui/enums";
+import * as enums from "@nativescript/core/ui/enums";
 
 const AnimateIn = {
   inserted(el) {

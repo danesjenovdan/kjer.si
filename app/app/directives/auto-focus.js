@@ -1,5 +1,5 @@
-import * as app from 'tns-core-modules/application';
-import * as utils from 'tns-core-modules/utils/utils';
+import * as app from '@nativescript/core/application';
+import * as utils from '@nativescript/core/utils/utils';
 
 const AutoFocus = {
   inserted(el) {

@@ -15,3 +15,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+## Insert categories
+```
+INSERT INTO categories (id, name, inserted_at, updated_at) VALUES (gen_random_uuid(), 'testiramo', now(), now());
+```

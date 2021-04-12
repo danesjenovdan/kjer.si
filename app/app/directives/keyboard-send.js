@@ -1,4 +1,4 @@
-import * as platform from 'tns-core-modules/platform';
+import * as platform from '@nativescript/core/platform';
 
 const KeyboardSend = {
   inserted(el) {

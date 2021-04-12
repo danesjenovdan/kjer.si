@@ -1,13 +1,13 @@
-import * as http from "http";
-import * as AppService from './app.service';
 import * as UserService from './user.service';
 import * as axios from 'axios';
 import * as Phx from "~/assets/js/phoenix";
 
 export default new class {
 
-  _baseSocketUrl = 'ws://api.kjer.si/socket';
-  _baseUrl = 'http://api.kjer.si/api';
+  // _baseSocketUrl = 'ws://api.kjer.si/socket';
+  // _baseUrl = 'http://api.kjer.si/api';
+  _baseSocketUrl = 'wss://kjersi.lb.djnd.si/socket';
+  _baseUrl = 'https://kjersi.lb.djnd.si/api';
   socket = null;
 
   configureAxios(token) {
@@ -79,10 +79,9 @@ export default new class {
   }
 
   async getCategories() {
-
     try {
       const response = await this.get('/categories');
-      return response.data.categories;
+      return response.data.data;
     } catch (e) {
       console.log('Error: ', e);
     }
@@ -127,31 +126,26 @@ export default new class {
 
     const room = {
       name, lat, lng, radius,
-      category_id: categoryId
+      category_id: categoryId,
+      description: 'Fake description',
     };
 
-    console.log('Create room: ', room);
-
-    const response = await this.post('/rooms', {room}, false);
+    const response = await this.post('/rooms', room, false);
     return response.data;
   }
 
   async getRoomsInRadius(lat, lng) {
-    const response = await this.post('/map/rooms', {
-      lat, lng
-    }, false);
+    const response = await this.get(`/rooms?lat=${lat}&lng=${lng}`, false);
     return response.data.data;
   }
 
   async fetchSelf(uuid) {
-
     const config = {
       baseURL: this._baseUrl
     };
 
-    const response = await axios.default.post('/recover-self', { uid: uuid }, config);
+    const response = await axios.default.post('/users', { uid: uuid }, config);
     return response.data;
-
   }
 
   /**
@@ -162,10 +156,7 @@ export default new class {
   async joinRoom(roomId) {
 
     const postData = {
-      subscription: {
-        room_id: roomId,
-        user_id: UserService.default.user.id
-      }
+      room_id: roomId,
     };
 
     console.log('postData: ', postData);
