@@ -105,7 +105,11 @@
           .receive('ok', resp => console.log('Joined channel successfully', resp))
           .receive('error', resp => console.log('Failed to join channel', resp))
           .receive("timeout", () => console.log("Networking issue..."));
+      },
 
+      leaveRoom() {
+        ApiService.default.leaveRoom(this.roomId);
+        this.$navigateBack();
       },
 
       onMessagesUpdate() {

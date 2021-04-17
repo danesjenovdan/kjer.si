@@ -6,8 +6,10 @@ export default new class {
 
   // _baseSocketUrl = 'ws://api.kjer.si/socket';
   // _baseUrl = 'http://api.kjer.si/api';
-  _baseSocketUrl = 'wss://kjersi.lb.djnd.si/socket';
-  _baseUrl = 'https://kjersi.lb.djnd.si/api';
+  // _baseSocketUrl = 'wss://kjersi.lb.djnd.si/socket';
+  // _baseUrl = 'https://kjersi.lb.djnd.si/api';
+  _baseSocketUrl = 'ws://192.168.1.129:4000/socket';
+  _baseUrl = 'http://192.168.1.129:4000/api';
   socket = null;
 
   configureAxios(token) {
@@ -60,6 +62,25 @@ export default new class {
     // }
 
     return axios.default.post(url, body, config);
+
+  }
+
+  delete(url, auth = true) {
+
+    const config = {
+      baseURL: this._baseUrl,
+      validateStatus: (status) => {
+        return (status >= 200 && status < 300) || status === 307;
+      },
+    };
+
+    // if (auth && UserService.default.user && UserService.default.user.uid) {
+    //   config.headers = {
+    //     Authorization: UserService.default.user.uid
+    //   };
+    // }
+
+    return axios.default.delete(url, config);
 
   }
 
@@ -168,6 +189,26 @@ export default new class {
 
     return responseData;
 
+  }
+
+  /**
+   * Leaves a joined room
+   * @param roomId
+   * @returns {Promise<*>}
+   */
+   async leaveRoom(roomId) {
+
+    const url = `/rooms/${roomId}/subscriptions`
+    console.log(url);
+    try {
+      const response = await this.delete(url, true);
+      // we have to manually follow 307 because reasons
+      const redirectedResponse = await this.delete(response.headers.location.slice(4), true);
+    }
+    catch (e) {
+      console.log('ERROR:', e);
+    }
+    return;
   }
 
   /**
