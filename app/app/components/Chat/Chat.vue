@@ -36,6 +36,21 @@
         return "Blank {N}-Vue app";
       }
     },
+    async beforeMount() {
+      // get messages
+      console.log('getting messages');
+      const now = new Date();
+      const latestMessages = await ApiService.default.getMessagesFromRoom(this.roomId, 100, now);
+
+      latestMessages.forEach(message => {
+        if (message.userId === this.userId) {
+          message.type = 'my_text';
+        } else {
+          message.type = 'text';
+        }
+        this.messages.push(message);
+      });
+    },
     mounted() {
 
       this.$refs.pageRef.nativeView.actionBarHidden = true;

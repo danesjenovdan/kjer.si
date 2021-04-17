@@ -170,4 +170,24 @@ export default new class {
 
   }
 
+  /**
+   * Gets messages from room, since time with limit
+   * @param roomId 
+   * @param {Number} limit 
+   * @param {Date} before
+   * @returns {Promise<*>}
+   */
+
+   async getMessagesFromRoom(roomId, limit, before) {
+
+    const url = `/rooms/${roomId}/messages?limit=${limit}&before=${encodeURIComponent(before.toISOString())}`;
+    console.log(url);
+    const response = await this.get(url, true);
+    const responseData = response.data.data;
+
+    console.log('Messages: ', responseData);
+
+    return responseData;
+  }
+
 }
