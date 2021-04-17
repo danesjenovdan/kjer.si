@@ -1,11 +1,9 @@
 import Vue from 'nativescript-vue';
-import {Mapbox} from '@nativescript-community/ui-mapbox'
 import Splash from './components/Splash/Splash';
 import Discover from './components/Discover/Discover';
 import Chat from './components/Chat/Chat';
 import {MapView} from 'nativescript-google-maps-sdk';
 import FontIcon from 'nativescript-vue-fonticon'
-import * as Shadow from './directives/shadow';
 import * as AnimateIn from './directives/animate-in';
 import NSVueShadow from 'nativescript-vue-shadow-ns-7'
 import * as AutoFocus from '~/directives/auto-focus';
@@ -17,7 +15,6 @@ import * as application from '@nativescript/core/application';
 // Vue.config.silent = false;
 
 Vue.registerElement('MapView', () => MapView);
-Vue.registerElement('MapBox', () => Mapbox);
 Vue.registerElement(
   'LottieView',
   () => require('@nativescript-community/ui-lottie').LottieView
@@ -40,7 +37,6 @@ application.on(application.launchEvent, async (args) => {
 });
 
 Vue.use(NSVueShadow);
-// Vue.directive('customShadow', Shadow.default);
 Vue.directive('animateIn', AnimateIn.default);
 Vue.directive('autoFocus', AutoFocus.default);
 Vue.directive('keyboardSend', KeyboardSend.default);

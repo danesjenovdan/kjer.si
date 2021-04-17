@@ -68,8 +68,9 @@
         this.channel.on('shout', payload => {
           const message = payload;
           console.log('SHOUT');
+          console.log(payload);
 
-          if (message.user_id === this.userId) {
+          if (message.userId === this.userId) {
             message.type = 'my_text';
           } else {
             message.type = 'text';

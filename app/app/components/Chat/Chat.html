@@ -19,7 +19,7 @@
       <ListView ref="chatListView" row="1" for="message in messages" @itemTap="onItemTap" separatorColor="#ffffff" verticalAlignment="bottom">
         <v-template name="text" if="message.type === 'text'">
           <WrapLayout class="message-container" orientation="vertical" paddingRight="50">
-            <Label class="message-user-name-label" text="Some other person"/>
+            <Label class="message-user-name-label" :text="message.userNickname"/>
             <Label class="message-text-label" :text="message.content" textWrap="true"/>
           </WrapLayout>
         </v-template>
