@@ -88,33 +88,6 @@
         this.screenWidth = utils.layout.toDeviceIndependentPixels(mapContainer.nativeView.getMeasuredWidth());
       }
 
-      // // to create a socket connection
-      // var socket = new Phx.Socket(ApiService.default._baseSocketUrl, {params: {userToken: '123'}});
-      // socket.connect();
-      // socket.onOpen((state) => {
-      //   // console.log('Socket: ', socket.isConnected());
-      // });
-      //
-      // // to create a channel
-      // const channel = socket.channel('room:lobby', {});
-      //
-      // // listen for 'shout' events
-      // channel.on('shout', payload => {
-      //   // do your own thing
-      //   // alert(payload.body);
-      // });
-      //
-      // // join the channel, with success and failure callbacks
-      // channel.join()
-      //   .receive('ok', resp => console.log('Joined channel successfully', resp))
-      //   .receive('error', resp => console.log('Failed to join channel', resp));
-      //
-      // // to send messages
-      // channel.push('shout', {body: 'This is a shoutout!'});
-      //
-      // // to leave a channel
-      // // channel.leave();
-
     },
     methods: {
 
@@ -123,7 +96,6 @@
         this.selectedMarker = null;
         this.selectedRoom = null;
 
-        console.log('updateRoomsInRadius()');
         try {
           const rooms = await ApiService.default.getRoomsInRadius(lat, lng);
 
@@ -140,6 +112,10 @@
           console.log('Get rooms error123: ', e.response.data);
         }
 
+      },
+
+      onLoaded() {
+        this.updateRoomsAroundMe();
       },
 
       async updateRoomsAroundMe() {
