@@ -20,7 +20,8 @@ spec:
         command:
           - mix
           - ecto.migrate
-        -
+        env:
+          -
             name: PGUSER
             value: postgres
           -
@@ -44,7 +45,6 @@ spec:
           -
             name: MIX_ENV
             value: k8s
-        env:
       containers:
       - name: kjer-si
         image: kjer-si # kustomize thing
