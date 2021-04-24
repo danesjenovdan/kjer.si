@@ -18,7 +18,9 @@ defmodule KjerSiWeb.RoomController do
     changeset = room_index(params)
 
     if changeset.valid? do
-      point = %Geo.Point{coordinates: {params["lng"], params["lat"]}, srid: 4326}
+      {lng, _lng} = Float.parse(params["lng"])
+      {lat, _lat} = Float.parse(params["lat"])
+      point = %Geo.Point{coordinates: {lng, lat}, srid: 4326}
       rooms = Rooms.get_rooms_around_point(point)
       render(conn, "index.json", rooms: rooms)
     else

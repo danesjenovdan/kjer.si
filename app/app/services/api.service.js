@@ -6,10 +6,10 @@ export default new class {
 
   // _baseSocketUrl = 'ws://api.kjer.si/socket';
   // _baseUrl = 'http://api.kjer.si/api';
-  // _baseSocketUrl = 'wss://kjersi.lb.djnd.si/socket';
-  // _baseUrl = 'https://kjersi.lb.djnd.si/api';
-  _baseSocketUrl = 'ws://192.168.1.129:4000/socket';
-  _baseUrl = 'http://192.168.1.129:4000/api';
+  _baseSocketUrl = 'wss://kjersi.lb.djnd.si/socket';
+  _baseUrl = 'https://kjersi.lb.djnd.si/api';
+  // _baseSocketUrl = 'ws://192.168.1.129:4000/socket';
+  // _baseUrl = 'http://192.168.1.129:4000/api';
   socket = null;
 
   configureAxios(token) {

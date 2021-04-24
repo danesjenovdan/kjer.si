@@ -33,7 +33,6 @@
       },
 
       async getRooms() {
-        console.log('updateRoomsInRadius()');
         try {
           this.loadingRooms = true;
           this.rooms = await ApiService.default.getRoomsInRadius(LocationService.default.location.latitude, LocationService.default.location.longitude);

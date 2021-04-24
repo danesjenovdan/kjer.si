@@ -30,7 +30,7 @@ ljubitelji_psov =
       category_id: pomoc.id,
       lat: 13.0,
       lng: 15.0,
-      radius: 2500,
+      radius: 2500.0,
       description: "Tukaj se zmenimo za skupne sprehode z našimi kosmatinci"
     })
   )
@@ -42,7 +42,7 @@ pevski_zbor =
       category_id: druzenje.id,
       lat: 13.0,
       lng: 15.0,
-      radius: 2500,
+      radius: 2500.0,
       description: "Ženska vokalna skupina Marjetice vabi vse pevke v svojo sredino"
     })
   )
@@ -54,7 +54,7 @@ gre_kdo_basket =
       category_id: sport.id,
       lat: 13.0,
       lng: 15.0,
-      radius: 2500,
+      radius: 2500.0,
       description: "Ponavadi ob četrtkih zvečer, na igrišču pri osnovni šoli"
     })
   )

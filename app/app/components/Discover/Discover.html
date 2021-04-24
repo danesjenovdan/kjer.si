@@ -1,4 +1,4 @@
-<Page ref="pageRef" class="page">
+<Page ref="pageRef" class="page" @loaded="onLoaded">
   <AbsoluteLayout ref="mapContainer" width="100%" height="100%">
 
     <MapView :latitude="location.latitude"

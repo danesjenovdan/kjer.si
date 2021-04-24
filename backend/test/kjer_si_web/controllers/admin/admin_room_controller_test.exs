@@ -18,7 +18,7 @@ defmodule KjerSiWeb.Admin.AdminRoomControllerTest do
         category: category,
         lat: 10.0,
         lng: 2.0,
-        radius: 10
+        radius: 10.0
       })
 
     {:ok, conn: conn, room: room, admin: admin, user: user, category: category}
