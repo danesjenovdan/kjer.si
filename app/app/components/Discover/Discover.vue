@@ -70,7 +70,8 @@
         },
         rangeCircle: null,
         limitCircle: null,
-        lastMapCamera: null
+        lastMapCamera: null,
+        joiningRoom: false,
       }
     },
     async mounted() {
@@ -129,11 +130,13 @@
         if (userData.type === 'ROOM') {
           const room = userData;
 
-          this.deselectSelectedMarker();
+          if (this.selectedRoom !== room) {
+            this.deselectSelectedMarker();
 
-          this.selectedRoom = room;
-          this.selectedMarker = this.roomMarkers.filter((roomMarker) => roomMarker.userData.id === room.id)[0];
-          this.selectedMarker.icon = 'room_pin_selected';
+            this.selectedRoom = room;
+            this.selectedMarker = this.roomMarkers.filter((roomMarker) => roomMarker.userData.id === room.id)[0];
+            this.selectedMarker.icon = 'room_pin_selected';
+          }
         }
       },
 
@@ -293,27 +296,32 @@
 
       },
 
-      async onCardTap() {
+      async onCardTap(event) {
 
-        try {
-          const room = await ApiService.default.joinRoom(this.selectedRoom.id);
-        } catch (e) {
-          console.log('Join room error: ', e.response.data);
-        }
-
-        this.$navigateTo(Chat, {
-          transition: {
-            name: 'slideLeft',
-            duration: 300,
-            curve: 'easeInOut'
-            // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
-          },
-          props: {
-            roomId: this.selectedRoom.id,
-            roomName: this.selectedRoom.name
+        if (!this.joiningRoom) {
+          this.joiningRoom = true;
+          try {
+            const room = await ApiService.default.joinRoom(this.selectedRoom.id);
+          } catch (e) {
+            console.log('Join room error: ', e.response.data);
           }
-        });
 
+          this.$navigateTo(Chat, {
+            transition: {
+              name: 'slideLeft',
+              duration: 300,
+              curve: 'easeInOut'
+              // curve: cubicBezier(0.175, 0.885, 0.32, 1.275)
+            },
+            props: {
+              roomId: this.selectedRoom.id,
+              roomName: this.selectedRoom.name
+            }
+          });
+          setTimeout(() => {
+            this.joiningRoom = false;
+          }, 400);
+        }
       },
 
       onCloseCreateRoom() {
