@@ -10,7 +10,7 @@ defmodule KjerSi.Rooms.Room do
     field :lat, :float
     field :lng, :float
     field :coordinates, Geo.PostGIS.Geometry
-    field :radius, :integer
+    field :radius, :float
     field :description, :string
     has_many :events, KjerSi.Events.Event
 

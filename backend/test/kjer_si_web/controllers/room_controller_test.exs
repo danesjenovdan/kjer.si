@@ -58,7 +58,7 @@ defmodule KjerSiWeb.RoomControllerTest do
 
   describe "show" do
     test "regular user get room details", %{conn: conn, room: room} do
-      %{"data" => %{"name" => "Test room", "radius" => 42}} =
+      %{"data" => %{"name" => "Test room", "radius" => 42.0}} =
         conn
         |> get(Routes.room_path(conn, :show, room.id))
         |> json_response(200)
@@ -69,7 +69,7 @@ defmodule KjerSiWeb.RoomControllerTest do
     test "regular user can create a room", %{conn: conn} do
       category = TestHelper.generate_category()
 
-      %{"data" => %{"name" => "New room", "radius" => 5}} =
+      %{"data" => %{"name" => "New room", "radius" => 5.0}} =
         conn
         |> post(
           Routes.room_path(conn, :create),
@@ -78,7 +78,7 @@ defmodule KjerSiWeb.RoomControllerTest do
             description: "room description",
             lat: 10.1,
             lng: 2.3,
-            radius: 5,
+            radius: 5.0,
             category_id: category.id
           }
         )
@@ -91,7 +91,7 @@ defmodule KjerSiWeb.RoomControllerTest do
 
       category = TestHelper.generate_category()
 
-      %{"data" => %{"name" => "New room", "radius" => 5}} =
+      %{"data" => %{"name" => "New room", "radius" => 5.0}} =
         conn
         |> post(
           Routes.room_path(conn, :create),
@@ -100,7 +100,7 @@ defmodule KjerSiWeb.RoomControllerTest do
             description: "room description",
             lat: 10.1,
             lng: 2.3,
-            radius: 5,
+            radius: 5.0,
             category_id: category.id
           }
         )

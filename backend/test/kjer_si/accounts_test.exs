@@ -112,7 +112,7 @@ defmodule KjerSi.AccountsTest do
       test_user = TestHelper.generate_user()
       test_room = TestHelper.generate_room()
 
-      assert {:ok, %Subscription{} = subscription} =
+      assert {:ok, %Subscription{} = _subscription} =
                Accounts.create_subscription(%{
                  user_id: test_user.id,
                  room_id: test_room.id

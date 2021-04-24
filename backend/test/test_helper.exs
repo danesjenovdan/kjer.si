@@ -27,7 +27,7 @@ defmodule TestHelper do
         lat: 120.5,
         lng: 121.4,
         name: "Test room",
-        radius: 42,
+        radius: 42.0,
         category_id: category.id,
         description: "Test description"
       })
