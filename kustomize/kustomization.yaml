@@ -10,4 +10,4 @@ resources:
 images:
 - name: kjer-si
   newName: rg.fr-par.scw.cloud/djnd/kjer.si
-  newTag: '83fb3aefd15d55b5746dbfdaefc2f251171201ba'
+  newTag: '58f5d9294be0c26fd15a1346b5b24d5dba1a8096'
