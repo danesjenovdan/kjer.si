@@ -28,7 +28,7 @@
           <!-- Shows the list item label in the default color and style. -->
           <StackLayout>
             <WrapLayout class="message-container message-me-container" orientation="vertical" horizontalAlignment="right" paddingLeft="50">
-              <Label class="message-user-name-label" text="Me" horizontalAlignment="right"/>
+              <Label class="message-user-name-label" :text="myUsername" horizontalAlignment="right"/>
               <Label class="message-text-label message-me-text-label" :text="message.content" textWrap="true"/>
             </WrapLayout>
           </StackLayout>
@@ -52,7 +52,7 @@
 <!--        <Label @tap="onEventsTap" class="chat-menu-button" text="Dogodki"></Label>-->
         <Label class="chat-menu-button" text="Zapusti" @tap="leaveRoom"></Label>
 <!--        <Label class="chat-menu-button" text="Utišaj"></Label>-->
-        <Label class="chat-menu-button chat-menu-button-last" text="Nastavitve"></Label>
+        <!-- <Label class="chat-menu-button chat-menu-button-last" text="Nastavitve"></Label> -->
       </StackLayout>
     </GridLayout>
 

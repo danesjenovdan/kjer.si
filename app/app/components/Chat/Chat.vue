@@ -27,6 +27,7 @@
         showMenu: false,
         channel: null,
         userId: UserService.default.user.id,
+        myUsername: UserService.default.user.nickname,
         messageText: '',
         messages: new ObservableArray([]),
       };

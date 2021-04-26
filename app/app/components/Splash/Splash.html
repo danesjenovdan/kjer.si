@@ -2,10 +2,24 @@
 
   <GridLayout ref="appContainer" width="100%" height="100%">
     <Image :src="mapBackground" stretch="aspectFill"></Image>
-    <GridLayout rows="5*, 5*">
-      <Image row="0" marginBottom="-20" verticalAlignment="bottom" src="~/assets/images/main_screen_logo.png"
+    <GridLayout rows="*, *, *">
+      <Image row="0" verticalAlignment="bottom" src="~/assets/images/main_screen_logo.png"
              width="200" height="100" stretch="aspectFit"></Image>
-      <StackLayout v-if="!isCreatingUser" row="1" marginTop="20">
+      <StackLayout row="1">
+        <Label textWrap="true" class="" width="300" marginTop="50" style="text-align: center;">
+          <Span>Tvoja sporočila so anonimna (ustvarili smo ti naključno uporabniško ime), vendar </Span>
+          <Span fontWeight="bold">javna</Span>
+          <Span>. Ne objavljaj svoje telefonske ali drugih osebnih podatkov.</Span>
+          <Span></Span>
+        </Label>
+      <!-- </StackLayout>
+      <StackLayout row="1"> -->
+        <Label textWrap="true" class="" width="300" marginTop="20" style="text-align: center;">
+          <Span fontStyle="italic">Lepa beseda lepo mesto najde.</Span>
+          <Span> Obnašaj se vsaj tako dobro, kot se od tebe pričakuje v šoli.</Span>
+        </Label>
+      </StackLayout>
+      <StackLayout v-if="!isCreatingUser" row="3" marginTop="0">
         <Label class="kjer-si-big-button" v-if="location" @tap="onEnterTap" text="Vstopi" width="150"
                marginTop="40"></Label>
         <Label class="kjer-si-button" v-if="locationError" @tap="requestLocation" text="Poizkusi ponovno" width="150"
@@ -15,7 +29,7 @@
         <Label class="splash-searching-location-label" v-if="!location && !locationError"
                text="Iščem lokacijo..."></Label>
       </StackLayout>
-      <StackLayout row="1" marginTop="60" v-if="isCreatingUser">
+      <StackLayout row="3" marginTop="0" v-if="isCreatingUser">
         <ActivityIndicator :busy="true" :isEnabled="true"></ActivityIndicator>
       </StackLayout>
     </GridLayout>
