@@ -44,7 +44,8 @@ defmodule KjerSi.MixProject do
       {:geo, "~> 3.3"},
       {:geo_postgis, "~> 3.3"},
       {:params, "~> 2.2"},
-      {:ex_doc, "~> 0.24", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false},
+      {:corsica, "~> 1.1"}
     ]
   end
 

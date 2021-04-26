@@ -30,5 +30,6 @@ defmodule KjerSiWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
+  plug Corsica, origins: "*", allow_headers: ["content-type", "accept", "authorization"]
   plug KjerSiWeb.Router
 end
