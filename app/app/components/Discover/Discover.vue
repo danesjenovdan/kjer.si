@@ -154,11 +154,6 @@
             'K'
           );
 
-          if (distance && distance > this.limitMeters / 1000) {
-            UiService.default.showToast('Ups, novo sobo moraš ustvariti znotraj z rdečo oznečenega kroga.');
-            return;
-          }
-
           console.log('DISTANCE: ', distance);
 
           this.drawRangeCircle(true);
@@ -217,6 +212,24 @@
       },
 
       confirmRangeTap() {
+
+        const distance = MapService.default.distance(
+          this.location.latitude,
+          this.location.longitude,
+          this.lastMapCamera.latitude,
+          this.lastMapCamera.longitude,
+          'K'
+        );
+
+        if (distance && distance > this.limitMeters / 1000) {
+          UiService.default.showToast('Ups, novo sobo moraš ustvariti znotraj z rdečo oznečenega kroga.');
+          return;
+        }
+
+        if (distance && distance > this.newRoom.radius / 1000) {
+          UiService.default.showToast('Ups, sobo poskušaš ustvariti predaleč. Premakni jo, ali povečaj radij.');
+          return;
+        }
 
         this.newRoom.location = {
           latitude: this.lastMapCamera.latitude,
