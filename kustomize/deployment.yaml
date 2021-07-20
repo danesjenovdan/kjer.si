@@ -45,6 +45,13 @@ spec:
           -
             name: MIX_ENV
             value: k8s
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 500m
+          limits:
+            memory: 1Gi
+            cpu: 500m
       containers:
       - name: kjer-si
         image: kjer-si # kustomize thing
@@ -89,3 +96,10 @@ spec:
           -
             name: MIX_ENV
             value: k8s
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 500m
+          limits:
+            memory: 1Gi
+            cpu: 500m
