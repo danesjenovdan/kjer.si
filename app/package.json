@@ -27,7 +27,7 @@
     "@nativescript/android": "8.0.0",
     "@nativescript/webpack": "~5.0.0-beta.0",
     "nativescript-vue-template-compiler": "~2.8.4",
-    "node-sass": "^4.7.1",
+    "node-sass": "^7.0.0",
     "vue-loader": "^15.9.6"
   },
   "gitHead": "8c1a4866a66daab09bf5ef8e5a96472687192373",
